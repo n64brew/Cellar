@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Buu342's Land</title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+        <link href="home.css" rel="stylesheet" type="text/css">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://buu342.me/">
+        <meta property="og:title" content="Buu342's Land">
+        <meta property="og:image" content="https://buu342.me/memyselfi.png">
+        <meta property="og:description" content="My personal home page." />
+    </head>
+    <body>
+        <h1></h1>
+        <center>
+            <div class="me-myself-and-i">
+                <img src="memyselfi.png" style="height:50vh;"/>
+            </div>
+        </center>
+        <h1></h1>
+        <center>
+            <a href="projects.html" class="button">Projects</a>    
+            <a href="blog.html" class="button">Blog</a>    
+            <a href="about.html" class="button">About Me</a>    
+        </center>
+        <br>
+        <br>
+        <center>
+            <table style="border-spacing:10vw 0px">
+                <th>
+                    <h1>Latest Projects</h1>
+                </th>
+                <th>
+                    <h1>Latest Blog Posts</h1>
+                </th>
+                <tr>
+                    <td>
+                        <table style="border-spacing: 10px 3px;">
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th> 
+                                <th>Project</th>
+                            </tr>
+_TEMPLATE_LATEST_PROJECTS_
+                        </table>
+                    </td>
+                    <td>
+                        <table style="border-spacing: 10px 3px;">
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th> 
+                                <th>Article</th>
+                            </tr>
+_TEMPLATE_LATEST_BLOGPOSTS_
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </center>
+        <script src="home.js"></script>
+    </body>
+</html>
