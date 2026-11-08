@@ -2,7 +2,7 @@ CODEFILES   = app.cpp main.cpp helper.cpp json.cpp framefind.cpp frameinsertimag
 LIBFILES    = 
 BUILDDIR = build
 CODEOBJECTS = $(CODEFILES:%.cpp=${BUILDDIR}/%.o)
-PROGNAME = Generator
+PROGNAME = Editor
 OS_NAME := $(shell uname -s)
 
 # -------------------------------------------------------------------------

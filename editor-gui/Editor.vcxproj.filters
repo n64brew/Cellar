@@ -99,7 +99,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Generator.rc" />
+    <ResourceCompile Include="Editor.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\prog.ico">

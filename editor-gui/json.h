@@ -9,5 +9,5 @@
 *********************************/
 
 int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist);
-void json_loadprojects(wxString workingdir, std::vector<Category*>* categorylist, wxTreeCtrl* tree);
-void json_save(wxString workingdir, std::vector<Category*>* categorylist_projects);
+void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wxTreeCtrl* tree);
+void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms);

@@ -87,25 +87,25 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
 
 
 /*==============================
-    json_loadprojects
-    Load a list of projects from a JSON file and populate the
-    project tree
+    json_loadroms
+    Load a list of roms from a JSON file and populate the
+    rom tree
     @param  The working directory of the program
     @param  A pointer to the category list
     @param  A pointer to tree to populate
 ==============================*/
 
-void json_loadprojects(wxString workingdir, std::vector<Category*>* categorylist, wxTreeCtrl* tree)
+void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wxTreeCtrl* tree)
 {
     nlohmann::json pagejson = json_fromfilepath(wxString(workingdir + wxString("/roms.json")));
 
-    // Add the projects from the JSON file
+    // Add the roms from the JSON file
     for (nlohmann::json::iterator itcat = pagejson["Categories"].begin(); itcat != pagejson["Categories"].end(); ++itcat)
     {
         int index = 0;
         wxTreeItemId cat_id;
         Category* cat_elem = NULL;
-        std::vector<Project*> projects;
+        std::vector<ROM*> roms;
 
         // Find the category tree index
         for (Category* cat : *categorylist)
@@ -118,11 +118,11 @@ void json_loadprojects(wxString workingdir, std::vector<Category*>* categorylist
             }
         }
 
-        // Read the project data from the JSON
+        // Read the rom data from the JSON
         for (nlohmann::json::iterator itproj = (*itcat)["Pages"].begin(); itproj != (*itcat)["Pages"].end(); ++itproj)
         {
             wxString taglist = wxString("");
-            Project* proj = new Project();
+            ROM* proj = new ROM();
             proj->index = (*itproj)["Index"];
             proj->filename = wxString::FromUTF8(itproj.key());
             proj->displayname = wxString::FromUTF8(std::string((*itproj)["DisplayName"]));
@@ -130,7 +130,7 @@ void json_loadprojects(wxString workingdir, std::vector<Category*>* categorylist
             proj->date = wxString::FromUTF8(std::string((*itproj)["Date"]));
             proj->tooltip = wxString::FromUTF8(std::string((*itproj)["ToolTip"]));
             proj->wasmodified = false;
-            proj->description = string_fromfile(workingdir + wxString("/projects/") + cat_elem->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
+            proj->description = string_fromfile(workingdir + wxString("/roms/") + cat_elem->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
             proj->images.clear();
             for (nlohmann::json::iterator it = (*itproj)["Images"].begin(); it != (*itproj)["Images"].end(); ++it)
                 proj->images.push_back(wxString::FromUTF8(std::string(*it)));
@@ -142,19 +142,19 @@ void json_loadprojects(wxString workingdir, std::vector<Category*>* categorylist
                 proj->tags.push_back(wxString::FromUTF8(std::string(*it)));
             proj->category = cat_elem;
             proj->treeid = NULL;
-            projects.push_back(proj);
+            roms.push_back(proj);
         }
 
-        // Correct the indices of the projects, to make sure they're in proper order
-        if (projects.size() > 0)
+        // Correct the indices of the roms, to make sure they're in proper order
+        if (roms.size() > 0)
         {
             index = 0;
-            std::sort(projects.begin(), projects.end(), &project_sorter);
-            for (Project* proj : projects)
+            std::sort(roms.begin(), roms.end(), &rom_sorter);
+            for (ROM* proj : roms)
                 proj->index = index++;
 
-            // Now add the project to the tree
-            for (Project* proj : projects)
+            // Now add the rom to the tree
+            for (ROM* proj : roms)
             {
                 proj->treeid = tree->AppendItem(cat_id, proj->displayname);
                 cat_elem->pages.push_back(proj);
@@ -166,49 +166,49 @@ void json_loadprojects(wxString workingdir, std::vector<Category*>* categorylist
 
 /*==============================
     json_save
-    Load a list of projects from a JSON file and populate the
-    project tree
+    Load a list of roms from a JSON file and populate the
+    rom tree
     @param  The working directory of the program
     @param  A pointer to the category list
 ==============================*/
 
-void json_save(wxString workingdir, std::vector<Category*>* categorylist_projects)
+void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
 {
     wxTextFile out_proj(workingdir + wxString("/roms.json"));
-    nlohmann::json projectjson = {};
-    projectjson["Categories"] = {};
+    nlohmann::json romjson = {};
+    romjson["Categories"] = {};
 
-    // Handle projects
-    for (Category* cat : *categorylist_projects)
+    // Handle roms
+    for (Category* cat : *categorylist_roms)
     {
         std::string catstr = cat->foldername.ToStdString();
-        projectjson["Categories"][catstr] = {};
-        projectjson["Categories"][catstr]["Index"] = cat->index;
-        projectjson["Categories"][catstr]["DisplayName"] = cat->displayname.ToUTF8();
-        projectjson["Categories"][catstr]["Description"] = cat->description.ToUTF8();
-        projectjson["Categories"][catstr]["Pages"] = {};
+        romjson["Categories"][catstr] = {};
+        romjson["Categories"][catstr]["Index"] = cat->index;
+        romjson["Categories"][catstr]["DisplayName"] = cat->displayname.ToUTF8();
+        romjson["Categories"][catstr]["Description"] = cat->description.ToUTF8();
+        romjson["Categories"][catstr]["Pages"] = {};
         for (void* child : cat->pages)
         {
-            Project* proj = (Project*)child;
+            ROM* proj = (ROM*)child;
             std::string projstr = proj->filename.ToStdString();
-            wxTextFile projmd(workingdir + wxString("/projects/") + cat->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
-            projectjson["Categories"][catstr]["Pages"][projstr] = {};
-            projectjson["Categories"][catstr]["Pages"][projstr]["Index"] = proj->index;
-            projectjson["Categories"][catstr]["Pages"][projstr]["DisplayName"] = proj->displayname.ToUTF8();
-            projectjson["Categories"][catstr]["Pages"][projstr]["Icon"] = proj->icon.ToUTF8();
-            projectjson["Categories"][catstr]["Pages"][projstr]["Date"] = proj->date.ToUTF8();
-            projectjson["Categories"][catstr]["Pages"][projstr]["ToolTip"] = proj->tooltip.ToUTF8();
-            projectjson["Categories"][catstr]["Pages"][projstr]["Images"] = {};
+            wxTextFile projmd(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
+            romjson["Categories"][catstr]["Pages"][projstr] = {};
+            romjson["Categories"][catstr]["Pages"][projstr]["Index"] = proj->index;
+            romjson["Categories"][catstr]["Pages"][projstr]["DisplayName"] = proj->displayname.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["Icon"] = proj->icon.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["Date"] = proj->date.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["ToolTip"] = proj->tooltip.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["Images"] = {};
             for (wxString str :  proj->images)
-                projectjson["Categories"][catstr]["Pages"][projstr]["Images"].push_back(str.ToUTF8());
-            projectjson["Categories"][catstr]["Pages"][projstr]["URLs"] = {};
+                romjson["Categories"][catstr]["Pages"][projstr]["Images"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][projstr]["URLs"] = {};
             for (wxString str :  proj->urls)
-                projectjson["Categories"][catstr]["Pages"][projstr]["URLs"].push_back(str.ToUTF8());
-            projectjson["Categories"][catstr]["Pages"][projstr]["Tags"] = {};
+                romjson["Categories"][catstr]["Pages"][projstr]["URLs"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][projstr]["Tags"] = {};
             for (wxString str :  proj->tags)
-                projectjson["Categories"][catstr]["Pages"][projstr]["Tags"].push_back(str.ToUTF8());
-            if (!wxDirExists(workingdir + wxString("/projects/") + cat->foldername + wxString("/markdown/")))
-                wxFileName::Mkdir(workingdir + wxString("/projects/") + cat->foldername + wxString("/markdown/"));
+                romjson["Categories"][catstr]["Pages"][projstr]["Tags"].push_back(str.ToUTF8());
+            if (!wxDirExists(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/")))
+                wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"));
             if (!projmd.Exists())
                 projmd.Create();
             projmd.Clear();
@@ -222,7 +222,7 @@ void json_save(wxString workingdir, std::vector<Category*>* categorylist_project
     if (!out_proj.Exists())
         out_proj.Create();
     out_proj.Clear();
-    out_proj.AddLine(wxString::FromUTF8(projectjson.dump(4)));
+    out_proj.AddLine(wxString::FromUTF8(romjson.dump(4)));
     out_proj.Write();
     out_proj.Close();
 }

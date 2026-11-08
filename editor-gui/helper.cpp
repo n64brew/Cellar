@@ -25,15 +25,15 @@ bool category_sorter(Category* lhs, Category* rhs)
 
 
 /*==============================
-    project_sorter
-    Sorts two project pages by their index
+    rom_sorter
+    Sorts two rom pages by their index
     @param  The first element
     @param  The second element
     @return Whether the first element should be ordered before
             the second
 ==============================*/
 
-bool project_sorter(Project* lhs, Project* rhs)
+bool rom_sorter(ROM* lhs, ROM* rhs)
 {
     return lhs->index < rhs->index;
 }
@@ -57,15 +57,15 @@ bool date_fromstring(wxString input, wxDateTime* output)
 
 
 /*==============================
-    project_sorter_date
-    Sorts two project pages by their date
+    rom_sorter_date
+    Sorts two rom pages by their date
     @param  The first element
     @param  The second element
     @return Whether the first element should be ordered before
             the second
 ==============================*/
 
-bool project_sorter_date(Project* lhs, Project* rhs)
+bool rom_sorter_date(ROM* lhs, ROM* rhs)
 {
     wxDateTime date_lhs, date_rhs;
     if (!date_fromstring(lhs->date, &date_lhs))
@@ -87,8 +87,8 @@ bool project_sorter_date(Project* lhs, Project* rhs)
 bool taggedpage_sorter(TaggedPage lhs, TaggedPage rhs)
 {
     wxString lhs_name, rhs_name;
-    lhs_name = ((Project*)lhs.page)->displayname;
-    rhs_name = ((Project*)rhs.page)->displayname;
+    lhs_name = ((ROM*)lhs.page)->displayname;
+    rhs_name = ((ROM*)rhs.page)->displayname;
     return lhs_name < rhs_name;
 }
 

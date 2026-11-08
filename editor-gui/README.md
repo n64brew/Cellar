@@ -12,7 +12,7 @@ The tool can be compiled on Windows, Mac, and Linux. To do that, you must first 
     
 Because my version of wxWidgets is designed with Windows XP compatibility in mind, I use Visual Studio 2019 with the old XP SDK (`v141_xp`) to compile the solution. If you are not interested in supporting XP, then feel free to use a later version of the IDE and SDK. 
 
-Download the [wxWidgets source code ZIP](https://wxwidgets.org/downloads/), and extract it. If you are targeting Windows XP, use wxWidgets 3.2.8, otherwise use the latest. Go to the `build/msw` folder and open the solution file for your Visual Studio version. Since I am using VS 2019, open `wx_vc16.sln` (as Visual Studio 2019 refers to version 16). Once the solution loads, you will need to edit all the projects options to use `/MT` for code generation, as wxWidgets compiles with `/MD` by default. Afterwards, if you want XP compatibility then make sure you set the Platform Toolset to `v141_xp`. After those steps are completed, compile the wxWidgets static libraries using your preferred setup (debug/release 32/64). Once wxWidgets is finished compiling, make sure that the `WXWIN` environment variable is set on your system to point to the wxWidgets directory (if it isn't, do so). If you are able to compile the OpenGL samples (after changing them to `/MT` and their platform toolkit if needed), then you are good to go.
+Download the [wxWidgets source code ZIP](https://wxwidgets.org/downloads/), and extract it. If you are targeting Windows XP, use wxWidgets 3.2.8, otherwise use the latest. Go to the `build/msw` folder and open the solution file for your Visual Studio version. Since I am using VS 2019, open `wx_vc16.sln` (as Visual Studio 2019 refers to version 16). Once the solution loads, you will need to edit all the roms options to use `/MT` for code generation, as wxWidgets compiles with `/MD` by default. Afterwards, if you want XP compatibility then make sure you set the Platform Toolset to `v141_xp`. After those steps are completed, compile the wxWidgets static libraries using your preferred setup (debug/release 32/64). Once wxWidgets is finished compiling, make sure that the `WXWIN` environment variable is set on your system to point to the wxWidgets directory (if it isn't, do so). If you are able to compile the OpenGL samples (after changing them to `/MT` and their platform toolkit if needed), then you are good to go.
 
 Once wxWidgets is taken care of:
 </br></br>
@@ -26,7 +26,7 @@ Simply open the Visual Studio solution in Visual Studio 2019+ and compile it the
 
 **Linux and macOS**
 
-Run `make`. Alternatively use `make DEBUG=1` to compile the project in debug mode.
+Run `make`. Alternatively use `make DEBUG=1` to compile the rom in debug mode.
 </br></br>
 
 
@@ -35,12 +35,12 @@ Run `make`. Alternatively use `make DEBUG=1` to compile the project in debug mod
 When you launch the executable, it will try to load the website in its current working directory. You can change the working directory once the program boots by going to `File -> Open Working Directory` or using the shortcut `CTRL+O`.
 
 The program expects the working directory to have the following folders:
-* `projects` - The list of projects
+* `roms` - The list of roms
 * `blog` - The list of blog pages
 * `tags` - The list of tags 
 * `template` - The templates to use to generate the other pages
 
-In order to add pages to the list of projects or blog, you need to have categories. You can create categories by going to the projects or blog folder and simply creating a new folder in there. Like that, when you load the generator, the category should be visible in the program tree and you should be able to add new pages by right clicking said category. Pages can be reorderd with a drag and drop.
+In order to add pages to the list of roms or blog, you need to have categories. You can create categories by going to the roms or blog folder and simply creating a new folder in there. Like that, when you load the generator, the category should be visible in the program tree and you should be able to add new pages by right clicking said category. Pages can be reorderd with a drag and drop.
 
 Clicking on a category or page will bring up the editor on the right side. List of images, URLs, and tags should be comma separated. Dates should be in the format `FullMonthName Day, FullYear`. The page descriptions support markdown, and *some* common unicode characters. Adding support for more will require modifying the `md_sanitize` and `md_unsanitize` function. Unfortunately the latest version of the MD4C library supports all Unicode, but I am using an old version because I want page URL support. Perhaps some day I can consolidate the two, but for now this workaround will be necessary.
 

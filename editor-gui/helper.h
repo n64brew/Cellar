@@ -17,8 +17,8 @@ wxString string_fromfile(wxString path);
 
 // Sorting functions
 bool category_sorter(Category* lhs, Category* rhs);
-bool project_sorter(Project* lhs, Project* rhs);
-bool project_sorter_date(Project* lhs, Project* rhs);
+bool rom_sorter(ROM* lhs, ROM* rhs);
+bool rom_sorter_date(ROM* lhs, ROM* rhs);
 bool taggedpage_sorter(TaggedPage lhs, TaggedPage rhs);
 
 // Date functions
