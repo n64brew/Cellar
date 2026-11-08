@@ -6,8 +6,6 @@ The main code of the static site generator
 
 #include "main.h"
 #include "framefind.h"
-#include "frameinsertimage.h"
-#include "frameinsertvideo.h"
 #include "helper.h"
 #include "json.h"
 #include "include/md4c/md4c-html.h"
@@ -246,14 +244,6 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_MenuItem_Find = new wxMenuItem(this->m_Menu_Edit, wxID_ANY, wxString(wxT("Find")) + wxT('\t') + wxT("CTRL+F"), wxEmptyString, wxITEM_NORMAL);
     this->m_Menu_Edit->Append(m_MenuItem_Find);
     this->m_Menu_Edit->AppendSeparator();
-    wxMenuItem* m_MenuItem_InsertImage;
-    m_MenuItem_InsertImage = new wxMenuItem(this->m_Menu_Edit, wxID_ANY, wxString(wxT("Insert Image")) + wxT('\t') + wxT("CTRL+I"), wxEmptyString, wxITEM_NORMAL);
-    this->m_Menu_Edit->Append(m_MenuItem_InsertImage);
-    wxMenuItem* m_MenuItem_InsertVideo;
-    m_MenuItem_InsertVideo = new wxMenuItem(this->m_Menu_Edit, wxID_ANY, wxString(wxT("Insert Video")) + wxT('\t') + wxT("CTRL+B"), wxEmptyString, wxITEM_NORMAL);
-    wxMenuItem* m_MenuItem_InsertTOC;
-    m_MenuItem_InsertTOC = new wxMenuItem(this->m_Menu_Edit, wxID_ANY, wxString(wxT("Insert Table of Contents")) + wxT('\t') + wxT("CTRL+T"), wxEmptyString, wxITEM_NORMAL);
-    this->m_Menu_Edit->Append(m_MenuItem_InsertTOC);
     this->m_Menubar_Main->Append(this->m_Menu_Edit, wxT("Edit"));
     this->SetMenuBar(this->m_Menubar_Main);
 
@@ -288,10 +278,10 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_Save_OnMenuSelection), this, m_MenuItem_Save->GetId());
     this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_FullRecompile_OnMenuSelection), this, m_MenuItem_FullRecompile->GetId());
     this->m_Menu_Edit->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_Find_OnMenuSelection), this, m_MenuItem_Find->GetId());
-    this->m_Menu_Edit->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_InsertImage_OnMenuSelection), this, m_MenuItem_InsertImage->GetId());
-    this->m_Menu_Edit->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_InsertVideo_OnMenuSelection), this, m_MenuItem_InsertVideo->GetId());
-    this->m_Menu_Edit->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_InsertTOC_OnMenuSelection), this, m_MenuItem_InsertTOC->GetId());
     this->m_Timer->Bind(wxEVT_TIMER, wxTimerEventHandler(Main::m_Timer_OnTimer), this, this->m_Timer->GetId());
+
+    // Check if we're set up properly
+    this->InitialCheck();
 
     // Load the roms from the current working directory
     this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
@@ -382,53 +372,6 @@ void Main::m_MenuItem_Find_OnMenuSelection(wxCommandEvent& event)
     FrameFind* frame = new FrameFind(NULL);
     frame->SetParent(this->m_TextCtrl_ROMs_Description);
     frame->Show();
-    event.Skip();
-}
-
-
-/*==============================
-    m_MenuItem_InsertImage_OnMenuSelection
-    Handles the Insert Image menu event
-    @param Unused
-==============================*/
-
-void Main::m_MenuItem_InsertImage_OnMenuSelection(wxCommandEvent& event)
-{
-    ROM* proj = this->FindROM(this->m_SelectedItem);
-    wxString basepath = this->m_WorkingDir + wxString("/roms/") + proj->category->foldername + wxString("/");
-    FrameImageInsert* frame = new FrameImageInsert(this);
-    frame->SetParent(this->m_TextCtrl_ROMs_Description, basepath);
-    frame->Show();
-    event.Skip();
-}
-
-
-/*==============================
-    m_MenuItem_InsertVideo_OnMenuSelection
-    Handles the Insert Video menu event
-    @param Unused
-==============================*/
-
-void Main::m_MenuItem_InsertVideo_OnMenuSelection(wxCommandEvent& event)
-{
-    ROM* proj = this->FindROM(this->m_SelectedItem);
-    wxString basepath = this->m_WorkingDir + wxString("/roms/") + proj->category->foldername + wxString("/");
-    FrameVideoInsert* frame = new FrameVideoInsert(this);
-    frame->SetParent(this->m_TextCtrl_ROMs_Description, basepath);
-    frame->Show();
-    event.Skip();
-}
-
-
-/*==============================
-    m_MenuItem_InsertTOC_OnMenuSelection
-    Handles the Insert TOC menu event
-    @param Unused
-==============================*/
-
-void Main::m_MenuItem_InsertTOC_OnMenuSelection(wxCommandEvent& event)
-{
-    this->m_TextCtrl_ROMs_Description->WriteText("[TOC]\r\n\r\n");
     event.Skip();
 }
 
@@ -862,12 +805,13 @@ void Main::m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event)
     @param Unused
 ==============================*/
 
-void Main::m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent&)
+void Main::m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event)
 {
     wxString content;
     wxString url = wxString("");
 
     // Compile the relevant page(s)
+    /*
     if (treeitem_iscategory(this->m_TreeCtrl_ROMs, this->m_SelectedItem)) // Handle category preview
     {
         Category* cat = this->FindCategory_ROMs(this->m_SelectedItem);
@@ -889,6 +833,8 @@ void Main::m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent&)
 
     // Launch the generated page in a browser window
     wxLaunchDefaultBrowser(wxString("file:") + url);
+    */
+    event.Skip();
 }
 
 
@@ -1013,6 +959,28 @@ void Main::OnClose(wxCloseEvent& event)
         }
     }
     event.Skip();
+}
+
+
+/*==============================
+    InitialCheck
+    Performs an initial check to make sure the program
+    is set up properly
+==============================*/
+
+void Main::InitialCheck()
+{
+    wxString errors = wxString("");
+    if (!wxDirExists(this->m_WorkingDir + wxString("/") + wxString("templates")))
+        errors += wxString("Templates folder is missing. Are you sure the editor is in the repository's root?\n");
+    if (!wxFileExists(this->m_WorkingDir + wxString("/") + wxString("cellar-generator")))
+        errors += wxString("Cellar Generator is missing. Did you remember to compile it and place it next to this program?\n");
+    if (errors != "")
+    {
+        errors = wxString("The following errors were encountered:\n\n") + errors + wxString("\nThe website might not compile properly!");
+        wxMessageBox(errors, wxString("Initialization error"), wxICON_ERROR);
+    }
+
 }
 
 
@@ -1304,436 +1272,12 @@ void Main::Save()
     json_save(this->m_WorkingDir, &this->m_Category_ROMs);
 
     // Compile the website
-    this->CompileROMs();
-    this->CompileTags();
-    this->CompileHomePage();
+    //this->CompileROMs();
+    //this->CompileTags();
+    //this->CompileHomePage();
 
     // Mark the program as no longer modified
     this->MarkModified(false);
-}
-
-
-/*==============================
-    CompileROMs
-    Compile all rom-related pages
-==============================*/
-
-void Main::CompileROMs()
-{
-    this->CompileROMs_List();
-
-    // Now create the page for each rom
-    for (Category* cat : this->m_Category_ROMs)
-        for (void* page : cat->pages)
-            this->CompileROMs_ROM((ROM*)page);
-}
-
-
-/*==============================
-    CompileROMs_List
-    Compile the rom list page
-==============================*/
-
-void Main::CompileROMs_List()
-{
-    bool modified = false;
-    wxTextFile out(this->m_WorkingDir + wxString("/roms.html"));
-    wxDateTime today = wxDateTime::Today();
-    wxString html_final = wxString("");
-    wxString html_categories = wxString("");
-
-    // Check if a category was modified, if not, then skip page generation
-    if (!this->m_FullCompile)
-    {
-        for (Category* cat : this->m_Category_ROMs)
-        {
-            if (cat->wasmodified)
-            {
-                modified = true;
-                break;
-            }
-        }
-        if (!modified)
-            return;
-    }
-
-    // Read the roms page template
-    html_final = string_fromfile(this->m_WorkingDir + "/templates/roms.html");
-
-    // Generate the page from the section + rom templates
-    for (Category* cat : this->m_Category_ROMs)
-    {
-        wxString html_roms = wxString("");
-        wxString relativepath = wxString("roms/") + cat->foldername + wxString("/");
-        wxString desccopy = cat->description;
-        const char* mdstr = md_sanitize(&desccopy)->mb_str();
-        wxString desc;
-
-        // If there's no roms in this category, skip it
-        if (cat->pages.size() == 0)
-            continue;
-
-        // Generate the rom blocks
-        for (void* page : cat->pages)
-        {
-            ROM* proj = (ROM*)page;
-            html_roms += string_fromfile(this->m_WorkingDir + "/templates/roms_rom.html");
-            html_roms.Replace("_TEMPLATE_ROM_URL_", relativepath + proj->filename + wxString(".html"));
-            html_roms.Replace("_TEMPLATE_ROM_TITLE_", proj->displayname);
-            html_roms.Replace("_TEMPLATE_ROM_IMAGE_", relativepath + proj->icon);
-            html_roms.Replace("_TEMPLATE_ROM_TOOLTIP_", proj->tooltip);
-            html_roms.Append("\r\n");
-        }
-
-        // Generate the section blocks
-        html_categories += string_fromfile(this->m_WorkingDir + "/templates/roms_section.html");
-        html_categories.Replace("_TEMPLATE_TITLE_", cat->displayname);
-        html_categories.Replace("_TEMPLATE_HREF_", cat->foldername);
-        md_html(mdstr, strlen(mdstr), md4c_funcptr_handlestr, &desc, MD_FLAG_NOHTMLBLOCKS | MD_FLAG_HEADINGAUTOID, 0, new MD_TOC_OPTIONS{.depth=5, .toc_placeholder="[TOC]"});
-        if (desc.Length() == 0 && cat->description.Length() > 0)
-        {
-            wxMessageDialog dialog(this, wxString("Markdown parsing was unsuccessful for '") + cat->displayname + wxString("'! Do you have some unsupported unicode?"), wxString("MD Generation Failure"), wxICON_EXCLAMATION);
-            dialog.ShowModal();
-        }
-        desc.Replace("<p>", "<p align=\"left\">");
-        html_categories.Replace("_TEMPLATE_SECTION_DESCRIPTION_", *md_unsanitize(&desc));
-        html_categories.Replace("_TEMPLATE_ROM_LIST_", html_roms);
-        html_categories.Append("\r\n");
-
-        // Mark the category as unmodified
-        cat->wasmodified = false;
-    }
-
-    // Finalize the roms page
-    html_final.Replace("_TEMPLATE_ROMS_LIST_", html_categories);
-    html_final.Replace("_TEMPLATE_ROMS_DATE_", today.Format("%b %d %Y"));
-
-    // Dump the html for the roms page
-    if (!out.Exists())
-        out.Create();
-    out.Open();
-    out.Clear();
-    out.AddLine(html_final);
-    out.Write();
-    out.Close();
-}
-
-
-/*==============================
-    CompileROMs_ROM
-    Compile a rom page
-    @param The rom page to compile
-==============================*/
-
-void Main::CompileROMs_ROM(ROM* proj)
-{
-    wxString html_final = wxString("");
-    Category* cat = proj->category;
-    wxString relativepath = wxString("roms/") + cat->foldername + wxString("/");
-    wxString projoutpath = this->m_WorkingDir + wxString("/") + relativepath + proj->filename + wxString(".html");
-    wxTextFile projout(projoutpath);
-    wxString html_md = wxString(""), pagetags = wxString("");
-    wxString desccopy = proj->description;
-    const char* mdstr = md_sanitize(&desccopy)->mb_str();
-    std::vector<wxString> images;
-    std::vector<wxString> youtubes;
-    std::vector<wxString> mp4s;
-
-    // Skip this rom if it wasn't modified
-    if (!this->m_FullCompile && !proj->wasmodified)
-        return;
-
-    // Replace most of the basic page info
-    html_final = string_fromfile(this->m_WorkingDir + "/templates/rom.html");
-    html_final.Replace("_TEMPLATE_ROMS_TITLE_", proj->displayname);
-    html_final.Replace("_TEMPLATE_ROMS_DATE_", proj->date);
-    md_html(mdstr, strlen(mdstr), md4c_funcptr_handlestr, &html_md, MD_FLAG_NOHTMLBLOCKS | MD_FLAG_HEADINGAUTOID, 0, new MD_TOC_OPTIONS{.depth=5, .toc_placeholder="[TOC]"});
-    if (html_md.Length() == 0 && proj->description.Length() > 0)
-    {
-        printf("Hello\n%s\n", mdstr);
-        wxMessageDialog dialog(this, wxString("Markdown parsing was unsuccessful for '") + proj->displayname + wxString("'! Do you have some unsupported unicode?"), wxString("MD Generation Failure"), wxICON_EXCLAMATION);
-        dialog.ShowModal();
-    }
-    html_final.Replace("_TEMPLATE_ROMS_DESCRIPTION_", *md_unsanitize(&html_md));
-    html_final.Replace("_TEMPLATE_ROMS_CATEGORY_", proj->category->foldername);
-    html_final.Replace("_TEMPLATE_ROM_URL_", relativepath + proj->filename + wxString(".html"));
-    html_final.Replace("_TEMPLATE_ROM_IMAGE_", relativepath + proj->icon);
-    html_final.Replace("_TEMPLATE_ROM_TOOLTIP_", proj->tooltip);
-
-    // Handle image carousel
-    for (wxString str : proj->images)
-    {
-        str.Replace("\"", wxString(""));
-        if (str.Contains("youtube.com"))
-            youtubes.push_back(str.AfterFirst('=').Left(11));
-        else if (str.Contains("youtu.be"))
-            youtubes.push_back(str.Mid(str.Find('/', true), 11));
-        else if (str.Contains(".mp4"))
-            mp4s.push_back(str);
-        else
-            images.push_back(str);
-    }
-    if (images.size() > 0 || youtubes.size() > 0 || mp4s.size() > 0)
-    {
-        int i;
-        wxString carousel = string_fromfile(this->m_WorkingDir + "/templates/rom_carousel.html");
-        wxString carousel_object = wxString("");
-        wxString carousel_list = wxString("");
-        if (images.size() > 0)
-        {
-            carousel_object += string_fromfile(this->m_WorkingDir + "/templates/rom_carousel_object_img.html");
-            carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_IMAGE_", images[0]);
-        }
-        if (youtubes.size() > 0)
-        {
-            carousel_object += string_fromfile(this->m_WorkingDir + "/templates/rom_carousel_object_youtube.html");
-            carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_YOUTUBE_", youtubes[0]);
-            if (images.size() == 0)
-                carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_SHOULDDISPLAYYOUTUBE_", "");
-            else
-                carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_SHOULDDISPLAYYOUTUBE_", "display:none");
-        }
-        if (mp4s.size() > 0)
-        {
-            carousel_object += string_fromfile(this->m_WorkingDir + "/templates/rom_carousel_object_mp4.html");
-            carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_MP4_", mp4s[0]);
-            if (images.size() == 0 && youtubes.size() == 0)
-                carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_SHOULDDISPLAYMP4_", "");
-            else
-                carousel_object.Replace("_TEMPLATE_ROMS_CAROUSEL_SHOULDDISPLAYMP4_", "display:none");
-        }
-        i=0;
-        for (wxString str : mp4s)
-        {
-            wxString obj = string_fromfile(this->m_WorkingDir + "/templates/rom_carousel_list_mp4.html");
-            wxString thumb = str;
-            if (i == 0 && images.size() == 0 && youtubes.size() == 0)
-                obj.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_SELECTED_", "selected");
-            else
-                obj.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_SELECTED_", "");
-            thumb.Replace(".mp4", ".jpg");
-            obj.Replace("_TEMPLATE_ROMS_CAROUSEL_MP4THUMB_", thumb);
-            obj.Replace("_TEMPLATE_ROMS_CAROUSEL_MP4_", str);
-            carousel_list += obj;
-            i++;
-        }
-        i=0;
-        for (wxString str : youtubes)
-        {
-            wxString obj = string_fromfile(this->m_WorkingDir + "/templates/rom_carousel_list_youtube.html");
-            if (i == 0 && images.size() == 0)
-                obj.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_SELECTED_", "selected");
-            else
-                obj.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_SELECTED_", "");
-            obj.Replace("_TEMPLATE_ROMS_CAROUSEL_YOUTUBE_", str);
-            carousel_list += obj;
-            i++;
-        }
-        i=0;
-        for (wxString str : images)
-        {
-            wxString obj = string_fromfile(this->m_WorkingDir + "/templates/rom_carousel_list_img.html");
-            if (i == 0)
-                obj.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_SELECTED_", "selected");
-            else
-                obj.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_SELECTED_", "");
-            obj.Replace("_TEMPLATE_ROMS_CAROUSEL_IMAGE_", str);
-            carousel_list += obj;
-            i++;
-        }
-        carousel.Replace("_TEMPLATE_ROMS_CAROUSEL_OBJECTS_", carousel_object);
-        carousel.Replace("_TEMPLATE_ROMS_CAROUSEL_LIST_", carousel_list);
-        html_final.Replace("_TEMPLATE_ROMS_IMAGES_", carousel);
-    }
-    else
-        html_final.Replace("_TEMPLATE_ROMS_IMAGES_", wxString(""));
-
-    // Handle page tags
-    for (wxString tag : proj->tags)
-    {
-        wxString str = string_fromfile(this->m_WorkingDir + "/templates/rom_tag.html");
-        str.Replace("_TEMPLATE_TAG_URL_", wxString("../../tags/") + sanitize_tagname(tag) + wxString(".html"));
-        str.Replace("_TEMPLATE_TAG_NAME_", tag);
-        pagetags += str;
-        if (tag != proj->tags.back())
-            pagetags += wxString(", ");
-    }
-    html_final.Replace("_TEMPLATE_ROMS_TAGS_", pagetags);
-
-    // Handle page URLS
-    if (proj->urls.size() > 0)
-    {
-        wxString url_list = wxString("");
-        for (wxString str : proj->urls)
-        {
-            wxString obj = string_fromfile(this->m_WorkingDir + "/templates/rom_url.html");
-            str.Replace("\"", wxString(""));
-            if (str.Contains("github.com"))
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadgh.png");
-            else if (str.Contains("gitlab.com"))
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadgl.png");
-            else if (str.Contains("store.steampowered.com"))
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadst.png");
-            else if (str.Contains("steamcommunity.com"))
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadsw.png");
-            else if (str.Contains("youtube.com") || str.Contains("youtu.be"))
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadyt.png");
-            else if (str.Contains("knockout.chat"))
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadko.png");
-            else
-                obj.Replace("_TEMPLATE_ROMS_URL_BADGE_", "../downloadzp.png");
-            obj.Replace("_TEMPLATE_ROMS_URL_", str);
-            url_list += obj;
-        }
-        html_final.Replace("_TEMPLATE_ROMS_LINKS_", url_list);
-    }
-    else
-        html_final.Replace("_TEMPLATE_ROMS_LINKS_", wxString(""));
-
-    // Generate the page itself
-    if (!projout.Exists())
-        projout.Create();
-    projout.Open();
-    projout.Clear();
-    projout.AddLine(html_final);
-    projout.Write();
-    projout.Close();
-
-    // Mark the rom as no longer modified
-    proj->wasmodified = false;
-}
-
-
-/*==============================
-    CompileTags
-    Compile the tag pages
-==============================*/
-
-void Main::CompileTags()
-{
-    bool cont;
-    wxString filename;
-    wxString tagspath = this->m_WorkingDir + wxString("/tags");
-    wxDir tagsdir(tagspath);
-    std::map<wxString, std::vector<TaggedPage>> tagmap;
-
-    // Go through all roms and add each one to the tag map
-    for (Category* cat : this->m_Category_ROMs)
-    {
-        for (void* page : cat->pages)
-        {
-            for (wxString tag : ((ROM*)page)->tags)
-            {
-                std::map<wxString, std::vector<TaggedPage>>::iterator foundtag = tagmap.find(tag);
-                if (foundtag == tagmap.end())
-                    foundtag = tagmap.insert(std::pair<wxString, std::vector<TaggedPage>>(tag, std::vector<TaggedPage>())).first;
-                foundtag->second.push_back({PAGETYPE_ROM, page});
-            }
-        }
-    }
-
-    // Purge the tags folder of html files
-    cont = tagsdir.GetFirst(&filename, "*.html");
-    while (cont)
-    {
-        wxRemoveFile(tagspath + wxString("/") + filename);
-        cont = tagsdir.GetNext(&filename);
-    }
-
-    // Now, alphabetically sort all the pages in the tags, and make their respective pages
-    for (std::pair<wxString, std::vector<TaggedPage>> it : tagmap)
-    {
-        wxString tagname_page;
-        wxString pagelist;
-        wxString html_final = string_fromfile(this->m_WorkingDir + "/templates/tag.html");
-        std::sort(it.second.begin(), it.second.end(), taggedpage_sorter);
-
-        // For a valid tag, its name needs to be sanitized
-        tagname_page = sanitize_tagname(it.first);
-
-        // Fill the tag page
-        html_final.Replace("_TEMPLATE_TAG_NAME_", it.first);
-        html_final.Replace("_TEMPLATE_TAG_CLEANNAME_", wxString("tags/") + tagname_page + wxString(".html"));
-        for (TaggedPage tp : it.second)
-        {
-            wxString item = string_fromfile(this->m_WorkingDir + "/templates/tag_item.html");
-            ROM* proj = (ROM*)tp.page;
-            item.Replace("_TEMPLATE_TAG_PAGENAME_", proj->displayname);
-            item.Replace("_TEMPLATE_TAG_PAGEURL_", wxString("../roms/") + proj->category->foldername + wxString("/") + proj->filename + wxString(".html"));
-            pagelist += item + wxString("\r\n");
-        }
-        html_final.Replace("_TEMPLATE_TAG_PAGELIST_", pagelist);
-
-        // Generate the page itself
-        wxTextFile out(tagspath + wxString("/") + tagname_page + wxString(".html"));
-        if (!out.Exists())
-            out.Create();
-        out.Open();
-        out.Clear();
-        out.AddLine(html_final);
-        out.Write();
-        out.Close();
-    }
-}
-
-
-/*==============================
-    CompileTags
-    Compile the homepage
-==============================*/
-
-void Main::CompileHomePage()
-{
-    int count;
-    wxString homepath = this->m_WorkingDir + wxString("/index.html");
-    wxTextFile fileout(homepath);
-    wxString html_entry;
-    wxString html_final = string_fromfile(this->m_WorkingDir + "/templates/index.html");
-    std::vector<ROM*> latestroms;
-
-    // Get the list of roms with dates
-    for (Category* cat : this->m_Category_ROMs)
-    {
-        for (void* page : cat->pages)
-        {
-            ROM* proj = (ROM*)page;
-            if (proj->date != "")
-                latestroms.push_back(proj);
-        }
-    }    
-
-    // Paste the 5 most recent roms
-    count = 0;
-    html_entry = wxString("");
-    std::sort(latestroms.begin(), latestroms.end(), &rom_sorter_date);
-    for (ROM* proj : latestroms)
-    {
-        wxDateTime date;
-        wxString tableelem;
-        if (count == 5)
-            break;
-        tableelem = string_fromfile(this->m_WorkingDir + "/templates/index_latest.html");
-        if (date_fromstring(proj->date, &date))
-            tableelem.Replace("_TEMPLATE_LATEST_ENTRY_DATE_", date.Format("%d/%m/%Y"));
-        else
-            tableelem.Replace("_TEMPLATE_LATEST_ENTRY_DATE_", "??/??/????");
-        tableelem.Replace("_TEMPLATE_LATEST_ENTRY_CATEGORY_", proj->category->displayname);
-        tableelem.Replace("_TEMPLATE_LATEST_ENTRY_NAME_", proj->displayname);
-        tableelem.Replace("_TEMPLATE_ENTRY_CATEGORY_", wxString("roms.html#") + proj->category->foldername);
-        tableelem.Replace("_TEMPLATE_ENTRY_PAGE_", wxString("roms/") + proj->category->foldername + wxString("/") + proj->filename + wxString(".html"));
-        html_entry += tableelem + wxString("\r\n");
-        count++;
-    }
-    html_final.Replace("_TEMPLATE_LATEST_ROMS_", html_entry);
-
-    // Generate the page itself
-    if (!fileout.Exists())
-        fileout.Create();
-    fileout.Open();
-    fileout.Clear();
-    fileout.AddLine(html_final);
-    fileout.Write();
-    fileout.Close();
 }
 
 

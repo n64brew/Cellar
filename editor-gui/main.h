@@ -167,6 +167,7 @@ class Main : public wxFrame
 	public:
 		Main(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 600), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
 		~Main();
+        void InitialCheck();
         Category* FindCategory_ROMs(wxTreeItemId item);
         Category* FindCategory_Blog(wxTreeItemId item);
         ROM* FindROM(wxTreeItemId item);
@@ -175,11 +176,6 @@ class Main : public wxFrame
         void EndDrag(wxTreeEvent& event, wxTreeCtrl* tree, std::vector<Category*>* categorylist);
         void EndDrag_ROM(wxTreeEvent& event);
 		void Save();
-        void CompileROMs();
-        void CompileROMs_List();
-        void CompileROMs_ROM(ROM* proj);
-        void CompileTags();
-        void CompileHomePage();
         void MarkModified(bool modified=true);
         void ShowROMEditor(bool show=true);
         void ShowROMCategoryEditor(bool show=true);

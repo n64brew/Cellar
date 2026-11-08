@@ -24,14 +24,18 @@ nlohmann::json json_fromfilepath(wxString filepath)
 {
     try
     {
-        if (wxFileExists(filepath))
+        if (!wxFileExists(filepath))
         {
-            std::ifstream stream(filepath.mb_str());
-            if (stream.is_open())
-                return nlohmann::json::parse(stream);
+            wxTextFile newfile;
+            wxMessageBox(wxString("JSON file at '"+filepath+"' does not exist. It will be created."), wxString("Error opening JSON"), wxICON_ERROR);
+            newfile.Create(filepath);
+            newfile.AddLine("{}");
+            newfile.Write();
+            newfile.Close();
         }
-        else
-            wxMessageBox(wxString("JSON file at '"+filepath+"' does not exist."), wxString("Error opening JSON"), wxICON_ERROR);
+        std::ifstream stream(filepath.mb_str());
+        if (stream.is_open())
+            return nlohmann::json::parse(stream);
     }
     catch (nlohmann::json::exception e)
     {
