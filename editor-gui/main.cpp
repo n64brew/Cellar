@@ -15,6 +15,7 @@ The main code of the static site generator
 #include <wx/dir.h>
 #include <wx/textfile.h>
 #include <wx/dirdlg.h>
+#include <wx/regex.h>
 
 
 /*==============================
@@ -175,7 +176,6 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_Label_ROMsCategory_Folder->Wrap(-1);
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_Folder, 0, wxALL, 5);
     this->m_TextCtrl_ROMsCategory_Folder = new wxTextCtrl(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMsCategory_Folder->Enable(false);
     this->m_TextCtrl_ROMsCategory_Folder->SetToolTip(wxT("The folder that represents this category"));
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_TextCtrl_ROMsCategory_Folder, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMsCategory_DisplayName = new wxStaticText(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxT("Display Name:"), wxDefaultPosition, wxDefaultSize, 0);
@@ -271,6 +271,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_TextCtrl_ROMs_URLs->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
     this->m_TextCtrl_ROMs_ToolTip->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ToolTip_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Description->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Description_OnText), NULL, this);
+    this->m_TextCtrl_ROMsCategory_Folder->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Folder_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_DisplayName->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_DisplayName_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Description->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Description_OnText), NULL, this);
     this->m_Button_ROMs_Preview->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Preview_OnButtonClick), NULL, this);
@@ -760,6 +761,32 @@ void Main::m_TextCtrl_ROMs_Description_OnText(wxCommandEvent& event)
         return;
     proj->description = event.GetString();
     proj->wasmodified = true;
+    this->MarkModified();
+}
+
+
+/*==============================
+    m_TextCtrl_ROMsCategory_Folder_OnText
+    Handles the rom category folder text control edit event
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_ROMsCategory_Folder_OnText(wxCommandEvent& event)
+{
+    Category* cat = this->FindCategory_ROMs(this->m_SelectedItem);
+    if (cat == NULL)
+        return;
+    cat->foldername = event.GetString();
+
+    // Replace all invalid characters with an underscore
+    wxRegEx invalid(wxT("[<>:\"/\\\\|?*\\x00-\\x1F]"));
+    invalid.ReplaceAll(&cat->foldername, wxT("_"));
+    cat->foldername.Trim(true);
+    cat->foldername.Trim(false);
+    if (cat->foldername.IsEmpty())
+        cat->foldername = wxString("new");
+
+    cat->wasmodified = true;
     this->MarkModified();
 }
 

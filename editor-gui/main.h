@@ -149,6 +149,7 @@ class Main : public wxFrame
         void m_TextCtrl_ROMs_URLs_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_ToolTip_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Description_OnText(wxCommandEvent& event);
+        void m_TextCtrl_ROMsCategory_Folder_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_DisplayName_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event);
         void m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event);

@@ -59,14 +59,11 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
     nlohmann::json pagejson = json_fromfilepath(filepath);
 
     // Add all the folders which are already included in the JSON
+    printf("Doing categories in %s\n", (const char*)filepath.c_str());
     for (nlohmann::json::iterator it = pagejson["Categories"].begin(); it != pagejson["Categories"].end(); ++it)
     {
         Category* cat;
         wxString catfoldername = wxString(it.key());
-
-        // If the category folder doesn't exist anymore, skip this category
-        if (!wxDirExists(wxFileName(filepath).GetPath() + wxString("/") + catfoldername))
-            continue;
 
         // Create the category object
         cat = new Category();
@@ -78,6 +75,7 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
         cat->treeid = NULL;
         cat->pages.clear();
         categorylist->push_back(cat);
+        printf("Created category %s\n", (const char*)catfoldername.c_str());
     }
 
     // Correct the indices of categories, to make sure they're in proper order
