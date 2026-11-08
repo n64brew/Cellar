@@ -59,7 +59,6 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
     nlohmann::json pagejson = json_fromfilepath(filepath);
 
     // Add all the folders which are already included in the JSON
-    printf("Doing categories in %s\n", (const char*)filepath.c_str());
     for (nlohmann::json::iterator it = pagejson["Categories"].begin(); it != pagejson["Categories"].end(); ++it)
     {
         Category* cat;
@@ -75,7 +74,6 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
         cat->treeid = NULL;
         cat->pages.clear();
         categorylist->push_back(cat);
-        printf("Created category %s\n", (const char*)catfoldername.c_str());
     }
 
     // Correct the indices of categories, to make sure they're in proper order
@@ -99,7 +97,7 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
 
 void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wxTreeCtrl* tree)
 {
-    nlohmann::json pagejson = json_fromfilepath(wxString(workingdir + wxString("/roms.json")));
+    nlohmann::json pagejson = json_fromfilepath(wxString(workingdir + wxString("/roms/roms.json")));
 
     // Add the roms from the JSON file
     for (nlohmann::json::iterator itcat = pagejson["Categories"].begin(); itcat != pagejson["Categories"].end(); ++itcat)
@@ -176,7 +174,7 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
 
 void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
 {
-    wxTextFile out_proj(workingdir + wxString("/roms.json"));
+    wxTextFile out_proj(workingdir + wxString("/roms/roms.json"));
     nlohmann::json romjson = {};
     romjson["Categories"] = {};
 
@@ -210,7 +208,16 @@ void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
             for (wxString str :  proj->tags)
                 romjson["Categories"][catstr]["Pages"][projstr]["Tags"].push_back(str.ToUTF8());
             if (!wxDirExists(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/")))
-                wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"));
+            {
+                wxFileName dir(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"));
+                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
+                dir.SetPath(workingdir + wxString("/roms/") + cat->foldername + wxString("/images/"));
+                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
+                dir.SetPath(workingdir + wxString("/roms/") + cat->foldername + wxString("/icons/"));
+                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
+                dir.SetPath(workingdir + wxString("/roms/") + cat->foldername + wxString("/downloads/"));
+                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
+            }
             if (!projmd.Exists())
                 projmd.Create();
             projmd.Clear();
