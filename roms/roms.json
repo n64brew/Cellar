@@ -1,0 +1,120 @@
+{
+    "Categories": {
+        "demoscene": {
+            "Description": "",
+            "DisplayName": "Demoscene Demos",
+            "Index": 9,
+            "Pages": null
+        },
+        "examples": {
+            "Description": "",
+            "DisplayName": "Examples",
+            "Index": 13,
+            "Pages": {
+                "netlib": {
+                    "Date": "",
+                    "DisplayName": "NetLib Examples",
+                    "Icon": "",
+                    "Images": null,
+                    "Index": 0,
+                    "Tags": null,
+                    "ToolTip": "",
+                    "URLs": null
+                },
+                "unfloader": {
+                    "Date": "",
+                    "DisplayName": "UNFLoader Examples",
+                    "Icon": "",
+                    "Images": null,
+                    "Index": 1,
+                    "Tags": null,
+                    "ToolTip": "",
+                    "URLs": null
+                }
+            }
+        },
+        "intros": {
+            "Description": "",
+            "DisplayName": "Demoscene Intros",
+            "Index": 10,
+            "Pages": null
+        },
+        "n64brew-gamejam2020": {
+            "Description": "",
+            "DisplayName": "N64brew Game Jam 2020",
+            "Index": 6,
+            "Pages": null
+        },
+        "n64brew-gamejam2021": {
+            "Description": "",
+            "DisplayName": "N64brew Game Jam 2021",
+            "Index": 5,
+            "Pages": null
+        },
+        "n64brew-gamejam2022": {
+            "Description": "",
+            "DisplayName": "N64brew Game Jam 2022",
+            "Index": 4,
+            "Pages": null
+        },
+        "n64brew-gamejam2023": {
+            "Description": "",
+            "DisplayName": "N64brew Game Jam 2023",
+            "Index": 3,
+            "Pages": null
+        },
+        "n64brew-gamejam2025": {
+            "Description": "",
+            "DisplayName": "N64brew Game Jam 2024",
+            "Index": 2,
+            "Pages": null
+        },
+        "original": {
+            "Description": "",
+            "DisplayName": "Original Games",
+            "Index": 0,
+            "Pages": null
+        },
+        "pom1998": {
+            "Description": "",
+            "DisplayName": "Presence of Mind 1998",
+            "Index": 7,
+            "Pages": null
+        },
+        "pom1999": {
+            "Description": "",
+            "DisplayName": "Presence of Mind 1999",
+            "Index": 8,
+            "Pages": null
+        },
+        "portsclones": {
+            "Description": "",
+            "DisplayName": "Ports and Clones",
+            "Index": 11,
+            "Pages": {
+                "pyoro64": {
+                    "Date": "",
+                    "DisplayName": "Pyoro64",
+                    "Icon": "",
+                    "Images": null,
+                    "Index": 0,
+                    "Tags": null,
+                    "ToolTip": "",
+                    "URLs": null
+                }
+            }
+        },
+        "tools": {
+            "Description": "",
+            "DisplayName": "Tools",
+            "Index": 12,
+            "Pages": null
+        },
+        "unfinished": {
+            "Description": "",
+            "DisplayName": "Unfinished",
+            "Index": 14,
+            "Pages": null
+        }
+    }
+}
