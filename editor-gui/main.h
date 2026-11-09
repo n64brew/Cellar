@@ -153,7 +153,6 @@ class Main : public wxFrame
         void m_TextCtrl_ROMsCategory_DisplayName_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event);
         void m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event);
-        void m_MenuItem_OpenDir_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_Save_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_Find_OnMenuSelection(wxCommandEvent& event);

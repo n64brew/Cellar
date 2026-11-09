@@ -65,7 +65,7 @@ bool date_fromstring(wxString input, wxDateTime* output)
             the second
 ==============================*/
 
-bool rom_sorter_date(ROM* lhs, ROM* rhs)
+bool rom_sorter_date(Page_ROM* lhs, Page_ROM* rhs)
 {
     wxDateTime date_lhs, date_rhs;
     if (!date_fromstring(lhs->date, &date_lhs))
@@ -74,6 +74,7 @@ bool rom_sorter_date(ROM* lhs, ROM* rhs)
         return true;
     return date_lhs.IsLaterThan(date_rhs);
 }
+
 
 /*==============================
     taggedpage_sorter

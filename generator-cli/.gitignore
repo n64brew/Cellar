@@ -1,0 +1,5 @@
+.directory
+.vs/*
+build/*
+Release/*
+Debug/*

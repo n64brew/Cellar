@@ -228,9 +228,6 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     // Add the menubar
     this->m_Menubar_Main = new wxMenuBar(0);
     this->m_Menu_File = new wxMenu();
-    wxMenuItem* m_MenuItem_OpenDir;
-    m_MenuItem_OpenDir = new wxMenuItem(this->m_Menu_File, wxID_ANY, wxString(wxT("Open Working Directory")) + wxT('\t') + wxT("CTRL+O"), wxEmptyString, wxITEM_NORMAL);
-    this->m_Menu_File->Append(m_MenuItem_OpenDir);
     wxMenuItem* m_MenuItem_Save;
     m_MenuItem_Save = new wxMenuItem(this->m_Menu_File, wxID_ANY, wxString(wxT("Save Changes")) + wxT('\t') + wxT("CTRL+S"), wxEmptyString, wxITEM_NORMAL);
     this->m_Menu_File->Append(m_MenuItem_Save);
@@ -275,7 +272,6 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_TextCtrl_ROMsCategory_DisplayName->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_DisplayName_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Description->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Description_OnText), NULL, this);
     this->m_Button_ROMs_Preview->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Preview_OnButtonClick), NULL, this);
-    this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_OpenDir_OnMenuSelection), this, m_MenuItem_OpenDir->GetId());
     this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_Save_OnMenuSelection), this, m_MenuItem_Save->GetId());
     this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_FullRecompile_OnMenuSelection), this, m_MenuItem_FullRecompile->GetId());
     this->m_Menu_Edit->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_Find_OnMenuSelection), this, m_MenuItem_Find->GetId());
@@ -328,25 +324,6 @@ void Main::m_Splitter_ROMsOnIdle(wxIdleEvent&)
 {
     this->m_Splitter_ROMs->SetSashPosition(0);
     this->m_Splitter_ROMs->Disconnect(wxEVT_IDLE, wxIdleEventHandler(Main::m_Splitter_ROMsOnIdle), NULL, this);
-}
-
-
-/*==============================
-    m_MenuItem_OpenDir_OnMenuSelection
-    Handles the Open Directory menu event
-    @param Unused
-==============================*/
-
-void Main::m_MenuItem_OpenDir_OnMenuSelection(wxCommandEvent&)
-{
-    wxDirDialog dir(this, wxString("Select Working Directory"), this->m_WorkingDir);
-    if (dir.ShowModal() == wxID_OK)
-    {
-        this->m_WorkingDir = dir.GetPath();
-        this->MarkModified(false);
-        this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
-        this->LoadROMs();
-    }
 }
 
 
