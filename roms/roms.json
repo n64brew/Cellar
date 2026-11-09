@@ -3,70 +3,85 @@
         "demoscene": {
             "Description": "",
             "DisplayName": "Demoscene Demos",
-            "Index": 9,
+            "Index": 8,
             "Pages": null
         },
         "examples": {
             "Description": "",
             "DisplayName": "Examples",
-            "Index": 13,
+            "Index": 12,
             "Pages": {
                 "netlib": {
-                    "Date": "",
+                    "Date": "December 10, 2024",
                     "DisplayName": "NetLib Examples",
-                    "Icon": "",
-                    "Images": null,
+                    "Icon": "icons/netlib.png",
+                    "Images": [
+                        "https://www.youtube.com/watch?v=v9aVrBq0aiY"
+                    ],
                     "Index": 0,
-                    "Tags": null,
-                    "ToolTip": "",
-                    "URLs": null
+                    "Tags": [
+                        "Libultra",
+                        "Libdragon",
+                        "Multiplayer"
+                    ],
+                    "ToolTip": "A collection of tools and libraries to allow N64 homebrew developers to connect their games to the internet for multiplayer.",
+                    "URLs": [
+                        "https://github.com/buu342/N64-NetLib"
+                    ]
                 },
                 "unfloader": {
-                    "Date": "",
+                    "Date": "March 1, 2021",
                     "DisplayName": "UNFLoader Examples",
-                    "Icon": "",
-                    "Images": null,
+                    "Icon": "icons/unfloader.png",
+                    "Images": [
+                        "https://www.youtube.com/watch?v=Fr8rSqsFuWk"
+                    ],
                     "Index": 1,
-                    "Tags": null,
-                    "ToolTip": "",
-                    "URLs": null
+                    "Tags": [
+                        "Libultra",
+                        "Libdragon"
+                    ],
+                    "ToolTip": "A cross-platform and universal Nintendo64 flashcart ROM uploader, featuring a USB+debug library for libultra and libdragon, as well as GDB support.",
+                    "URLs": [
+                        "https://github.com/buu342/N64-UNFLoader/"
+                    ]
                 }
             }
         },
         "intros": {
             "Description": "",
             "DisplayName": "Demoscene Intros",
-            "Index": 10,
+            "Index": 9,
             "Pages": null
         },
         "n64brew-gamejam2020": {
             "Description": "",
             "DisplayName": "N64brew Game Jam 2020",
-            "Index": 6,
+            "Index": 5,
             "Pages": null
         },
         "n64brew-gamejam2021": {
             "Description": "",
             "DisplayName": "N64brew Game Jam 2021",
-            "Index": 5,
+            "Index": 4,
             "Pages": null
         },
         "n64brew-gamejam2022": {
             "Description": "",
             "DisplayName": "N64brew Game Jam 2022",
-            "Index": 4,
+            "Index": 3,
             "Pages": null
         },
         "n64brew-gamejam2023": {
             "Description": "",
             "DisplayName": "N64brew Game Jam 2023",
-            "Index": 3,
+            "Index": 2,
             "Pages": null
         },
         "n64brew-gamejam2025": {
             "Description": "",
             "DisplayName": "N64brew Game Jam 2024",
-            "Index": 2,
+            "Index": 1,
             "Pages": null
         },
         "original": {
@@ -78,42 +93,49 @@
         "pom1998": {
             "Description": "",
             "DisplayName": "Presence of Mind 1998",
-            "Index": 7,
+            "Index": 6,
             "Pages": null
         },
         "pom1999": {
             "Description": "",
             "DisplayName": "Presence of Mind 1999",
-            "Index": 8,
+            "Index": 7,
             "Pages": null
         },
         "portsclones": {
-            "Description": "",
+            "Description": "This section contains ports and clones of other games. Most games will probably not have a direct download link as they will require you to build the games from the source code using a copy of the official game it's porting.",
             "DisplayName": "Ports and Clones",
-            "Index": 11,
+            "Index": 10,
             "Pages": {
                 "pyoro64": {
-                    "Date": "",
+                    "Date": "December 25, 2018",
                     "DisplayName": "Pyoro64",
-                    "Icon": "",
-                    "Images": null,
+                    "Icon": "icons/pyoro64.png",
+                    "Images": [
+                        "images/Pyoro64.gif",
+                        "images/PyoroDocs.png"
+                    ],
                     "Index": 0,
-                    "Tags": null,
-                    "ToolTip": "",
-                    "URLs": null
+                    "Tags": [
+                        "Libultra"
+                    ],
+                    "ToolTip": "A clone of the WarioWare minigame Pyoro for the N64. ",
+                    "URLs": [
+                        "https://github.com/buu342/N64-Pyoro64"
+                    ]
                 }
             }
         },
         "tools": {
             "Description": "",
             "DisplayName": "Tools",
-            "Index": 12,
+            "Index": 11,
             "Pages": null
         },
         "unfinished": {
             "Description": "",
             "DisplayName": "Unfinished",
-            "Index": 14,
+            "Index": 13,
             "Pages": null
         }
     }
