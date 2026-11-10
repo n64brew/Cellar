@@ -1,0 +1,246 @@
+name: Build Cellar Editor
+
+on:
+  push:
+    paths:
+      - 'editor-gui/**'
+      - 'generator-cli/**'
+      - '.github/workflows/**'
+    branches: [ "main" ]
+  pull_request:
+    paths:
+      - 'editor-gui/**'
+      - 'generator-cli/**'
+      - '.github/workflows/**'
+    branches: [ "main" ]
+  release:
+    types:
+      - created
+
+env:
+  WXVERSION: v3.2.8
+  WINDOWS_ARTIFACT_NAME: Editors-Windows-x86
+  LINUX_ARTIFACT_NAME: Editors-Linux-x64
+  MACOS_ARTIFACT_NAME: Editors-macOS-arm64
+  MACOS86_ARTIFACT_NAME: Editors-macOS-x86
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    env:
+      SOLUTION_CLI_FILE_PATH: ./generator-cli/Generator.sln
+      SOLUTION_GUI_FILE_PATH: ./editor-gui/Editor.sln
+      BUILD_CONFIGURATION: Release
+      BUILD_PLATFORM_WX:  Win32
+      BUILD_PLATFORM_CLI: Win32 (XP)
+      BUILD_PLATFORM_GUI: Win32
+      BUILD_TOOLSET: v141_xp
+      BUILD_DIRECTORY_CLI: ./generator-cli/Release
+      BUILD_DIRECTORY_GUI: ./editor-gui/Release
+      WXWIN: C:/wxWidgets/
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Visual Studio 2019
+        run: |
+          cd ".github/windows/"
+          move vsconfig c:\vsconfig
+          ./install.bat
+      - name: Download wxWidgets
+        run: |
+          cd C:/
+          git clone https://github.com/wxWidgets/wxWidgets.git
+          cd wxWidgets
+          git checkout tags/${{ env.WXVERSION }}
+          git submodule update --init --recursive
+
+          cd build/msw
+          Get-ChildItem *.vcxproj -recurse |
+            Foreach-Object {
+                $c = ($_ | Get-Content) 
+                $c = $c -replace 'MultiThreadedDLL','MultiThreaded'
+                [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
+            }
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          vsversion: 2019
+      - name: Compile wxWidgets
+        run: |
+          cd C:/wxWidgets/build/msw
+          msbuild /m /p:Configuration="${{ env.BUILD_CONFIGURATION }}" /p:Platform="${{ env.BUILD_PLATFORM_WX }}" /p:PlatformToolset=${{ env.BUILD_TOOLSET }} wx_vc16.sln
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          vsversion: 2019
+      - name: Build Cellar Editor
+        working-directory: ${{ env.GITHUB_WORKSPACE }}
+        run: |
+          msbuild /m /p:Configuration="${{ env.BUILD_CONFIGURATION }}" /p:Platform="${{ env.BUILD_PLATFORM_GUI }}" "${{ env.SOLUTION_GUI_FILE_PATH }}"
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          vsversion: 2019
+      - name: Build Cellar Generator
+        working-directory: ${{ env.GITHUB_WORKSPACE }}
+        run: |
+          msbuild /m /p:Configuration="${{ env.BUILD_CONFIGURATION }}" /p:Platform="${{ env.BUILD_PLATFORM_CLI }}" "${{ env.SOLUTION_CLI_FILE_PATH }}"
+
+      - name: Package Windows binaries
+        run: |
+          Compress-Archive `
+            -Path "${{ env.BUILD_DIRECTORY_GUI }}/cellar-editor.exe", "${{ env.BUILD_DIRECTORY_CLI }}/cellar-generator.exe" `
+            -DestinationPath "${{ env.WINDOWS_ARTIFACT_NAME }}.zip"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARTIFACT_NAME }}
+          path: ${{ env.WINDOWS_ARTIFACT_NAME }}.zip
+
+  build-linux:
+    runs-on: ubuntu-latest
+    env:
+      SOURCES_DIRECTORY_CLI: generator-cli
+      SOURCES_DIRECTORY_GUI: editor-gui
+      BUILD_DIRECTORY_CLI: ./generator-cli/build
+      BUILD_DIRECTORY_GUI: ./editor-gui/build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libgtk-3-dev freeglut3-dev zip
+          
+      - name: Build wxWidgets
+        run: |
+          git clone https://github.com/wxWidgets/wxWidgets.git
+          cd wxWidgets
+          git checkout tags/${{ env.WXVERSION }}
+          git submodule update --init --recursive
+
+          mkdir gtk-build
+          cd gtk-build
+          ../configure --with-opengl --disable-shared --with-libjpeg=builtin
+          make -j$(nproc)
+          sudo make install
+          sudo ldconfig
+
+      - name: Build Cellar Editor
+        run: |
+          cd "${{ env.SOURCES_DIRECTORY_GUI }}/"
+          make
+
+      - name: Build Cellar Generator
+        run: |
+          cd "${{ env.SOURCES_DIRECTORY_CLI }}/"
+          make
+
+      - name: Package Linux binaries
+        run: |
+          zip -j "${{ env.LINUX_ARTIFACT_NAME }}.zip" \
+            "${{ env.BUILD_DIRECTORY_GUI }}/cellar-editor" \
+            "${{ env.BUILD_DIRECTORY_CLI }}/cellar-generator"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.LINUX_ARTIFACT_NAME }}
+          path: "${{ env.LINUX_ARTIFACT_NAME }}.zip"
+
+  build-macos:
+    runs-on: macos-latest
+    env:
+      SOURCES_DIRECTORY_CLI: generator-cli
+      SOURCES_DIRECTORY_GUI: editor-gui
+      BUILD_DIRECTORY_CLI: ./generator-cli/build
+      BUILD_DIRECTORY_GUI: ./editor-gui/build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wxWidgets
+        run: |
+          git clone https://github.com/wxWidgets/wxWidgets.git
+          cd wxWidgets
+          git checkout tags/${{ env.WXVERSION }}
+          git submodule update --init --recursive
+          
+          mkdir build-cocoa
+          cd build-cocoa
+          ../configure --with-opengl --disable-shared --disable-sys-libs
+          make -j$(sysctl -n hw.ncpu)
+          sudo make install
+
+      - name: Build Cellar Editor
+        run: |
+          cd "${{ env.SOURCES_DIRECTORY_GUI }}/"
+          make
+
+      - name: Build Cellar Generator
+        run: |
+          cd "${{ env.SOURCES_DIRECTORY_CLI }}/"
+          make
+
+      - name: Package MacOS binaries
+        run: |
+          zip -j "${{ env.MACOS_ARTIFACT_NAME }}.zip" \
+            "${{ env.BUILD_DIRECTORY_GUI }}/cellar-editor" \
+            "${{ env.BUILD_DIRECTORY_CLI }}/cellar-generator"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.MACOS_ARTIFACT_NAME }}
+          path: "${{ env.MACOS_ARTIFACT_NAME }}.zip"
+
+  build-macos86:
+    runs-on: macos-15-intel
+    env:
+      SOURCES_DIRECTORY_CLI: generator-cli
+      SOURCES_DIRECTORY_GUI: editor-gui
+      BUILD_DIRECTORY_CLI: ./generator-cli/build
+      BUILD_DIRECTORY_GUI: ./editor-gui/build
+      MACOSX_DEPLOYMENT_TARGET: "10.13"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wxWidgets
+        run: |
+          git clone https://github.com/wxWidgets/wxWidgets.git
+          cd wxWidgets
+          git checkout tags/${{ env.WXVERSION }}
+          git submodule update --init --recursive
+
+          mkdir build-cocoa
+          cd build-cocoa
+
+          ../configure --with-opengl --disable-shared --disable-sys-libs
+
+          make -j$(sysctl -n hw.ncpu)
+          sudo make install
+
+      - name: Build Cellar Editor
+        run: |
+          cd "${{ env.SOURCES_DIRECTORY_GUI }}/"
+          make
+
+      - name: Build Cellar Generator
+        run: |
+          cd "${{ env.SOURCES_DIRECTORY_CLI }}/"
+          make
+
+      - name: Package MacOS binaries
+        run: |
+          zip -j "${{ env.MACOS86_ARTIFACT_NAME }}.zip" \
+            "${{ env.BUILD_DIRECTORY_GUI }}/cellar-editor" \
+            "${{ env.BUILD_DIRECTORY_CLI }}/cellar-generator"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.MACOS86_ARTIFACT_NAME }}
+          path: "${{ env.MACOS86_ARTIFACT_NAME }}.zip"
