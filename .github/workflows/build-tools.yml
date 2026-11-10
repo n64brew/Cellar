@@ -1,6 +1,7 @@
 name: Build Cellar Editor
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'editor-gui/**'
