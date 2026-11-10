@@ -233,7 +233,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_Menu_File->Append(m_MenuItem_Save);
     this->m_Menu_File->AppendSeparator();
     wxMenuItem* m_MenuItem_FullRecompile;
-    m_MenuItem_FullRecompile = new wxMenuItem(this->m_Menu_File, wxID_ANY, wxString(wxT("Full Website Recompile")), wxEmptyString, wxITEM_NORMAL);
+    m_MenuItem_FullRecompile = new wxMenuItem(this->m_Menu_File, wxID_ANY, wxString(wxT("Full Website Recompile")) + wxT('\t') + wxT("CTRL+R"), wxEmptyString, wxITEM_NORMAL);
     this->m_Menu_File->Append(m_MenuItem_FullRecompile);
     this->m_Menubar_Main->Append(this->m_Menu_File, wxT("File"));
     this->m_Menu_Edit = new wxMenu();
@@ -362,9 +362,12 @@ void Main::m_MenuItem_Find_OnMenuSelection(wxCommandEvent& event)
 
 void Main::m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent&)
 {
-    this->m_FullCompile = true;
     this->Save();
-    this->m_FullCompile = false;
+    long ret = wxExecute("./cellar-generator roms", wxEXEC_SYNC);
+    if (ret == 0)
+        wxMessageBox("Website recompiled successfully!", wxString("Great success"), wxICON_INFORMATION);
+    else
+        wxMessageBox(wxString::Format("Generator returned error code %d", ret), wxString("Generator error"), wxICON_ERROR);
 }
 
 
@@ -814,30 +817,43 @@ void Main::m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event)
     wxString content;
     wxString url = wxString("");
 
+    // Save changes
+    this->Save();
+
     // Compile the relevant page(s)
-    /*
     if (treeitem_iscategory(this->m_TreeCtrl_ROMs, this->m_SelectedItem)) // Handle category preview
     {
         Category* cat = this->FindCategory_ROMs(this->m_SelectedItem);
         if (cat != NULL)
         {
-            CompileROMs_List();
+            long ret = wxExecute("./cellar-generator roms", wxEXEC_SYNC);
+            if (ret != 0)
+            {
+                wxMessageBox(wxString::Format("Generator returned error code %d", ret), wxString("Generator error"), wxICON_ERROR);
+                event.Skip();
+                return;
+            }
             url = this->m_WorkingDir + wxString("/roms.html") + wxString("#") + cat->foldername;
         }
     }
-    else // Handle rom preview
+    else // Handle project preview
     {
-        ROM* proj = this->FindROM(this->m_SelectedItem);
-        if (proj != NULL)
+        ROM* rom = this->FindROM(this->m_SelectedItem);
+        if (rom != NULL)
         {
-            CompileROMs_ROM(proj);
-            url = this->m_WorkingDir + wxString("/roms/") + proj->category->foldername + wxString("/") + proj->filename + wxString(".html");
+            long ret = wxExecute("./cellar-generator roms -single " + rom->category->foldername + "/" + rom->filename, wxEXEC_SYNC);
+            if (ret != 0)
+            {
+                wxMessageBox(wxString::Format("Generator returned error code %d", ret), wxString("Generator error"), wxICON_ERROR);
+                event.Skip();
+                return;
+            }
+            url = this->m_WorkingDir + wxString("/roms/") + rom->category->foldername + wxString("/") + rom->filename + wxString(".html");
         }
     }
 
     // Launch the generated page in a browser window
     wxLaunchDefaultBrowser(wxString("file:") + url);
-    */
     event.Skip();
 }
 
@@ -1273,12 +1289,7 @@ void Main::EndDrag_ROM(wxTreeEvent& event)
 void Main::Save()
 {
     // Save the json files
-    json_save(this->m_WorkingDir, &this->m_Category_ROMs);
-
-    // Compile the website
-    //this->CompileROMs();
-    //this->CompileTags();
-    //this->CompileHomePage();
+    json_save(this->m_WorkingDir, &this->m_Category_ROMs);;
 
     // Mark the program as no longer modified
     this->MarkModified(false);

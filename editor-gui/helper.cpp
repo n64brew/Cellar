@@ -65,7 +65,7 @@ bool date_fromstring(wxString input, wxDateTime* output)
             the second
 ==============================*/
 
-bool rom_sorter_date(Page_ROM* lhs, Page_ROM* rhs)
+bool rom_sorter_date(ROM* lhs, ROM* rhs)
 {
     wxDateTime date_lhs, date_rhs;
     if (!date_fromstring(lhs->date, &date_lhs))

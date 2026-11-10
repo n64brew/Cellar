@@ -89,7 +89,6 @@ class Main : public wxFrame
 {
 	private:
         bool m_Modified;
-        bool m_FullCompile;
         std::vector<Category*> m_Category_ROMs;
 		wxString m_WorkingDir;
 		wxTreeItemId m_DraggedItem;
