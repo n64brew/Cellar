@@ -1,5 +1,4 @@
 #include <fstream>
-#include <filesystem>
 #include <string>
 #include <sstream>
 #include <iomanip>
@@ -20,10 +19,7 @@ std::string string_fromfile(std::string path)
     std::string line;
     bool first = true;
 
-
     // Ensure we managed to check and open the file
-    if (!std::filesystem::exists(path))
-        return "";
     std::ifstream file(path);
     if (!file.is_open())
         return "";

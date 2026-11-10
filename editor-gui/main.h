@@ -155,9 +155,6 @@ class Main : public wxFrame
         void m_MenuItem_Save_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_Find_OnMenuSelection(wxCommandEvent& event);
-        void m_MenuItem_InsertImage_OnMenuSelection(wxCommandEvent& event);
-        void m_MenuItem_InsertVideo_OnMenuSelection(wxCommandEvent& event);
-        void m_MenuItem_InsertTOC_OnMenuSelection(wxCommandEvent& event);
         void m_Timer_OnTimer(wxTimerEvent& event);
         void OnPopupClick_Categories(wxCommandEvent& event);
         void OnPopupClick_ROMs(wxCommandEvent& event);

@@ -1,7 +1,6 @@
 # Cellar
 
 This repository contains a static webpage for N64brew's homebrew repository. It also contains the tools used to generate the website.
-
 </br></br>
 
 
@@ -24,7 +23,6 @@ If you wish to only compile a single page (faster for previewing), then do:
 ./cellar-generator roms -single category/name
 ```
 where `category` is the category key in the JSON file (AKA `Folder:` in the GUI), and the name is the ROM key in the JSON file (AKA `File:` in the GUI). As a concrete example, the `Pyoro64` page inside the `Ports and Clones` category would be: `portsclones/pyoro64`.
-
 </br></br>
 
 
@@ -33,7 +31,6 @@ where `category` is the category key in the JSON file (AKA `Folder:` in the GUI)
 1) Make a fork of this repo.
 2) Use the GUI tool to make relevant changes, or do it manually by editing the JSON file.
 3) Compile the whole website and then submit a PR with your changes.
-
 </br></br>
 
 
@@ -41,7 +38,17 @@ where `category` is the category key in the JSON file (AKA `Folder:` in the GUI)
 
 ##### Compiler CLI
 
-Simply run `make` inside the `generator-cli` folder. if you don't have a C++ compiler installed, take care of that first.
+**Windows**
+
+Simply open the Visual Studio solution in Visual Studio 2019+ and compile it there. If you want XP compatibility, then you will need to use the `Win32 (XP)` solution platform. Otherwise, use `x64`.
+</br></br>
+
+
+**Linux and macOS**
+
+Run `make`. Alternatively use `make DEBUG=1` to compile the project in debug mode.
+</br></br>
+
 
 ##### Editor GUI
 

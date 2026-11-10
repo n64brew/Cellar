@@ -993,8 +993,13 @@ void Main::InitialCheck()
     wxString errors = wxString("");
     if (!wxDirExists(this->m_WorkingDir + wxString("/") + wxString("templates")))
         errors += wxString("Templates folder is missing. Are you sure the editor is in the repository's root?\n");
-    if (!wxFileExists(this->m_WorkingDir + wxString("/") + wxString("cellar-generator")))
-        errors += wxString("Cellar Generator is missing. Did you remember to compile it and place it next to this program?\n");
+    #ifdef _WIN32
+        if (!wxFileExists(this->m_WorkingDir + wxString("/") + wxString("cellar-generator.exe")))
+            errors += wxString("Cellar Generator is missing. Did you remember to compile it and place it next to this program?\n");
+    #else
+        if (!wxFileExists(this->m_WorkingDir + wxString("/") + wxString("cellar-generator")))
+            errors += wxString("Cellar Generator is missing. Did you remember to compile it and place it next to this program?\n");
+    #endif
     if (errors != "")
     {
         errors = wxString("The following errors were encountered:\n\n") + errors + wxString("\nThe website might not compile properly!");
