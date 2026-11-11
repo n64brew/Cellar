@@ -23,19 +23,7 @@ typedef enum
 
 
 /*********************************
-            Structures
-*********************************/
-
-// Helper struct for sorting tagged pages
-//typedef struct TaggedPage_s
-//{
-//    PageType type;
-//    void* page;
-//} TaggedPage;
-
-
-/*********************************
-            Structures
+       Function Prototypes
 *********************************/
 
 void compile_roms(std::vector<Category*>* pages);
@@ -181,38 +169,32 @@ void compile_rom(std::vector<Category*>* pages, std::string jsonpath)
 
 void compile_tags(std::vector<Category*>* pages)
 {
-    /*
     bool cont;
     std::string filename;
     std::string tagspath = "tags";
-    wxDir tagsdir(tagspath);
-    std::map<std::string, std::vector<TaggedPage>> tagmap;
+    std::map<std::string, std::vector<Page*>> tagmap;
 
-    // Go through all roms and add each one to the tag map
-    for (Category* cat : this->m_Category_ROMs)
+    // Go through all pages and add each one to the tag map
+    for (Category* cat : *pages)
     {
-        for (void* page : cat->pages)
+        for (Page* page : cat->pages)
         {
-            for (std::string tag : ((ROM*)page)->tags)
+            for (std::string tag : page->tags)
             {
-                std::map<std::string, std::vector<TaggedPage>>::iterator foundtag = tagmap.find(tag);
+                std::map<std::string, std::vector<Page*>>::iterator foundtag = tagmap.find(tag);
                 if (foundtag == tagmap.end())
-                    foundtag = tagmap.insert(std::pair<std::string, std::vector<TaggedPage>>(tag, std::vector<TaggedPage>())).first;
-                foundtag->second.push_back({PAGETYPE_ROM, page});
+                    foundtag = tagmap.insert(std::pair<std::string, std::vector<Page*>>(tag, std::vector<Page*>())).first;
+                foundtag->second.push_back(page);
             }
         }
     }
 
     // Purge the tags folder of html files
-    cont = tagsdir.GetFirst(&filename, "*.html");
-    while (cont)
-    {
-        wxRemoveFile(tagspath + "/" + filename);
-        cont = tagsdir.GetNext(&filename);
-    }
+    makedir(tagspath);
+    purge_htmlfiles(tagspath);
 
     // Now, alphabetically sort all the pages in the tags, and make their respective pages
-    for (std::pair<std::string, std::vector<TaggedPage>> it : tagmap)
+    for (std::pair<std::string, std::vector<Page*>> it : tagmap)
     {
         std::string tagname_page;
         std::string pagelist;
@@ -225,12 +207,15 @@ void compile_tags(std::vector<Category*>* pages)
         // Fill the tag page
         strreplace_all(html_final, "_TEMPLATE_TAG_NAME_", it.first);
         strreplace_all(html_final, "_TEMPLATE_TAG_CLEANNAME_", "tags/" + tagname_page + ".html");
-        for (TaggedPage tp : it.second)
+        for (Page* page : it.second)
         {
             std::string item = string_fromfile("templates/tag_item.html");
-            ROM* proj = (ROM*)tp.page;
-            strreplace_all(item, "_TEMPLATE_TAG_PAGENAME_", proj->displayname);
-            strreplace_all(item, "_TEMPLATE_TAG_PAGEURL_", "../roms/" + proj->category->foldername + "/" + proj->filename + ".html");
+            if (dynamic_cast<Page_ROM*>(page))
+            {
+                Page_ROM* rom = dynamic_cast<Page_ROM*>(page);
+                strreplace_all(item, "_TEMPLATE_TAG_PAGENAME_", rom->displayname);
+                strreplace_all(item, "_TEMPLATE_TAG_PAGEURL_", "../roms/" + rom->category->foldername + "/" + rom->filename + ".html");
+            }
             pagelist += item + "\r\n";
         }
         strreplace_all(html_final, "_TEMPLATE_TAG_PAGELIST_", pagelist);
@@ -240,8 +225,8 @@ void compile_tags(std::vector<Category*>* pages)
         out << html_final;
         out.close();
     }
-    */
 }
+
 
 /*==============================
     compile_homepage
