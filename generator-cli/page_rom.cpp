@@ -24,7 +24,7 @@ void Page_ROM::Compile()
     // Replace most of the basic page info
     html_final = string_fromfile("templates/rom.html");
     strreplace_all(html_final, "_TEMPLATE_ROMS_TITLE_", this->displayname);
-    strreplace_all(html_final, "_TEMPLATE_ROMS_DATE_", this->date);
+    strreplace_all(html_final, "_TEMPLATE_ROMS_DATE_", date_tostring(this->date));
     md_html(mdstr, strlen(mdstr), md4c_funcptr_handlestr, &html_md, MD_FLAG_NOHTMLBLOCKS | MD_FLAG_HEADINGAUTOID, 0, new MD_TOC_OPTIONS{});
     if (html_md.length() == 0 && this->description.length() > 0)
     {

@@ -92,18 +92,23 @@ void strreplace_all(std::string& str, const std::string& from, const std::string
 
 
 /*==============================
-    date_fromstring
-    Retrieves a date from a string
-    @param  The input string
-    @param  A pointer to the date to output
-    @return Whether the conversion was successful
+    date_tostring
+    Convert a timestamp to date
+    @param  The input date
+    @return The date string
 ==============================*/
 
-bool date_fromstring(const std::string& input, std::tm* output)
+std::string date_tostring(time_t date)
 {
-    std::istringstream ss(input);
-    ss >> std::get_time(output, "%Y-%m-%d");
-    return !ss.fail();
+    std::tm utc{};
+    std::ostringstream oss;
+    #ifdef _WIN32
+        gmtime_s(&utc, &date);
+    #else
+        gmtime_r(&date, &utc);
+    #endif
+    oss << std::put_time(&utc, "%B %d, %Y");
+    return oss.str();
 }
 
 
@@ -118,21 +123,7 @@ bool date_fromstring(const std::string& input, std::tm* output)
 
 bool rom_sorter_date(Page_ROM* lhs, Page_ROM* rhs)
 {
-    std::tm date_lhs{}, date_rhs{};
-
-    if (!date_fromstring(lhs->date, &date_lhs))
-        return false;
-
-    if (!date_fromstring(rhs->date, &date_rhs))
-        return true;
-
-    if (date_lhs.tm_year != date_rhs.tm_year)
-        return date_lhs.tm_year > date_rhs.tm_year;
-
-    if (date_lhs.tm_mon != date_rhs.tm_mon)
-        return date_lhs.tm_mon > date_rhs.tm_mon;
-
-    return date_lhs.tm_mday > date_rhs.tm_mday;
+    return lhs->date > rhs->date;
 }
 
 

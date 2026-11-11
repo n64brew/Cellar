@@ -139,7 +139,7 @@ void json_loadroms(std::string filepath, std::vector<Category*>* categorylist)
             page->filename = std::string(itproj.key());
             page->displayname = std::string((*itproj)["DisplayName"]);
             page->icon = std::string((*itproj)["Icon"]);
-            page->date = std::string((*itproj)["Date"]);
+            page->date = (*itproj)["Date"];
             page->tooltip = std::string((*itproj)["ToolTip"]);
             page->description = string_fromfile(workingdir + "/" + cat_elem->foldername + "/markdown/" + page->filename + ".md");
             page->images.clear();

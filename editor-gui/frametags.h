@@ -67,5 +67,6 @@ class FrameTags : public wxFrame
     public:
         FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 500), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
         ~FrameTags();
+        
         void ActivateTags(wxString tags);
 };

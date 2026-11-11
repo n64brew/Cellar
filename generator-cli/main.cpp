@@ -247,7 +247,7 @@ void compile_homepage(std::vector<Category*>* pages)
         for (Page* page : cat->pages)
         {
             Page_ROM* rom = dynamic_cast<Page_ROM*>(page);
-            if (rom->date != "")
+            if (rom->date != 0)
                 latestroms.push_back(rom);
         }
     }    
@@ -271,13 +271,11 @@ void compile_homepage(std::vector<Category*>* pages)
         #else
             localtime_r(&now, &today);
         #endif
-        std::ostringstream oss;
-        oss << std::put_time(&today, "%b %d %Y");
 
         // Replace
         tableelem = string_fromfile("templates/index_latest.html");
-        if (date_fromstring(page->date, &date))
-            strreplace_all(tableelem, "_TEMPLATE_LATEST_ENTRY_DATE_", oss.str());
+        if (page->date != 0)
+            strreplace_all(tableelem, "_TEMPLATE_LATEST_ENTRY_DATE_", date_tostring(page->date));
         else
             strreplace_all(tableelem, "_TEMPLATE_LATEST_ENTRY_DATE_", "\?\?/\?\?/\?\?\?\?");
         strreplace_all(tableelem, "_TEMPLATE_LATEST_ENTRY_CATEGORY_", page->category->displayname);

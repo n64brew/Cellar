@@ -12,7 +12,7 @@
             "Index": 12,
             "Pages": {
                 "netlib": {
-                    "Date": "December 10, 2024",
+                    "Date": 1733788800,
                     "DisplayName": "NetLib Examples",
                     "Icon": "icons/netlib.png",
                     "Images": [
@@ -37,7 +37,7 @@
                     ]
                 },
                 "unfloader": {
-                    "Date": "March 1, 2021",
+                    "Date": 1614556800,
                     "DisplayName": "UNFLoader Examples",
                     "Icon": "icons/unfloader.png",
                     "Images": [
@@ -125,7 +125,7 @@
             "Index": 10,
             "Pages": {
                 "pyoro64": {
-                    "Date": "December 25, 2018",
+                    "Date": 1545696000,
                     "DisplayName": "Pyoro64",
                     "Icon": "icons/pyoro64.png",
                     "Images": [
@@ -145,7 +145,7 @@
                         "Supports Accurate Emulator",
                         "Supports Inaccurate Emulator"
                     ],
-                    "ToolTip": "A clone of the WarioWare minigame Pyoro for the N64. ",
+                    "ToolTip": "A clone of the WarioWare minigame Pyoro.",
                     "URLs": [
                         "https://github.com/buu342/N64-Pyoro64"
                     ]

@@ -16,7 +16,7 @@ class Page
         std::string filename;
         std::string displayname;
         std::string icon;
-        std::string date;
+        time_t date;
         std::string tooltip;
         std::string description;
         std::vector<std::string> tags;

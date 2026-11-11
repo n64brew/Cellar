@@ -27,6 +27,7 @@ typedef struct IUnknown IUnknown;
 #include <wx/frame.h>
 #include <wx/filefn.h>
 #include <wx/timer.h>
+#include <cstdint>
 
 
 /*********************************
@@ -56,29 +57,29 @@ typedef struct TaggedPage_s
 
 // Category structure
 typedef struct Category_s {
-	int index;
-	wxString foldername;
-	wxString displayname;
+    int index;
+    wxString foldername;
+    wxString displayname;
     wxString description;
     bool wasmodified;
-	wxTreeItemId treeid;
-	std::vector<void*> pages;
+    wxTreeItemId treeid;
+    std::vector<void*> pages;
 } Category;
 
 // ROM page structure
 typedef struct ROM_s {
-	int index;
-	wxString filename;
-	wxString displayname;
+    int index;
+    wxString filename;
+    wxString displayname;
     wxString icon;
-    wxString date;
+    time_t date;
     wxString tooltip;
     wxString description;
     std::vector<wxString> images;
-	std::vector<wxString> urls;
+    std::vector<wxString> urls;
     std::vector<wxString> tags;
     bool wasmodified;
-	Category* category;
+    Category* category;
     wxTreeItemId treeid;
 } ROM;
 
@@ -89,14 +90,14 @@ typedef struct ROM_s {
 
 class Main : public wxFrame
 {
-	private:
+    private:
         bool m_Modified;
         std::vector<Category*> m_Category_ROMs;
-		wxString m_WorkingDir;
-		wxTreeItemId m_DraggedItem;
+        wxString m_WorkingDir;
+        wxTreeItemId m_DraggedItem;
         wxTreeItemId m_SelectedItem;
 
-	protected:
+    protected:
         wxChoicebook* m_ChoiceBook_PageSelection;
         wxPanel* m_Panel_ROMs;
         wxSplitterWindow* m_Splitter_ROMs;
@@ -105,30 +106,22 @@ class Main : public wxFrame
         wxTreeCtrl* m_TreeCtrl_ROMs;
         wxPanel* m_Panel_ROMs_Editor;
         wxScrolledWindow* m_ScrolledWindow_ROM_Editor;
-        wxStaticText* m_Label_ROMs_File;
         wxTextCtrl* m_TextCtrl_ROMs_File;
-        wxStaticText* m_Label_ROMs_Name;
         wxTextCtrl* m_TextCtrl_ROMs_Name;
-        wxStaticText* m_Label_ROMs_Icon;
         wxTextCtrl* m_TextCtrl_ROMs_Icon;
-        wxStaticText* m_Label_ROMs_Tags;
+        wxBitmapButton* m_Button_ROMs_FindAuthors;
+        wxTextCtrl* m_TextCtrl_ROMs_Authors;
+        wxBitmapButton* m_Button_ROMs_Date;
+        wxTextCtrl* m_TextCtrl_ROMs_Date;
         wxBitmapButton* m_Button_ROMs_Tags;
         wxTextCtrl* m_TextCtrl_ROMs_Tags;
-        wxStaticText* m_Label_ROMs_Images;
         wxTextCtrl* m_TextCtrl_ROMs_Images;
-        wxStaticText* m_Label_ROMs_Date;
-        wxTextCtrl* m_TextCtrl_ROMs_Date;
-        wxStaticText* m_Label_ROMs_URLs;
         wxTextCtrl* m_TextCtrl_ROMs_URLs;
-        wxStaticText* m_Label_ROMs_ToolTip;
         wxTextCtrl* m_TextCtrl_ROMs_ToolTip;
         wxTextCtrl* m_TextCtrl_ROMs_Description;
         wxScrolledWindow* m_ScrolledWindow_ROMCategory_Editor;
-        wxStaticText* m_Label_ROMsCategory_Folder;
         wxTextCtrl* m_TextCtrl_ROMsCategory_Folder;
-        wxStaticText* m_Label_ROMsCategory_DisplayName;
         wxTextCtrl* m_TextCtrl_ROMsCategory_DisplayName;
-        wxStaticText* m_Label_ROMsCategory_Description;
         wxTextCtrl* m_TextCtrl_ROMsCategory_Description;
         wxButton* m_Button_ROMs_Preview;
         wxMenuBar* m_Menubar_Main;
@@ -147,9 +140,10 @@ class Main : public wxFrame
         void m_TextCtrl_ROMs_File_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Name_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Icon_OnText(wxCommandEvent& event);
+        void m_Button_ROMs_FindAuthors_OnButton(wxCommandEvent& event);
         void m_Button_ROMs_Tags_OnButton(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Images_OnText(wxCommandEvent& event);
-        void m_TextCtrl_ROMs_Date_OnText(wxCommandEvent& event);
+        void m_Button_ROMs_Date_OnButton(wxCommandEvent& event);
         void m_TextCtrl_ROMs_URLs_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_ToolTip_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Description_OnText(wxCommandEvent& event);
@@ -164,21 +158,23 @@ class Main : public wxFrame
         void OnPopupClick_Categories(wxCommandEvent& event);
         void OnPopupClick_ROMs(wxCommandEvent& event);
         void OnClose(wxCloseEvent& event);
+    
+    public:
+        Main(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 600), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
+        ~Main();
 
-	public:
-		Main(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 600), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
-		~Main();
         void InitialCheck();
         Category* FindCategory_ROMs(wxTreeItemId item);
         Category* FindCategory_Blog(wxTreeItemId item);
         ROM* FindROM(wxTreeItemId item);
-		void UpdateTree(wxTreeCtrl* tree, wxString folder, std::vector<Category*>* categorylist);
+        void UpdateTree(wxTreeCtrl* tree, wxString folder, std::vector<Category*>* categorylist);
         void LoadROMs();
         void EndDrag(wxTreeEvent& event, wxTreeCtrl* tree, std::vector<Category*>* categorylist);
         void EndDrag_ROM(wxTreeEvent& event);
-		void Save();
+        void Save();
         void MarkModified(bool modified=true);
         void ShowROMEditor(bool show=true);
         void ShowROMCategoryEditor(bool show=true);
         void UpdateROMTags(wxString tags);
+        void UpdateROMDate(time_t date);
 };

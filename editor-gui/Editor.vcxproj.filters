@@ -32,6 +32,9 @@
     <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framecalendar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="framefind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -84,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="include\md4c\md4c.c">
       <Filter>Source Files\include\md4c</Filter>
+    </ClCompile>
+    <ClCompile Include="framecalendar.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framefind.cpp">
       <Filter>Source Files</Filter>
