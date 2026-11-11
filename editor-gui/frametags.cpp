@@ -5,9 +5,11 @@ TODO
 ***************************************************************/
 
 #include "frametags.h"
+#include "main.h"
 
 FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
+    this->m_PressedOK = false;
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
     wxFlexGridSizer* m_Sizer_Tags;
@@ -34,7 +36,6 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
     m_CheckBox_SDKOther = new wxCheckBox( this, wxID_ANY, wxT("Other"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_SDK->Add( m_CheckBox_SDKOther, 0, wxALL, 5 );
 
-
     m_Sizer_Tags->Add( m_Sizer_SDK, 1, wxEXPAND, 5 );
 
     wxStaticText* m_StaticText_Requirements;
@@ -48,6 +49,8 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
     m_CheckBox_RequirementsEPak = new wxCheckBox( this, wxID_ANY, wxT("Expansion Pak"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Requirements->Add( m_CheckBox_RequirementsEPak, 0, wxALL, 5 );
 
+    m_CheckBox_RequirementsUSB = new wxCheckBox( this, wxID_ANY, wxT("USB"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_Sizer_Requirements->Add( m_CheckBox_RequirementsUSB, 0, wxALL, 5 );
 
     m_Sizer_Tags->Add( m_Sizer_Requirements, 1, wxEXPAND, 5 );
 
@@ -83,7 +86,6 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
     m_CheckBox_AccurateEmulator = new wxCheckBox( this, wxID_ANY, wxT("Accurate Emulators"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Support->Add( m_CheckBox_AccurateEmulator, 0, wxALL, 5 );
 
-
     m_Sizer_Tags->Add( m_Sizer_Support, 1, wxEXPAND, 5 );
 
     wxStaticText* m_StaticText_Players;
@@ -111,7 +113,6 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
 
     m_CheckBox_PlayersMulti = new wxCheckBox( this, wxID_ANY, wxT("Online Multiplayer"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Players->Add( m_CheckBox_PlayersMulti, 0, wxALL, 5 );
-
 
     m_Sizer_Tags->Add( m_Sizer_Players, 1, wxEXPAND, 5 );
 
@@ -144,7 +145,6 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
     m_CheckBox_AccessoriesRandnet = new wxCheckBox( this, wxID_ANY, wxT("Randnet Keyboard"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Accessories->Add( m_CheckBox_AccessoriesRandnet, 0, wxALL, 5 );
 
-
     m_Sizer_Tags->Add( m_Sizer_Accessories, 1, wxEXPAND, 5 );
 
     wxStaticText* m_StaticText_Saving;
@@ -167,7 +167,6 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
     m_CheckBox_SavingCPak = new wxCheckBox( this, wxID_ANY, wxT("Controller Pak"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Saving->Add( m_CheckBox_SavingCPak, 0, wxALL, 5 );
 
-
     m_Sizer_Tags->Add( m_Sizer_Saving, 1, wxEXPAND, 5 );
 
     wxStaticText* m_StaticText_Other;
@@ -187,20 +186,89 @@ FrameTags::FrameTags( wxWindow* parent, wxWindowID id, const wxString& title, co
     m_CheckBox_OtherEmbeddedData = new wxCheckBox( this, wxID_ANY, wxT("Embedded Metadata"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Other->Add( m_CheckBox_OtherEmbeddedData, 0, wxALL, 5 );
 
-
     m_Sizer_Tags->Add( m_Sizer_Other, 1, wxEXPAND, 5 );
 
     m_Button_Ok = new wxButton( this, wxID_ANY, wxT("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
     m_Sizer_Tags->Add( m_Button_Ok, 0, wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 
-
     this->SetSizer( m_Sizer_Tags );
     this->Layout();
-
     this->Centre( wxBOTH );
+
+    m_Button_Ok->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( FrameTags::m_Button_Ok_OnClick ), NULL, this );
+
+    this->m_TagDictionary = {
+        {"Libultra", m_CheckBox_SDKLibultra},
+        {"Libdragon", m_CheckBox_SDKLibdragon},
+        {"Other SDK", m_CheckBox_SDKOther},
+        {"Expansion Pak Required", m_CheckBox_RequirementsEPak},
+        {"USB Required", m_CheckBox_RequirementsUSB},
+        {"NTSC Console", m_CheckBox_SupportNTSC},
+        {"PAL Console", m_CheckBox_SupportPAL},
+        {"MPAL Console", m_CheckBox_SupportMPAL},
+        {"64Drive", m_CheckBox_Support64Drive},
+        {"Everdrive", m_CheckBox_SupportED},
+        {"SC64", m_CheckBox_SupportSC64},
+        {"Supports Inaccurate Emulator", m_CheckBox_InaccurateEmulator},
+        {"Supports Accurate Emulator", m_CheckBox_AccurateEmulator},
+        {"1 Player", m_CheckBox_Players1},
+        {"2 Players", m_CheckBox_Players2},
+        {"3 Players", m_CheckBox_Players3},
+        {"4 Players", m_CheckBox_Players4},
+        {"No Players (Video)", m_CheckBox_Players0},
+        {"Online Multiplayer", m_CheckBox_PlayersMulti},
+        {"Rumble Pak", m_CheckBox_AccessoriesRumble},
+        {"Transfer Pak", m_CheckBox_AccessoriesTransfer},
+        {"Mouse", m_CheckBox_AccessoriesMouse},
+        {"Voice Recognition Unit", m_CheckBox_AccessoriesVRU},
+        {"GameCube Controller", m_CheckBox_AccessoriesGCCont},
+        {"GameCube Keyboard", m_CheckBox_AccessoriesGCKeyb},
+        {"Randnet Keyboard", m_CheckBox_AccessoriesRandnet},
+        {"EEPROM Saves", m_CheckBox_SavingEEPROM},
+        {"SRAM Saves", m_CheckBox_SavingSRAM},
+        {"FlashRAM Saves", m_CheckBox_SavingFlashRAM},
+        {"CPak Saves", m_CheckBox_SavingCPak},
+        {"Source Code Available", m_CheckBox_OtherSource},
+        {"Real Time Clock", m_CheckBox_OtherRTC},
+        {"Has Embedded Metadata", m_CheckBox_OtherEmbeddedData},
+    };
 }
 
 FrameTags::~FrameTags()
 {
+    if (this->m_PressedOK)
+    {
+        wxString final;
+        std::map<wxString, wxCheckBox*>::iterator it;
+        for (it = this->m_TagDictionary.begin(); it != this->m_TagDictionary.end(); it++)
+            if (it->second->GetValue())
+                final += it->first + ", ";
+        ((Main*)(this->GetParent()))->UpdateROMTags(final);
+    }
+    m_Button_Ok->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( FrameTags::m_Button_Ok_OnClick ), NULL, this );
+}
 
+void FrameTags::m_Button_Ok_OnClick(wxCommandEvent& event)
+{
+    this->m_PressedOK = true;
+    this->Close();
+    event.Skip();
+}
+
+void FrameTags::ActivateTags(wxString tags)
+{
+    wxArrayString strarray = wxSplit(tags, ',');
+
+    // Split the elements by comma
+    for (wxString str : strarray)
+    {
+        str.Trim(true);
+        str.Trim(false);
+        if (str != "")
+        {
+            std::map<wxString, wxCheckBox*>::const_iterator pos = this->m_TagDictionary.find(str);
+            if (pos != this->m_TagDictionary.end())
+                pos->second->SetValue(true);
+        }
+    }
 }

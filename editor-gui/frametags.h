@@ -18,16 +18,20 @@ typedef struct IUnknown IUnknown;
 #include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/frame.h>
+#include <map>
 
 class FrameTags : public wxFrame
 {
     private:
 
     protected:
+        bool m_PressedOK;
+        std::map<wxString, wxCheckBox*> m_TagDictionary;
         wxCheckBox* m_CheckBox_SDKLibultra;
         wxCheckBox* m_CheckBox_SDKLibdragon;
         wxCheckBox* m_CheckBox_SDKOther;
         wxCheckBox* m_CheckBox_RequirementsEPak;
+        wxCheckBox* m_CheckBox_RequirementsUSB;
         wxCheckBox* m_CheckBox_SupportNTSC;
         wxCheckBox* m_CheckBox_SupportPAL;
         wxCheckBox* m_CheckBox_SupportMPAL;
@@ -58,7 +62,10 @@ class FrameTags : public wxFrame
         wxCheckBox* m_CheckBox_OtherEmbeddedData;
         wxButton* m_Button_Ok;
 
+        void m_Button_Ok_OnClick(wxCommandEvent& event);
+
     public:
         FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 500), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
         ~FrameTags();
+        void ActivateTags(wxString tags);
 };

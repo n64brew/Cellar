@@ -180,4 +180,5 @@ class Main : public wxFrame
         void MarkModified(bool modified=true);
         void ShowROMEditor(bool show=true);
         void ShowROMCategoryEditor(bool show=true);
+        void UpdateROMTags(wxString tags);
 };

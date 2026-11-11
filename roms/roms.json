@@ -20,9 +20,16 @@
                     ],
                     "Index": 0,
                     "Tags": [
-                        "Libultra",
+                        "64Drive",
+                        "Everdrive",
                         "Libdragon",
-                        "Multiplayer"
+                        "Libultra",
+                        "MPAL Console",
+                        "NTSC Console",
+                        "Online Multiplayer",
+                        "PAL Console",
+                        "SC64",
+                        "Source Code Available"
                     ],
                     "ToolTip": "A collection of tools and libraries to allow N64 homebrew developers to connect their games to the internet for multiplayer.",
                     "URLs": [
@@ -38,8 +45,18 @@
                     ],
                     "Index": 1,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
                         "Libultra",
-                        "Libdragon"
+                        "MPAL Console",
+                        "NTSC Console",
+                        "PAL Console",
+                        "SC64",
+                        "Source Code Available",
+                        "Supports Accurate Emulator",
+                        "USB Required"
                     ],
                     "ToolTip": "A cross-platform and universal Nintendo64 flashcart ROM uploader, featuring a USB+debug library for libultra and libdragon, as well as GDB support.",
                     "URLs": [
@@ -117,7 +134,16 @@
                     ],
                     "Index": 0,
                     "Tags": [
-                        "Libultra"
+                        "1 Player",
+                        "2 Players",
+                        "EEPROM Saves",
+                        "Libultra",
+                        "MPAL Console",
+                        "NTSC Console",
+                        "PAL Console",
+                        "Source Code Available",
+                        "Supports Accurate Emulator",
+                        "Supports Inaccurate Emulator"
                     ],
                     "ToolTip": "A clone of the WarioWare minigame Pyoro for the N64. ",
                     "URLs": [

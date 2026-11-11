@@ -663,37 +663,48 @@ void Main::m_TextCtrl_ROMs_Icon_OnText(wxCommandEvent& event)
 
 
 /*==============================
-    m_TextCtrl_ROMs_Tags_OnText
-    Handles the rom tags text control edit event
-    @param The event that was generated
+    UpdateROMTags
+    Updates the tags of the currently selected ROM
+    @param The string with comma separated tags
 ==============================*/
-/*
-void Main::m_TextCtrl_ROMs_Tags_OnText(wxCommandEvent& event)
-{
-    ROM* proj = this->FindROM(this->m_SelectedItem);
-    if (proj != NULL)
-    {
-        wxArrayString strarray = wxSplit(event.GetString(), ',');
-        proj->tags.clear();
 
-        // Split the elements by comma
-        for (wxString str : strarray)
+void Main::UpdateROMTags(wxString tags)
+{
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom != NULL)
+    {
+        wxString old = this->m_TextCtrl_ROMs_Tags->GetValue();
+        if (old != tags)
         {
-            str.Trim(true);
-            str.Trim(false);
-            if (str != "")
-                proj->tags.push_back(str);
+            this->m_TextCtrl_ROMs_Tags->SetValue(tags);
+
+            wxArrayString strarray = wxSplit(tags, ',');
+            rom->tags.clear();
+
+            // Split the elements by comma
+            for (wxString str : strarray)
+            {
+                str.Trim(true);
+                str.Trim(false);
+                if (str != "")
+                    rom->tags.push_back(str);
+            }
+
+            this->MarkModified();
         }
-        proj->wasmodified = true;
-        this->MarkModified();
     }
 }
-*/
 
 void Main::m_Button_ROMs_Tags_OnButton(wxCommandEvent& event)
 {
-    FrameTags* frame = new FrameTags(this);
-    frame->Show();
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom != NULL)
+    {
+        FrameTags* frame = new FrameTags(this);
+        frame->ActivateTags(this->m_TextCtrl_ROMs_Tags->GetValue());
+        frame->Show();
+    }
+    
 }
 
 
