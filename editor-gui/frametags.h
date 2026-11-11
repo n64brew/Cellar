@@ -59,6 +59,6 @@ class FrameTags : public wxFrame
         wxButton* m_Button_Ok;
 
     public:
-        FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(442, 423), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
+        FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 500), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
         ~FrameTags();
 };

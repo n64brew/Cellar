@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="framefind.h" />
+    <ClInclude Include="frametags.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\md4c\entity.h" />
@@ -39,6 +40,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="frametags.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="include\md4c\entity.c" />
     <ClCompile Include="include\md4c\md4c-html.c" />
