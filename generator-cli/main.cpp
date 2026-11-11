@@ -169,7 +169,6 @@ void compile_rom(std::vector<Category*>* pages, std::string jsonpath)
 
 void compile_tags(std::vector<Category*>* pages)
 {
-    bool cont;
     std::string filename;
     std::string tagspath = "tags";
     std::map<std::string, std::vector<Page*>> tagmap;

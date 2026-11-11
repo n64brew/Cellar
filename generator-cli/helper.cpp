@@ -1,4 +1,5 @@
 #ifdef _WIN32
+    typedef struct IUnknown IUnknown;
     #include <windows.h>
     #include <direct.h>
 #else

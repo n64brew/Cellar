@@ -83,9 +83,6 @@
     <ClCompile Include="page_rom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="category.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="include\md4c\md4c-html.c">
       <Filter>Source Files\include\md4c</Filter>
     </ClCompile>

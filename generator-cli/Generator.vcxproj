@@ -33,7 +33,6 @@
     <ClInclude Include="page_rom.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="category.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="include\md4c\entity.c" />
     <ClCompile Include="include\md4c\md4c-html.c" />
