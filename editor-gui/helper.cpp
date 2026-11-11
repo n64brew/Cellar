@@ -306,3 +306,50 @@ wxString* md_unsanitize(wxString* input)
     input->Replace("_CCEDILHAC_SYMBOL", "&Ccedil;");
     return input;
 }
+
+static bool matches_filter(const wxString& text, const wxString& filter)
+{
+    printf("%s %s %d\n", (const char*)text.Lower().c_str(), (const char*)filter.c_str(), text.Lower().Contains(filter));
+    return text.Lower().Contains(filter);
+}
+
+static bool filter_tree_recursive(wxTreeCtrl* tree, const wxTreeItemId& item, const wxString& filter)
+{
+    bool itemmatch = tree->GetItemText(item).Lower().Contains(filter);
+    bool childmatch = false;
+    
+    wxArrayTreeItemIds children;
+    wxTreeItemIdValue cookie;
+    wxTreeItemId child = tree->GetFirstChild(item, cookie);
+
+    // Collect children before modifying the tree.
+    while (child.IsOk())
+    {
+        children.Add(child);
+        child = tree->GetNextChild(item, cookie);
+    }
+
+    // Recursively filter children.
+    for (size_t  =0; i<children.size(); ++i)
+        if (filter_tree_recursive(tree, children[i], filter))
+            childmatch = true;
+
+    // Remove items that don't match.
+    if (!itemmatch && !childmatch)
+    {
+        tree->Delete(item);
+        return false;
+    }
+    return true;
+}
+
+void filter_tree(wxTreeCtrl* tree, wxString filter)
+{
+    wxTreeItemId root = tree->GetRootItem();
+    if (!root.IsOk())
+        return;
+    wxString filter_lower = filter.Lower();
+    printf("Begin filter '%s',\n", (const char*)filter.c_str());
+
+    filter_tree_recursive(tree, root, filter_lower);
+}

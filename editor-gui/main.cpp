@@ -46,11 +46,13 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     // Create the rom tree
     this->m_Panel_ROMs_Tree = new wxPanel(this->m_Splitter_ROMs, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxFlexGridSizer* m_Sizer_ROMs_Tree;
-    m_Sizer_ROMs_Tree = new wxFlexGridSizer(0, 0, 0, 0);
+    m_Sizer_ROMs_Tree = new wxFlexGridSizer(0, 1, 0, 0);
     m_Sizer_ROMs_Tree->AddGrowableCol(0);
-    m_Sizer_ROMs_Tree->AddGrowableRow(0);
+    m_Sizer_ROMs_Tree->AddGrowableRow(1);
     m_Sizer_ROMs_Tree->SetFlexibleDirection(wxBOTH);
     m_Sizer_ROMs_Tree->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    m_TextCtrl_Search = new wxTextCtrl(this->m_Panel_ROMs_Tree, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    m_Sizer_ROMs_Tree->Add(this->m_TextCtrl_Search, 0, wxALL|wxEXPAND, 5);
     this->m_TreeCtrl_ROMs = new wxTreeCtrl(this->m_Panel_ROMs_Tree, wxID_ANY, wxDefaultPosition, wxSize(-1,-1), wxTR_DEFAULT_STYLE|wxTR_EDIT_LABELS|wxTR_HIDE_ROOT);
     m_Sizer_ROMs_Tree->Add(this->m_TreeCtrl_ROMs, 0, wxALL|wxEXPAND, 5);
     this->m_Panel_ROMs_Tree->SetSizer(m_Sizer_ROMs_Tree);
@@ -253,6 +255,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
 
     // Connect Events
     this->Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(Main::OnClose));
+    this->m_TextCtrl_Search->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_SearchOnText), NULL, this);
     this->m_TreeCtrl_ROMs->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(Main::m_TreeCtrl_ROMs_OnTreeRightClick), NULL, this);
     this->m_TreeCtrl_ROMs->Connect(wxEVT_COMMAND_TREE_BEGIN_DRAG, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeBeginDrag), NULL, this);
     this->m_TreeCtrl_ROMs->Connect(wxEVT_COMMAND_TREE_END_DRAG, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeEndDrag), NULL, this);
@@ -368,6 +371,28 @@ void Main::m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent&)
         wxMessageBox("Website recompiled successfully!", wxString("Great success"), wxICON_INFORMATION);
     else
         wxMessageBox(wxString::Format("Generator returned error code %d", ret), wxString("Generator error"), wxICON_ERROR);
+}
+
+
+/*==============================
+    m_TextCtrl_SearchOnText
+    Handles inputting text into the search bar
+    This is an inelegant, inefficient bodge since wxWidgets 
+    does not provide a way to hide tree children.
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_SearchOnText(wxCommandEvent& event)
+{
+    wxString filter = this->m_TextCtrl_Search->GetValue();
+    this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
+    this->LoadROMs();
+    if (!filter.IsEmpty())
+    {
+        filter_tree(this->m_TreeCtrl_ROMs, filter);
+        this->m_TreeCtrl_ROMs->ExpandAll();
+    }
+    event.Skip();
 }
 
 

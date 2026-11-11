@@ -14,6 +14,7 @@ typedef struct IUnknown IUnknown;
 // Finding functions
 bool treeitem_iscategory(wxTreeCtrl* tree, wxTreeItemId item);
 wxString string_fromfile(wxString path);
+void filter_tree(wxTreeCtrl* tree, wxString filter);
 
 // Sorting functions
 bool category_sorter(Category* lhs, Category* rhs);

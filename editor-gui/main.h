@@ -99,6 +99,7 @@ class Main : public wxFrame
         wxPanel* m_Panel_ROMs;
         wxSplitterWindow* m_Splitter_ROMs;
         wxPanel* m_Panel_ROMs_Tree;
+        wxTextCtrl* m_TextCtrl_Search;
         wxTreeCtrl* m_TreeCtrl_ROMs;
         wxPanel* m_Panel_ROMs_Editor;
         wxScrolledWindow* m_ScrolledWindow_ROM_Editor;
@@ -133,6 +134,7 @@ class Main : public wxFrame
         wxTimer* m_Timer;
         
         void m_Splitter_ROMsOnIdle(wxIdleEvent& event);
+        void m_TextCtrl_SearchOnText(wxCommandEvent& event);
         void m_TreeCtrl_ROMs_OnTreeRightClick(wxMouseEvent& event);
         void m_TreeCtrl_ROMs_OnTreeBeginDrag(wxTreeEvent& event);
         void m_TreeCtrl_ROMs_OnTreeEndDrag(wxTreeEvent& event);
