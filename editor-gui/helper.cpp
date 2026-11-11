@@ -307,11 +307,30 @@ wxString* md_unsanitize(wxString* input)
     return input;
 }
 
+
+/*==============================
+    matches_filter
+    Checks if a text string contains the substring in the
+    filter.
+    @param  The text we want to check
+    @param  The filter to perform
+    @return Whether the string matches the filter
+==============================*/
+
 static bool matches_filter(const wxString& text, const wxString& filter)
 {
-    printf("%s %s %d\n", (const char*)text.Lower().c_str(), (const char*)filter.c_str(), text.Lower().Contains(filter));
     return text.Lower().Contains(filter);
 }
+
+
+/*==============================
+    filter_tree_recursive
+    Filters a tree recursively, keeping parent nodes visible
+    @param  The tree to recurse
+    @param  The parent item
+    @param  The text we want to use to filter
+    @return Whether the string matches the filter
+==============================*/
 
 static bool filter_tree_recursive(wxTreeCtrl* tree, const wxTreeItemId& item, const wxString& filter)
 {
@@ -330,7 +349,7 @@ static bool filter_tree_recursive(wxTreeCtrl* tree, const wxTreeItemId& item, co
     }
 
     // Recursively filter children.
-    for (size_t  =0; i<children.size(); ++i)
+    for (size_t  i=0; i<children.size(); ++i)
         if (filter_tree_recursive(tree, children[i], filter))
             childmatch = true;
 
@@ -343,13 +362,19 @@ static bool filter_tree_recursive(wxTreeCtrl* tree, const wxTreeItemId& item, co
     return true;
 }
 
+
+/*==============================
+    filter_tree
+    Filters a tree, removing elements that don't match the filter
+    @param  The tree to recurse
+    @param  The text we want to use to filter
+==============================*/
+
 void filter_tree(wxTreeCtrl* tree, wxString filter)
 {
     wxTreeItemId root = tree->GetRootItem();
     if (!root.IsOk())
         return;
     wxString filter_lower = filter.Lower();
-    printf("Begin filter '%s',\n", (const char*)filter.c_str());
-
     filter_tree_recursive(tree, root, filter_lower);
 }

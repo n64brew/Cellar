@@ -6,6 +6,7 @@ The main code of the static site generator
 
 #include "main.h"
 #include "framefind.h"
+#include "frametags.h"
 #include "helper.h"
 #include "json.h"
 #include "include/md4c/md4c-html.h"
@@ -16,6 +17,8 @@ The main code of the static site generator
 #include <wx/textfile.h>
 #include <wx/dirdlg.h>
 #include <wx/regex.h>
+#include <wx/wx.h>
+#include "resource.h"
 
 
 /*==============================
@@ -35,7 +38,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     wxBoxSizer* m_Sizer_Main;
     m_Sizer_Main = new wxBoxSizer(wxVERTICAL);
 
-    // Create the main rom panels
+    // Create the main ROM panels
     this->m_Panel_ROMs = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxBoxSizer* m_Sizer_ROMs;
     m_Sizer_ROMs = new wxBoxSizer(wxVERTICAL);
@@ -43,7 +46,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_Splitter_ROMs->SetSashGravity(0);
     this->m_Splitter_ROMs->Connect(wxEVT_IDLE, wxIdleEventHandler(Main::m_Splitter_ROMsOnIdle), NULL, this);
 
-    // Create the rom tree
+    // Create the ROM tree
     this->m_Panel_ROMs_Tree = new wxPanel(this->m_Splitter_ROMs, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxFlexGridSizer* m_Sizer_ROMs_Tree;
     m_Sizer_ROMs_Tree = new wxFlexGridSizer(0, 1, 0, 0);
@@ -51,15 +54,19 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ROMs_Tree->AddGrowableRow(1);
     m_Sizer_ROMs_Tree->SetFlexibleDirection(wxBOTH);
     m_Sizer_ROMs_Tree->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-    m_TextCtrl_Search = new wxTextCtrl(this->m_Panel_ROMs_Tree, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    m_Sizer_ROMs_Tree->Add(this->m_TextCtrl_Search, 0, wxALL|wxEXPAND, 5);
+    this->m_SearchCtrl_ROMs = new wxSearchCtrl(this->m_Panel_ROMs_Tree, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    #ifndef __WXMAC__
+        this->m_SearchCtrl_ROMs->ShowSearchButton(true);
+    #endif
+    this->m_SearchCtrl_ROMs->ShowCancelButton(false);
+    m_Sizer_ROMs_Tree->Add(this->m_SearchCtrl_ROMs, 0, wxALL|wxEXPAND, 5);
     this->m_TreeCtrl_ROMs = new wxTreeCtrl(this->m_Panel_ROMs_Tree, wxID_ANY, wxDefaultPosition, wxSize(-1,-1), wxTR_DEFAULT_STYLE|wxTR_EDIT_LABELS|wxTR_HIDE_ROOT);
     m_Sizer_ROMs_Tree->Add(this->m_TreeCtrl_ROMs, 0, wxALL|wxEXPAND, 5);
     this->m_Panel_ROMs_Tree->SetSizer(m_Sizer_ROMs_Tree);
     this->m_Panel_ROMs_Tree->Layout();
     m_Sizer_ROMs_Tree->Fit(this->m_Panel_ROMs_Tree);
 
-    // Create the primary rom editor
+    // Create the primary ROM editor
     this->m_Panel_ROMs_Editor = new wxPanel(this->m_Splitter_ROMs, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxFlexGridSizer* m_Sizer_ROMs_Editor;
     m_Sizer_ROMs_Editor = new wxFlexGridSizer(3, 1, 0, 0);
@@ -86,64 +93,73 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_Editor_Main->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
     m_Sizer_ScrolledWindow_Editor_Main->SetMinSize(wxSize(0,0));
 
-    // Create the rom page editor controls 
+    // Create the ROM page editor controls 
     this->m_Label_ROMs_File = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("File:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_File->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_File, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_File, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_File = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMs_File->SetToolTip(wxT("The filename of the rom"));
+    this->m_TextCtrl_ROMs_File->SetToolTip(wxT("The filename of the ROM"));
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_File, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMs_Name = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Display Name:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_Name->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Name, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Name, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_Name = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_RICH2);
-    this->m_TextCtrl_ROMs_Name->SetToolTip(wxT("The display name of the rom"));
+    this->m_TextCtrl_ROMs_Name->SetToolTip(wxT("The display name of the ROM"));
     #if wxUSE_SPELLCHECK
         this->m_TextCtrl_ROMs_Name->EnableProofCheck();
     #endif
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Name, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMs_Icon = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Icon:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_Icon->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Icon, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Icon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_Icon = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMs_Icon->SetToolTip(wxT("The icon used to display the rom in the list of roms. Requires a relative path (to the working directory) to a 240x125 png."));
+    this->m_TextCtrl_ROMs_Icon->SetToolTip(wxT("The icon used to display the rom in the list of ROMs. Requires a relative path (to the working directory) to a 240x125 png."));
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Icon, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMs_Tags = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Tags:"), wxDefaultPosition, wxDefaultSize, 0);
-    this->m_Label_ROMs_Tags->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Tags, 0, wxALL, 5);
-    this->m_TextCtrl_ROMs_Tags = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_Label_ROMs_Tags->Wrap( -1 );
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Tags, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxFlexGridSizer* m_Sizer_ROMs_Tags;
+    m_Sizer_ROMs_Tags = new wxFlexGridSizer(0, 2, 0, 0);
+    m_Sizer_ROMs_Tags->AddGrowableCol(1);
+    m_Sizer_ROMs_Tags->SetFlexibleDirection(wxBOTH);
+    m_Sizer_ROMs_Tags->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    this->m_Button_ROMs_Tags = new wxBitmapButton(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, icon_tags, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0);
+    m_Sizer_ROMs_Tags->Add(this->m_Button_ROMs_Tags, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    this->m_TextCtrl_ROMs_Tags = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY);
+    this->m_TextCtrl_ROMs_Tags->Enable(false);
     this->m_TextCtrl_ROMs_Tags->SetToolTip(wxT("ROM tags, comma separated."));
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Tags, 0, wxALL|wxEXPAND, 5);
+    m_Sizer_ROMs_Tags->Add(this->m_TextCtrl_ROMs_Tags, 0, wxALL|wxEXPAND, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(m_Sizer_ROMs_Tags, 1, wxEXPAND, 5);
     this->m_Label_ROMs_Images = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Images:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_Images->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Images, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Images, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_Images = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMs_Images->SetToolTip(wxT("Images for this rom, comma separated. Paths should be relative to the working directory."));
+    this->m_TextCtrl_ROMs_Images->SetToolTip(wxT("Images for this ROM, comma separated. Paths should be relative to the working directory."));
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Images, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMs_Date = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Date:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_Date->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Date, 0, wxALL|wxEXPAND, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_Date, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     this->m_TextCtrl_ROMs_Date = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMs_Date->SetToolTip(wxT("The date of this rom's release."));
+    this->m_TextCtrl_ROMs_Date->SetToolTip(wxT("The date of this ROM's release."));
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Date, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMs_URLs = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("URLs:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_URLs->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_URLs, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_URLs, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_URLs = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMs_URLs->SetToolTip(wxT("URLs for this rom, comma separated."));
+    this->m_TextCtrl_ROMs_URLs->SetToolTip(wxT("URLs for this ROM, comma separated."));
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_URLs, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMs_ToolTip = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Subtitle:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMs_ToolTip->Wrap(-1);
-    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_ToolTip, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_Label_ROMs_ToolTip, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_ToolTip = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_RICH2);
-    this->m_TextCtrl_ROMs_ToolTip->SetToolTip(wxT("Brief description that shows up when hovering over a rom with the mouse."));
+    this->m_TextCtrl_ROMs_ToolTip->SetToolTip(wxT("Brief description that shows up when hovering over a ROM with the mouse."));
     #if wxUSE_SPELLCHECK
         this->m_TextCtrl_ROMs_ToolTip->EnableProofCheck();
     #endif
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_ToolTip, 0, wxALL|wxEXPAND, 5);
     m_Sizer_ScrolledWindow_Editor->Add(m_Sizer_ScrolledWindow_Editor_Main, 1, wxEXPAND, 5);
     this->m_TextCtrl_ROMs_Description = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1,-1), wxTE_MULTILINE | wxTE_RICH2);
-    this->m_TextCtrl_ROMs_Description->SetToolTip(wxT("The rom description. Supports markdown."));
+    this->m_TextCtrl_ROMs_Description->SetToolTip(wxT("The ROM description. Supports markdown."));
     this->m_TextCtrl_ROMs_Description->SetMinSize(wxSize(-1,200));
     #if wxUSE_SPELLCHECK
         this->m_TextCtrl_ROMs_Description->EnableProofCheck();
@@ -154,7 +170,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_Editor->Fit(this->m_ScrolledWindow_ROM_Editor);
     m_Sizer_ROMs_Editor->Add(this->m_ScrolledWindow_ROM_Editor, 0, wxALL|wxEXPAND, 5);
 
-    // Create the rom category editor 
+    // Create the ROM category editor 
     this->m_ScrolledWindow_ROMCategory_Editor = new wxScrolledWindow(this->m_Panel_ROMs_Editor, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL);
     this->m_ScrolledWindow_ROMCategory_Editor->SetScrollRate(5, 5);
     this->m_ScrolledWindow_ROMCategory_Editor->Hide();
@@ -173,16 +189,16 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->SetMinSize(wxSize(0,0));
 
-    // Create the rom category editor controls 
+    // Create the ROM category editor controls 
     this->m_Label_ROMsCategory_Folder = new wxStaticText(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxT("Folder:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMsCategory_Folder->Wrap(-1);
-    m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_Folder, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_Folder, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMsCategory_Folder = new wxTextCtrl(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
     this->m_TextCtrl_ROMsCategory_Folder->SetToolTip(wxT("The folder that represents this category"));
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_TextCtrl_ROMsCategory_Folder, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMsCategory_DisplayName = new wxStaticText(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxT("Display Name:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMsCategory_DisplayName->Wrap(-1);
-    m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_DisplayName, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_DisplayName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMsCategory_DisplayName = new wxTextCtrl(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_RICH2);
     this->m_TextCtrl_ROMsCategory_DisplayName->SetToolTip(wxT("The display name of this category"));
     #if wxUSE_SPELLCHECK
@@ -191,11 +207,11 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_TextCtrl_ROMsCategory_DisplayName, 0, wxALL|wxEXPAND, 5);
     this->m_Label_ROMsCategory_Description = new wxStaticText(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxT("Description:"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Label_ROMsCategory_Description->Wrap(-1);
-    m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_Description, 0, wxALL, 5);
+    m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(this->m_Label_ROMsCategory_Description, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(0, 0, 1, wxEXPAND, 5);
     m_Sizer_ScrolledWindow_ROMCategory_Editor->Add(m_Sizer_ScrolledWindow_ROMCategory_Editor_Main, 1, wxEXPAND, 5);
     this->m_TextCtrl_ROMsCategory_Description = new wxTextCtrl(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2);
-    this->m_TextCtrl_ROMsCategory_Description->SetToolTip(wxT("The filename of the rom"));
+    this->m_TextCtrl_ROMsCategory_Description->SetToolTip(wxT("The filename of the ROM"));
     this->m_TextCtrl_ROMsCategory_Description->SetMinSize(wxSize(-1,200));
     #if wxUSE_SPELLCHECK
         this->m_TextCtrl_ROMsCategory_Description->EnableProofCheck();
@@ -206,13 +222,13 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_ROMCategory_Editor->Fit(this->m_ScrolledWindow_ROMCategory_Editor);
     m_Sizer_ROMs_Editor->Add(this->m_ScrolledWindow_ROMCategory_Editor, 0, wxEXPAND | wxALL, 5);
 
-    // Create the rom preview button
+    // Create the ROM preview button
     this->m_Button_ROMs_Preview = new wxButton(this->m_Panel_ROMs_Editor, wxID_ANY, wxT("Preview"), wxDefaultPosition, wxDefaultSize, 0);
     this->m_Button_ROMs_Preview->Hide();
     this->m_Button_ROMs_Preview->SetMinSize(wxSize(-1,24));
     m_Sizer_ROMs_Editor->Add(this->m_Button_ROMs_Preview, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    // Add everything to the roms panel
+    // Add everything to the ROMs panel
     this->m_Panel_ROMs_Editor->SetSizer(m_Sizer_ROMs_Editor);
     this->m_Panel_ROMs_Editor->Layout();
     m_Sizer_ROMs_Editor->Fit(this->m_Panel_ROMs_Editor);
@@ -255,7 +271,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
 
     // Connect Events
     this->Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(Main::OnClose));
-    this->m_TextCtrl_Search->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_SearchOnText), NULL, this);
+    this->m_SearchCtrl_ROMs->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_SearchCtrl_ROMsOnText), NULL, this);
     this->m_TreeCtrl_ROMs->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(Main::m_TreeCtrl_ROMs_OnTreeRightClick), NULL, this);
     this->m_TreeCtrl_ROMs->Connect(wxEVT_COMMAND_TREE_BEGIN_DRAG, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeBeginDrag), NULL, this);
     this->m_TreeCtrl_ROMs->Connect(wxEVT_COMMAND_TREE_END_DRAG, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeEndDrag), NULL, this);
@@ -265,7 +281,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_TextCtrl_ROMs_File->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_File_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Name->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Name_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Icon->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Icon_OnText), NULL, this);
-    this->m_TextCtrl_ROMs_Tags->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Tags_OnText), NULL, this);
+    this->m_Button_ROMs_Tags->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Tags_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_Images->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Images_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Date->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Date_OnText), NULL, this);
     this->m_TextCtrl_ROMs_URLs->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
@@ -283,9 +299,10 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     // Check if we're set up properly
     this->InitialCheck();
 
-    // Load the roms from the current working directory
+    // Load the ROMs from the current working directory
     this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
     this->LoadROMs();
+    this->m_TreeCtrl_ROMs->SetFocus();
 }
 
 
@@ -296,6 +313,9 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
 
 Main::~Main()
 {
+    this->Disconnect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(Main::OnClose));
+    this->m_SearchCtrl_ROMs->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_SearchCtrl_ROMsOnText), NULL, this);
+    this->m_TreeCtrl_ROMs->Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(Main::m_TreeCtrl_ROMs_OnTreeRightClick), NULL, this);
     this->m_TreeCtrl_ROMs->Disconnect(wxEVT_COMMAND_TREE_BEGIN_DRAG, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeBeginDrag), NULL, this);
     this->m_TreeCtrl_ROMs->Disconnect(wxEVT_COMMAND_TREE_END_DRAG, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeEndDrag), NULL, this);
     this->m_TreeCtrl_ROMs->Disconnect(wxEVT_COMMAND_TREE_END_LABEL_EDIT, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeEndLabelEdit), NULL, this);
@@ -303,13 +323,21 @@ Main::~Main()
     this->m_TreeCtrl_ROMs->Disconnect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(Main::m_TreeCtrl_ROMs_OnTreeSelChanged), NULL, this);
     this->m_TextCtrl_ROMs_File->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_File_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Name->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Name_OnText), NULL, this);
+    this->m_TextCtrl_ROMs_ToolTip->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ToolTip_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Icon->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Icon_OnText), NULL, this);
-    this->m_TextCtrl_ROMs_Tags->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Tags_OnText), NULL, this);
+    //this->m_Button_ROMs_FindAuthors->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_FindAuthors_OnButton), NULL, this);
+    //this->m_TextCtrl_ROMs_Authors->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Authors_OnText), NULL, this);
+    this->m_Button_ROMs_Tags->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Tags_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_Images->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Images_OnText), NULL, this);
+    //this->m_Button_ROMs_Date->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Date_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_Date->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Date_OnText), NULL, this);
     this->m_TextCtrl_ROMs_URLs->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
-    this->m_TextCtrl_ROMs_ToolTip->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ToolTip_OnText), NULL, this);
+    //this->m_TextCtrl_ROMs_Genres->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
+    //this->m_ComboBox_ROMs_AgeRating->Disconnect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(Main::m_ComboBox_ROMs_AgeRating_OnCombobox), NULL, this);
+    //this->m_TextCtrl_ROMs_ContentWarning->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ContentWarning_OnText), NULL, this);
+    //this->m_TextCtrl_ROMs_AIDisclosure->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Description->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Description_OnText), NULL, this);
+    this->m_TextCtrl_ROMsCategory_Folder->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Folder_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_DisplayName->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_DisplayName_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Description->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Description_OnText), NULL, this);
     this->m_Button_ROMs_Preview->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Preview_OnButtonClick), NULL, this);
@@ -375,16 +403,16 @@ void Main::m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent&)
 
 
 /*==============================
-    m_TextCtrl_SearchOnText
+    m_SearchCtrl_ROMsOnText
     Handles inputting text into the search bar
     This is an inelegant, inefficient bodge since wxWidgets 
     does not provide a way to hide tree children.
     @param The event that was generated
 ==============================*/
 
-void Main::m_TextCtrl_SearchOnText(wxCommandEvent& event)
+void Main::m_SearchCtrl_ROMsOnText(wxCommandEvent& event)
 {
-    wxString filter = this->m_TextCtrl_Search->GetValue();
+    wxString filter = this->m_SearchCtrl_ROMs->GetValue();
     this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
     this->LoadROMs();
     if (!filter.IsEmpty())
@@ -639,7 +667,7 @@ void Main::m_TextCtrl_ROMs_Icon_OnText(wxCommandEvent& event)
     Handles the rom tags text control edit event
     @param The event that was generated
 ==============================*/
-
+/*
 void Main::m_TextCtrl_ROMs_Tags_OnText(wxCommandEvent& event)
 {
     ROM* proj = this->FindROM(this->m_SelectedItem);
@@ -659,6 +687,13 @@ void Main::m_TextCtrl_ROMs_Tags_OnText(wxCommandEvent& event)
         proj->wasmodified = true;
         this->MarkModified();
     }
+}
+*/
+
+void Main::m_Button_ROMs_Tags_OnButton(wxCommandEvent& event)
+{
+    FrameTags* frame = new FrameTags(this);
+    frame->Show();
 }
 
 

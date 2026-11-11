@@ -8,12 +8,14 @@ typedef struct IUnknown IUnknown;
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
+#include <wx/srchctrl.h>
 #include <wx/settings.h>
 #include <wx/string.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
+#include <wx/bmpbuttn.h>
 #include <wx/scrolwin.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
@@ -99,7 +101,7 @@ class Main : public wxFrame
         wxPanel* m_Panel_ROMs;
         wxSplitterWindow* m_Splitter_ROMs;
         wxPanel* m_Panel_ROMs_Tree;
-        wxTextCtrl* m_TextCtrl_Search;
+        wxSearchCtrl* m_SearchCtrl_ROMs;
         wxTreeCtrl* m_TreeCtrl_ROMs;
         wxPanel* m_Panel_ROMs_Editor;
         wxScrolledWindow* m_ScrolledWindow_ROM_Editor;
@@ -110,6 +112,7 @@ class Main : public wxFrame
         wxStaticText* m_Label_ROMs_Icon;
         wxTextCtrl* m_TextCtrl_ROMs_Icon;
         wxStaticText* m_Label_ROMs_Tags;
+        wxBitmapButton* m_Button_ROMs_Tags;
         wxTextCtrl* m_TextCtrl_ROMs_Tags;
         wxStaticText* m_Label_ROMs_Images;
         wxTextCtrl* m_TextCtrl_ROMs_Images;
@@ -134,7 +137,7 @@ class Main : public wxFrame
         wxTimer* m_Timer;
         
         void m_Splitter_ROMsOnIdle(wxIdleEvent& event);
-        void m_TextCtrl_SearchOnText(wxCommandEvent& event);
+        void m_SearchCtrl_ROMsOnText(wxCommandEvent& event);
         void m_TreeCtrl_ROMs_OnTreeRightClick(wxMouseEvent& event);
         void m_TreeCtrl_ROMs_OnTreeBeginDrag(wxTreeEvent& event);
         void m_TreeCtrl_ROMs_OnTreeEndDrag(wxTreeEvent& event);
@@ -144,7 +147,7 @@ class Main : public wxFrame
         void m_TextCtrl_ROMs_File_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Name_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Icon_OnText(wxCommandEvent& event);
-        void m_TextCtrl_ROMs_Tags_OnText(wxCommandEvent& event);
+        void m_Button_ROMs_Tags_OnButton(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Images_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_Date_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_URLs_OnText(wxCommandEvent& event);

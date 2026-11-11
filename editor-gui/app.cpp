@@ -6,13 +6,14 @@ This file handles the wxWidgets initialization.
 
 #include <wx/socket.h>
 #include "app.h"
-
-// Icons
-#include "resources/icon_prog.h"
+#include "resource.h"
 
 wxIMPLEMENT_APP(App);
 
-wxIcon   iconbm_prog = wxNullIcon;
+wxIcon iconbm_prog = wxNullIcon;
+wxIcon icon_authors = wxNullIcon;
+wxIcon icon_calendar = wxNullIcon;
+wxIcon icon_tags = wxNullIcon;
 
 /*==============================
     App (Constructor)
@@ -49,8 +50,10 @@ bool App::OnInit()
 
     // Initialize image handlers and icons
     wxInitAllImageHandlers();
-	wxBitmap temp = wxBITMAP_PNG_FROM_DATA(icon_prog);
-	iconbm_prog.CopyFromBitmap(temp);
+	iconbm_prog.CopyFromBitmap(wxBITMAP_PNG_FROM_DATA(icon_prog));
+    icon_authors.CopyFromBitmap(wxBITMAP_PNG_FROM_DATA(icon_authors));
+    icon_calendar.CopyFromBitmap(wxBITMAP_PNG_FROM_DATA(icon_calendar));
+    icon_tags.CopyFromBitmap(wxBITMAP_PNG_FROM_DATA(icon_tags));
 
     // Show the main window
     this->m_Frame = new Main(NULL);
