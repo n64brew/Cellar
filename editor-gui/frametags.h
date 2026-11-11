@@ -24,12 +24,10 @@ class FrameTags : public wxFrame
     private:
 
     protected:
-        wxStaticText* m_StaticText_SDK;
         wxCheckBox* m_CheckBox_SDKLibultra;
         wxCheckBox* m_CheckBox_SDKLibdragon;
-        wxStaticText* m_StaticText_Requirements;
+        wxCheckBox* m_CheckBox_SDKOther;
         wxCheckBox* m_CheckBox_RequirementsEPak;
-        wxStaticText* m_StaticText_Support;
         wxCheckBox* m_CheckBox_SupportNTSC;
         wxCheckBox* m_CheckBox_SupportPAL;
         wxCheckBox* m_CheckBox_SupportMPAL;
@@ -38,21 +36,26 @@ class FrameTags : public wxFrame
         wxCheckBox* m_CheckBox_SupportSC64;
         wxCheckBox* m_CheckBox_InaccurateEmulator;
         wxCheckBox* m_CheckBox_AccurateEmulator;
-        wxStaticText* m_StaticText_Saving;
-        wxCheckBox* m_CheckBox_SavingEEPROM;
-        wxCheckBox* m_CheckBox_SavingSRAM;
-        wxCheckBox* m_CheckBox_SavingFlashRAM;
-        wxCheckBox* m_CheckBox_SavingCPak;
-        wxStaticText* m_StaticText_Players;
         wxCheckBox* m_CheckBox_Players1;
         wxCheckBox* m_CheckBox_Players2;
         wxCheckBox* m_CheckBox_Players3;
         wxCheckBox* m_CheckBox_Players4;
         wxCheckBox* m_CheckBox_Players0;
         wxCheckBox* m_CheckBox_PlayersMulti;
-        wxStaticText* m_StaticText_Other;
+        wxCheckBox* m_CheckBox_AccessoriesRumble;
+        wxCheckBox* m_CheckBox_AccessoriesTransfer;
+        wxCheckBox* m_CheckBox_AccessoriesMouse;
+        wxCheckBox* m_CheckBox_AccessoriesVRU;
+        wxCheckBox* m_CheckBox_AccessoriesGCCont;
+        wxCheckBox* m_CheckBox_AccessoriesGCKeyb;
+        wxCheckBox* m_CheckBox_AccessoriesRandnet;
+        wxCheckBox* m_CheckBox_SavingEEPROM;
+        wxCheckBox* m_CheckBox_SavingSRAM;
+        wxCheckBox* m_CheckBox_SavingFlashRAM;
+        wxCheckBox* m_CheckBox_SavingCPak;
         wxCheckBox* m_CheckBox_OtherSource;
-        wxCheckBox* m_CheckBox_OtherRumble;
+        wxCheckBox* m_CheckBox_OtherRTC;
+        wxCheckBox* m_CheckBox_OtherEmbeddedData;
         wxButton* m_Button_Ok;
 
     public:
