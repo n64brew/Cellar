@@ -16,6 +16,7 @@ typedef struct IUnknown IUnknown;
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/bmpbuttn.h>
+#include <wx/combobox.h>
 #include <wx/scrolwin.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
@@ -74,10 +75,14 @@ typedef struct ROM_s {
     wxString icon;
     time_t date;
     wxString tooltip;
+    wxString agerating;
+    wxString contentwarning;
+    wxString aidisclosure;
     wxString description;
     std::vector<wxString> images;
     std::vector<wxString> urls;
     std::vector<wxString> tags;
+    std::vector<wxString> genres;
     bool wasmodified;
     Category* category;
     wxTreeItemId treeid;
@@ -118,6 +123,9 @@ class Main : public wxFrame
         wxTextCtrl* m_TextCtrl_ROMs_Images;
         wxTextCtrl* m_TextCtrl_ROMs_URLs;
         wxTextCtrl* m_TextCtrl_ROMs_ToolTip;
+        wxComboBox* m_ComboBox_ROMs_AgeRating;
+        wxTextCtrl* m_TextCtrl_ROMs_ContentWarning;
+        wxTextCtrl* m_TextCtrl_ROMs_AIDisclosure;
         wxTextCtrl* m_TextCtrl_ROMs_Description;
         wxScrolledWindow* m_ScrolledWindow_ROMCategory_Editor;
         wxTextCtrl* m_TextCtrl_ROMsCategory_Folder;
@@ -149,6 +157,9 @@ class Main : public wxFrame
         void m_TextCtrl_ROMs_Description_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_Folder_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_DisplayName_OnText(wxCommandEvent& event);
+        void m_ComboBox_ROMs_AgeRating_OnCombobox(wxCommandEvent& event);
+        void m_TextCtrl_ROMs_ContentWarning_OnText(wxCommandEvent& event);
+        void m_TextCtrl_ROMs_AIDisclosure_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event);
         void m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event);
         void m_MenuItem_Save_OnMenuSelection(wxCommandEvent& event);

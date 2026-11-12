@@ -67,12 +67,7 @@ bool date_fromstring(wxString input, wxDateTime* output)
 
 bool rom_sorter_date(ROM* lhs, ROM* rhs)
 {
-    wxDateTime date_lhs, date_rhs;
-    if (!date_fromstring(lhs->date, &date_lhs))
-        return false;
-    if (!date_fromstring(rhs->date, &date_rhs))
-        return true;
-    return date_lhs.IsLaterThan(date_rhs);
+    return lhs->date < rhs->date;
 }
 
 

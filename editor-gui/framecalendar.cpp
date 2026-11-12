@@ -58,6 +58,7 @@ void FrameCalendar::m_Calendar_OnCalendar(wxCalendarEvent& event)
     date.MakeUTC();
     time_t utc = date.GetTicks();
     ((Main*)(this->GetParent()))->UpdateROMDate(utc);
+    event.Skip();
     this->Close();
 }
 

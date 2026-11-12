@@ -12,6 +12,9 @@
             "Index": 12,
             "Pages": {
                 "netlib": {
+                    "AIDisclosure": "",
+                    "AgeRating": "",
+                    "ContentWarning": "",
                     "Date": 1733788800,
                     "DisplayName": "NetLib Examples",
                     "Icon": "icons/netlib.png",
@@ -37,6 +40,9 @@
                     ]
                 },
                 "unfloader": {
+                    "AIDisclosure": "",
+                    "AgeRating": "",
+                    "ContentWarning": "",
                     "Date": 1614556800,
                     "DisplayName": "UNFLoader Examples",
                     "Icon": "icons/unfloader.png",
@@ -125,6 +131,9 @@
             "Index": 10,
             "Pages": {
                 "pyoro64": {
+                    "AIDisclosure": "",
+                    "AgeRating": "All",
+                    "ContentWarning": "",
                     "Date": 1545696000,
                     "DisplayName": "Pyoro64",
                     "Icon": "icons/pyoro64.png",

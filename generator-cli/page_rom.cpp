@@ -24,7 +24,34 @@ void Page_ROM::Compile()
     // Replace most of the basic page info
     html_final = string_fromfile("templates/rom.html");
     strreplace_all(html_final, "_TEMPLATE_ROMS_TITLE_", this->displayname);
-    strreplace_all(html_final, "_TEMPLATE_ROMS_DATE_", date_tostring(this->date));
+    if (this->date != 0)
+    {
+        strreplace_all(html_final, "_TEMPLATE_ROMS_DATESECTION_", string_fromfile("templates/rom_date.html"));
+        strreplace_all(html_final, "_TEMPLATE_ROMS_DATE_", date_tostring(this->date));
+    }
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_DATESECTION_", "");
+    if (this->agerating != "")
+    {
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AGERATINGSECTION_", string_fromfile("templates/rom_age.html"));
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AGERATING_", this->agerating);
+        if (this->contentwarning != "")
+        {
+            strreplace_all(html_final, "_TEMPLATE_ROMS_CONTENTWARNINGSECTION_", string_fromfile("templates/rom_contentwarn.html"));
+            strreplace_all(html_final, "_TEMPLATE_ROMS_CONTENTWARNING_", this->contentwarning);
+        }
+        else
+            strreplace_all(html_final, "_TEMPLATE_ROMS_CONTENTWARNINGSECTION_", "");
+    }
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AGERATINGSECTION_", "");
+    if (this->aidisclosure != "")
+    {
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AIDISCLOSURESECTION_", string_fromfile("templates/rom_aidisclosure.html"));
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AIDISCLOSURE_", this->aidisclosure);
+    }
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AIDISCLOSURESECTION_", "");
     md_html(mdstr, strlen(mdstr), md4c_funcptr_handlestr, &html_md, MD_FLAG_NOHTMLBLOCKS | MD_FLAG_HEADINGAUTOID, 0, new MD_TOC_OPTIONS{});
     if (html_md.length() == 0 && this->description.length() > 0)
     {
@@ -127,16 +154,22 @@ void Page_ROM::Compile()
         strreplace_all(html_final, "_TEMPLATE_ROMS_IMAGES_", "");
 
     // Handle page tags
-    for (std::string tag : this->tags)
+    if (this->tags.size() > 0)
     {
-        std::string str = string_fromfile("templates/rom_tag.html");
-        strreplace_all(str, "_TEMPLATE_TAG_URL_", "../../tags/" + sanitize_tagname(tag) + ".html");
-        strreplace_all(str, "_TEMPLATE_TAG_NAME_", tag);
-        pagetags += str;
-        if (tag != this->tags.back())
-            pagetags += ", ";
+        strreplace_all(html_final, "_TEMPLATE_ROMS_TAGSSECTION_", string_fromfile("templates/rom_tags.html"));
+        for (std::string tag : this->tags)
+        {
+            std::string str = string_fromfile("templates/rom_tag.html");
+            strreplace_all(str, "_TEMPLATE_TAG_URL_", "../../tags/" + sanitize_tagname(tag) + ".html");
+            strreplace_all(str, "_TEMPLATE_TAG_NAME_", tag);
+            pagetags += str;
+            if (tag != this->tags.back())
+                pagetags += ", ";
+        }
+        strreplace_all(html_final, "_TEMPLATE_ROMS_TAGS_", pagetags);
     }
-    strreplace_all(html_final, "_TEMPLATE_ROMS_TAGS_", pagetags);
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_TAGSSECTION_", "");
 
     // Handle page URLS
     if (this->urls.size() > 0)

@@ -11,6 +11,9 @@ class Page_ROM : public Page
     protected:
 
     public:
+        std::string agerating;
+        std::string contentwarning;
+        std::string aidisclosure;
         std::vector<std::string> images;
         std::vector<std::string> urls;
 

@@ -129,6 +129,9 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
             proj->icon = wxString::FromUTF8(std::string((*itproj)["Icon"]));
             proj->date = (*itproj)["Date"];
             proj->tooltip = wxString::FromUTF8(std::string((*itproj)["ToolTip"]));
+            proj->agerating = wxString::FromUTF8(std::string((*itproj)["AgeRating"]));
+            proj->contentwarning = wxString::FromUTF8(std::string((*itproj)["ContentWarning"]));
+            proj->aidisclosure = wxString::FromUTF8(std::string((*itproj)["AIDisclosure"]));
             proj->wasmodified = false;
             proj->description = string_fromfile(workingdir + wxString("/roms/") + cat_elem->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
             proj->images.clear();
@@ -198,6 +201,9 @@ void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
             romjson["Categories"][catstr]["Pages"][projstr]["Icon"] = proj->icon.ToUTF8();
             romjson["Categories"][catstr]["Pages"][projstr]["Date"] = proj->date;
             romjson["Categories"][catstr]["Pages"][projstr]["ToolTip"] = proj->tooltip.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["AgeRating"] = proj->agerating.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["ContentWarning"] = proj->contentwarning.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][projstr]["AIDisclosure"] = proj->aidisclosure.ToUTF8();
             romjson["Categories"][catstr]["Pages"][projstr]["Images"] = {};
             for (wxString str :  proj->images)
                 romjson["Categories"][catstr]["Pages"][projstr]["Images"].push_back(str.ToUTF8());

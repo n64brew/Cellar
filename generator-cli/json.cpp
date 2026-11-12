@@ -141,6 +141,9 @@ void json_loadroms(std::string filepath, std::vector<Category*>* categorylist)
             page->icon = std::string((*itproj)["Icon"]);
             page->date = (*itproj)["Date"];
             page->tooltip = std::string((*itproj)["ToolTip"]);
+            page->agerating = std::string((*itproj)["AgeRating"]);
+            page->contentwarning = std::string((*itproj)["ContentWarning"]);
+            page->aidisclosure = std::string((*itproj)["AIDisclosure"]);
             page->description = string_fromfile(workingdir + "/" + cat_elem->foldername + "/markdown/" + page->filename + ".md");
             page->images.clear();
             for (nlohmann::json::iterator it = (*itproj)["Images"].begin(); it != (*itproj)["Images"].end(); ++it)

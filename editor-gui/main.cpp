@@ -207,8 +207,34 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     // Genres
 
     // Age Rating
+    wxStaticText* m_Label_ROMs_AgeRating;
+    m_Label_ROMs_AgeRating = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Age Rating:"), wxDefaultPosition, wxDefaultSize, 0);
+    m_Label_ROMs_AgeRating->Wrap(-1);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(m_Label_ROMs_AgeRating, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxFlexGridSizer* m_Sizer_ROMs_ContentWarnings;
+    m_Sizer_ROMs_ContentWarnings = new wxFlexGridSizer(0, 2, 0, 0);
+    m_Sizer_ROMs_ContentWarnings->AddGrowableCol(1);
+    m_Sizer_ROMs_ContentWarnings->SetFlexibleDirection(wxBOTH);
+    m_Sizer_ROMs_ContentWarnings->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    this->m_ComboBox_ROMs_AgeRating = new wxComboBox(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+    this->m_ComboBox_ROMs_AgeRating->Append(wxT("All"));
+    this->m_ComboBox_ROMs_AgeRating->Append(wxT("Teens"));
+    this->m_ComboBox_ROMs_AgeRating->Append(wxT("Mature"));
+    this->m_ComboBox_ROMs_AgeRating->Append(wxT("Adult"));
+    m_Sizer_ROMs_ContentWarnings->Add(this->m_ComboBox_ROMs_AgeRating, 0, wxALL, 5);
+    this->m_TextCtrl_ROMs_ContentWarning = new wxTextCtrl(m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_TextCtrl_ROMs_ContentWarning->SetToolTip(wxT("Potential content warnings"));
+    m_Sizer_ROMs_ContentWarnings->Add(this->m_TextCtrl_ROMs_ContentWarning, 0, wxALL|wxEXPAND, 5);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(m_Sizer_ROMs_ContentWarnings, 1, wxEXPAND, 5);
 
     // AI Disclosure
+    wxStaticText* m_Label_ROMs_AIDisclosure;
+    m_Label_ROMs_AIDisclosure = new wxStaticText(m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("AI Disclosure:"), wxDefaultPosition, wxDefaultSize, 0);
+    m_Label_ROMs_AIDisclosure->Wrap(-1);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(m_Label_ROMs_AIDisclosure, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    this->m_TextCtrl_ROMs_AIDisclosure = new wxTextCtrl(m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_TextCtrl_ROMs_AIDisclosure->SetToolTip(wxT("AI use disclosure (if applicable)"));
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_AIDisclosure, 0, wxALL|wxEXPAND, 5);
 
     // Description
     this->m_TextCtrl_ROMs_Description = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1,-1), wxTE_MULTILINE | wxTE_RICH2);
@@ -351,6 +377,9 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_TextCtrl_ROMs_Images->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Images_OnText), NULL, this);
     this->m_Button_ROMs_Date->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Date_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_URLs->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
+    this->m_ComboBox_ROMs_AgeRating->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(Main::m_ComboBox_ROMs_AgeRating_OnCombobox), NULL, this);
+    this->m_TextCtrl_ROMs_ContentWarning->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ContentWarning_OnText), NULL, this);
+    this->m_TextCtrl_ROMs_AIDisclosure->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_AIDisclosure_OnText), NULL, this);
     this->m_TextCtrl_ROMs_ToolTip->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ToolTip_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Description->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Description_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Folder->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Folder_OnText), NULL, this);
@@ -391,16 +420,15 @@ Main::~Main()
     this->m_TextCtrl_ROMs_Name->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Name_OnText), NULL, this);
     this->m_TextCtrl_ROMs_ToolTip->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ToolTip_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Icon->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Icon_OnText), NULL, this);
-    //this->m_Button_ROMs_FindAuthors->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_FindAuthors_OnButton), NULL, this);
-    //this->m_TextCtrl_ROMs_Authors->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Authors_OnText), NULL, this);
+    this->m_Button_ROMs_FindAuthors->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_FindAuthors_OnButton), NULL, this);
     this->m_Button_ROMs_Tags->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Tags_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_Images->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Images_OnText), NULL, this);
     this->m_Button_ROMs_Date->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Date_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_URLs->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
     //this->m_TextCtrl_ROMs_Genres->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
-    //this->m_ComboBox_ROMs_AgeRating->Disconnect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(Main::m_ComboBox_ROMs_AgeRating_OnCombobox), NULL, this);
-    //this->m_TextCtrl_ROMs_ContentWarning->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ContentWarning_OnText), NULL, this);
-    //this->m_TextCtrl_ROMs_AIDisclosure->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
+    this->m_ComboBox_ROMs_AgeRating->Disconnect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(Main::m_ComboBox_ROMs_AgeRating_OnCombobox), NULL, this);
+    this->m_TextCtrl_ROMs_ContentWarning->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ContentWarning_OnText), NULL, this);
+    this->m_TextCtrl_ROMs_AIDisclosure->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_AIDisclosure_OnText), NULL, this);
     this->m_TextCtrl_ROMs_Description->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Description_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Folder->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Folder_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_DisplayName->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_DisplayName_OnText), NULL, this);
@@ -628,6 +656,9 @@ void Main::m_TreeCtrl_ROMs_OnTreeSelChanged(wxTreeEvent& event)
         this->m_TextCtrl_ROMs_Name->ChangeValue(rom->displayname);
         this->m_TextCtrl_ROMs_Icon->ChangeValue(rom->icon);
         this->m_TextCtrl_ROMs_ToolTip->ChangeValue(rom->tooltip);
+        this->m_ComboBox_ROMs_AgeRating->ChangeValue(rom->agerating);
+        this->m_TextCtrl_ROMs_ContentWarning->ChangeValue(rom->contentwarning);
+        this->m_TextCtrl_ROMs_AIDisclosure->ChangeValue(rom->aidisclosure);
         this->m_TextCtrl_ROMs_Description->ChangeValue(rom->description);
         if (rom->date != 0)
         {
@@ -735,6 +766,60 @@ void Main::m_TextCtrl_ROMs_Icon_OnText(wxCommandEvent& event)
 
 
 /*==============================
+    m_ComboBox_ROMs_AgeRating_OnCombobox
+    Handles the rom age rating combo box change event
+    @param The event that was generated
+==============================*/
+
+void Main::m_ComboBox_ROMs_AgeRating_OnCombobox(wxCommandEvent& event)
+{
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom == NULL)
+        return;
+    rom->agerating = event.GetString();
+    rom->wasmodified = true;
+    this->MarkModified();
+    event.Skip();
+}
+
+
+/*==============================
+    m_TextCtrl_ROMs_ContentWarning_OnText
+    Handles the rom content warning text control edit event
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_ROMs_ContentWarning_OnText(wxCommandEvent& event)
+{
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom == NULL)
+        return;
+    rom->contentwarning = event.GetString();
+    rom->wasmodified = true;
+    this->MarkModified();
+    event.Skip();
+}
+
+
+/*==============================
+    m_TextCtrl_ROMs_AIDisclosure_OnText
+    Handles the rom ai disclosure text control edit event
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_ROMs_AIDisclosure_OnText(wxCommandEvent& event)
+{
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom == NULL)
+        return;
+    rom->aidisclosure = event.GetString();
+    rom->wasmodified = true;
+    this->MarkModified();
+    event.Skip();
+}
+
+
+/*==============================
     m_Button_ROMs_FindAuthors_OnButton
     Handles the ROM authors button click event
     @param The event that was generated
@@ -795,6 +880,7 @@ void Main::m_Button_ROMs_Tags_OnButton(wxCommandEvent& event)
         frame->ActivateTags(this->m_TextCtrl_ROMs_Tags->GetValue());
         frame->Show();
     }
+    event.Skip();
 }
 
 
@@ -815,6 +901,13 @@ void Main::m_Button_ROMs_Date_OnButton(wxCommandEvent& event)
     }
     event.Skip();
 }
+
+
+/*==============================
+    UpdateROMDate
+    Updates the ROM date into a nice readable string
+    @param The timestamp
+==============================*/
 
 void Main::UpdateROMDate(time_t date)
 {
@@ -1064,6 +1157,7 @@ void Main::OnPopupClick_Categories(wxCommandEvent& event)
     cat->treeid = this->m_TreeCtrl_ROMs->AppendItem(this->m_TreeCtrl_ROMs->GetRootItem(), cat->displayname != "" ? cat->displayname : cat->foldername);
     cat->pages.clear();
     this->m_Category_ROMs.push_back(cat);
+    event.Skip();
 }
 
 
@@ -1101,6 +1195,9 @@ void Main::OnPopupClick_ROMs(wxCommandEvent& event)
             rom->date = 0;
             rom->tooltip = "";
             rom->description = "";
+            rom->agerating = "";
+            rom->contentwarning = "";
+            rom->aidisclosure = "";
             rom->wasmodified = true;
             rom->images.clear();
             rom->urls.clear();

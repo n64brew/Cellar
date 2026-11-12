@@ -67,7 +67,6 @@ std::string sanitize_tagname(std::string tagname)
 }
 
 
-
 /*==============================
     strreplace_all
     Replace all ocurrences of a substring
