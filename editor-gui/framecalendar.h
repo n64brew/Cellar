@@ -11,10 +11,10 @@ typedef struct IUnknown IUnknown;
 #include <wx/settings.h>
 #include <wx/string.h>
 #include <wx/sizer.h>
-#include <wx/frame.h>
+#include <wx/dialog.h>
 #include <cstdint>
 
-class FrameCalendar : public wxFrame
+class FrameCalendar : public wxDialog
 {
     private:
 
@@ -25,7 +25,7 @@ class FrameCalendar : public wxFrame
 
 
     public:
-        FrameCalendar(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Calendar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 480), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
+        FrameCalendar(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Calendar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 480), long style = wxDEFAULT_DIALOG_STYLE);
         ~FrameCalendar();
 
         void SetDate(time_t date);

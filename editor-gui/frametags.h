@@ -17,10 +17,10 @@ typedef struct IUnknown IUnknown;
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/sizer.h>
-#include <wx/frame.h>
+#include <wx/dialog.h>
 #include <map>
 
-class FrameTags : public wxFrame
+class FrameTags : public wxDialog
 {
     private:
 
@@ -65,7 +65,7 @@ class FrameTags : public wxFrame
         void m_Button_Ok_OnClick(wxCommandEvent& event);
 
     public:
-        FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 500), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
+        FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 500), long style = wxDEFAULT_DIALOG_STYLE);
         ~FrameTags();
         
         void ActivateTags(wxString tags);

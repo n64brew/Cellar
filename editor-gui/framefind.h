@@ -44,7 +44,7 @@ class FrameFind : public wxFrame
         bool FindPrevious(wxString find);
 
     public:
-        FrameFind(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Find"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(400, 150), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL);
+        FrameFind(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Find"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(400, 150), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP);
         ~FrameFind();
 
         void SetParent(wxWindow* parent);

@@ -13,7 +13,7 @@ Frame for a calendar selector
     Initializes the class
 ==============================*/
 
-FrameCalendar::FrameCalendar(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
+FrameCalendar::FrameCalendar(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
     this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 

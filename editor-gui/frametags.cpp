@@ -13,7 +13,7 @@ This file contains a frame for setting tags on a ROM
     Initializes the class
 ==============================*/
 
-FrameTags::FrameTags(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
+FrameTags::FrameTags(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
     this->m_PressedOK = false;
     this->SetSizeHints(wxDefaultSize, wxDefaultSize);

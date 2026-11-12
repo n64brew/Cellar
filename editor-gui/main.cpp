@@ -5,6 +5,7 @@ The main code of the static site generator
 ***************************************************************/
 
 #include "main.h"
+#include "frameauthors.h"
 #include "framecalendar.h"
 #include "framefind.h"
 #include "frametags.h"
@@ -827,7 +828,13 @@ void Main::m_TextCtrl_ROMs_AIDisclosure_OnText(wxCommandEvent& event)
 
 void Main::m_Button_ROMs_FindAuthors_OnButton(wxCommandEvent& event)
 {
-
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom != NULL)
+    {
+        FrameAuthors* frame = new FrameAuthors(this);
+        frame->ShowModal();
+    }
+    event.Skip();
 }
 
 
@@ -878,7 +885,7 @@ void Main::m_Button_ROMs_Tags_OnButton(wxCommandEvent& event)
     {
         FrameTags* frame = new FrameTags(this);
         frame->ActivateTags(this->m_TextCtrl_ROMs_Tags->GetValue());
-        frame->Show();
+        frame->ShowModal();
     }
     event.Skip();
 }
@@ -897,7 +904,7 @@ void Main::m_Button_ROMs_Date_OnButton(wxCommandEvent& event)
     {
         FrameCalendar* frame = new FrameCalendar(this);
         frame->SetDate(rom->date);
-        frame->Show();
+        frame->ShowModal();
     }
     event.Skip();
 }

@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
-    <ClInclude Include="framecalendar.h" />
+    <ClInclude Include="frameauthors.h" />
     <ClInclude Include="framefind.h" />
     <ClInclude Include="frametags.h" />
     <ClInclude Include="helper.h" />
@@ -35,8 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
-    <ClCompile Include="framecalendar.cpp">
-    <ClCompile Include="framefind.cpp">
+    <ClCompile Include="frameauthors.cpp" />
+    <ClCompile Include="framecalendar.cpp" />
+    <ClCompile Include="framefind.cpp" />
     <ClCompile Include="frametags.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="include\md4c\entity.c" />
