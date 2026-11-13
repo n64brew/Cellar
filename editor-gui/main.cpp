@@ -185,7 +185,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Label_ROMs_Icon->Wrap(-1);
     m_Sizer_ScrolledWindow_Editor_Main->Add(m_Label_ROMs_Icon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     this->m_TextCtrl_ROMs_Icon = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-    this->m_TextCtrl_ROMs_Icon->SetToolTip(wxT("The icon used to display the rom in the list of ROMs. Requires a relative path (to the working directory) to a 240x125 png."));
+    this->m_TextCtrl_ROMs_Icon->SetToolTip(wxT("The icon used to display the ROM in the list of ROMs. Requires a relative path (to the working directory) to a 240x125 png."));
     m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Icon, 0, wxALL|wxEXPAND, 5);
 
     // Images
@@ -206,6 +206,13 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_Editor->Add(m_Sizer_ScrolledWindow_Editor_Main, 1, wxEXPAND, 5);
 
     // Genres
+    wxStaticText* m_Label_ROMs_Genres;
+    m_Label_ROMs_Genres = new wxStaticText(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxT("Genres:"), wxDefaultPosition, wxDefaultSize, 0);
+    m_Label_ROMs_Genres->Wrap(-1);
+    m_Sizer_ScrolledWindow_Editor_Main->Add(m_Label_ROMs_Genres, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    this->m_TextCtrl_ROMs_Genres = new wxTextCtrl(this->m_ScrolledWindow_ROM_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_TextCtrl_ROMs_Genres->SetToolTip(wxT("Genres, comma separated"));
+    m_Sizer_ScrolledWindow_Editor_Main->Add(this->m_TextCtrl_ROMs_Genres, 0, wxALL|wxEXPAND, 5);
 
     // Age Rating
     wxStaticText* m_Label_ROMs_AgeRating;
@@ -379,6 +386,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_Button_ROMs_Date->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Date_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_URLs->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
     this->m_ComboBox_ROMs_AgeRating->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(Main::m_ComboBox_ROMs_AgeRating_OnCombobox), NULL, this);
+    this->m_TextCtrl_ROMs_Genres->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
     this->m_TextCtrl_ROMs_ContentWarning->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ContentWarning_OnText), NULL, this);
     this->m_TextCtrl_ROMs_AIDisclosure->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_AIDisclosure_OnText), NULL, this);
     this->m_TextCtrl_ROMs_ToolTip->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ToolTip_OnText), NULL, this);
@@ -396,6 +404,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->InitialCheck();
 
     // Load the ROMs from the current working directory
+    json_loadauthors(this->m_WorkingDir, &this->m_Authors);
     this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
     this->LoadROMs();
     this->m_TreeCtrl_ROMs->SetFocus();
@@ -426,7 +435,7 @@ Main::~Main()
     this->m_TextCtrl_ROMs_Images->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Images_OnText), NULL, this);
     this->m_Button_ROMs_Date->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Date_OnButton), NULL, this);
     this->m_TextCtrl_ROMs_URLs->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_URLs_OnText), NULL, this);
-    //this->m_TextCtrl_ROMs_Genres->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
+    this->m_TextCtrl_ROMs_Genres->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_Genres_OnText), NULL, this);
     this->m_ComboBox_ROMs_AgeRating->Disconnect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(Main::m_ComboBox_ROMs_AgeRating_OnCombobox), NULL, this);
     this->m_TextCtrl_ROMs_ContentWarning->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_ContentWarning_OnText), NULL, this);
     this->m_TextCtrl_ROMs_AIDisclosure->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMs_AIDisclosure_OnText), NULL, this);
@@ -441,7 +450,7 @@ Main::~Main()
 
 /*==============================
     m_Splitter_ROMsOnIdle
-    Handles the rom splitter event
+    Handles the ROM splitter event
     @param Unused
 ==============================*/
 
@@ -487,7 +496,8 @@ void Main::m_MenuItem_Find_OnMenuSelection(wxCommandEvent& event)
 
 void Main::m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent&)
 {
-    this->Save();
+    if (!this->Save())
+        return;
     long ret = wxExecute("./cellar-generator roms", wxEXEC_SYNC);
     if (ret == 0)
         wxMessageBox("Website recompiled successfully!", wxString("Great success"), wxICON_INFORMATION);
@@ -506,21 +516,43 @@ void Main::m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent&)
 
 void Main::m_SearchCtrl_ROMsOnText(wxCommandEvent& event)
 {
-    wxString filter = this->m_SearchCtrl_ROMs->GetValue();
-    this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
-    this->LoadROMs();
-    if (!filter.IsEmpty())
+    wxString filter = this->m_SearchCtrl_ROMs->GetValue().Lower();
+    this->m_SelectedItem = wxTreeItemId();
+    this->ShowROMEditor(false);
+    this->m_TreeCtrl_ROMs->Freeze();
+    this->m_TreeCtrl_ROMs->DeleteAllItems();
+    wxTreeItemId root = this->m_TreeCtrl_ROMs->AddRoot("Root");
+    for (Category* cat : this->m_Category_ROMs)
     {
-        filter_tree(this->m_TreeCtrl_ROMs, filter);
-        this->m_TreeCtrl_ROMs->ExpandAll();
+        bool matches = filter.IsEmpty() || cat->displayname.Lower().Contains(filter);
+        for (void* child : cat->pages)
+        {
+            ROM* rom = (ROM*)child;
+            rom->treeid = wxTreeItemId();
+            if (rom->displayname.Lower().Contains(filter))
+                matches = true;
+        }
+        cat->treeid = wxTreeItemId();
+        if (!matches)
+            continue;
+        cat->treeid = this->m_TreeCtrl_ROMs->AppendItem(root, cat->displayname);
+        for (void* child : cat->pages)
+        {
+            ROM* rom = (ROM*)child;
+            if (filter.IsEmpty() || rom->displayname.Lower().Contains(filter))
+                rom->treeid = this->m_TreeCtrl_ROMs->AppendItem(cat->treeid, rom->displayname);
+        }
     }
+    if (!filter.IsEmpty())
+        this->m_TreeCtrl_ROMs->ExpandAll();
+    this->m_TreeCtrl_ROMs->Thaw();
     event.Skip();
 }
 
 
 /*==============================
     m_TreeCtrl_ROMs_OnTreeEndLabelEdit
-    Handles the rom tree label editing event
+    Handles the ROM tree label editing event
     @param The event that was generated
 ==============================*/
 
@@ -548,7 +580,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeEndLabelEdit(wxTreeEvent& event)
             return;
         }
     }
-    else // Handle rom label editing
+    else // Handle ROM label editing
     {
         ROM* rom = this->FindROM(event.GetItem());
         if (rom != NULL)
@@ -568,7 +600,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeEndLabelEdit(wxTreeEvent& event)
 
 /*==============================
     m_TreeCtrl_ROMs_OnTreeRightClick
-    Handles the rom tree right click event
+    Handles the ROM tree right click event
     @param The event that was generated
 ==============================*/
 
@@ -587,7 +619,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeRightClick(wxMouseEvent& event)
 
 /*==============================
     m_TreeCtrl_ROMs_OnTreeBeginDrag
-    Handles the rom tree drag event
+    Handles the ROM tree drag event
     @param The event that was generated
 ==============================*/
 
@@ -600,7 +632,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeBeginDrag(wxTreeEvent& event)
 
 /*==============================
     m_TreeCtrl_ROMs_OnTreeEndDrag
-    Handles the rom tree drag ending event
+    Handles the ROM tree drag ending event
     @param The event that was generated
 ==============================*/
 
@@ -615,7 +647,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeEndDrag(wxTreeEvent& event)
 
 /*==============================
     m_TreeCtrl_ROMs_OnTreeItemMenu
-    Handles the rom tree right click event
+    Handles the ROM tree right click event
     @param The event that was generated
 ==============================*/
 
@@ -623,9 +655,9 @@ void Main::m_TreeCtrl_ROMs_OnTreeItemMenu(wxTreeEvent& event)
 {
     wxMenu menu;
     this->m_SelectedItem = event.GetItem();
-    menu.Append(wxID_NEW, wxT("Create rom"));
+    menu.Append(wxID_NEW, wxT("Create ROM"));
     if (!treeitem_iscategory(this->m_TreeCtrl_ROMs, event.GetItem()))
-        menu.Append(wxID_DELETE, wxT("Delete rom"));
+        menu.Append(wxID_DELETE, wxT("Delete ROM"));
     menu.Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::OnPopupClick_ROMs), NULL, this);
     PopupMenu(&menu, event.GetPoint());
 }
@@ -633,7 +665,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeItemMenu(wxTreeEvent& event)
 
 /*==============================
     m_TreeCtrl_ROMs_OnTreeSelChanged
-    Handles the rom tree selection event
+    Handles the ROM tree selection event
     @param The event that was generated
 ==============================*/
 
@@ -643,12 +675,12 @@ void Main::m_TreeCtrl_ROMs_OnTreeSelChanged(wxTreeEvent& event)
 
     // Handle the item selection
     this->m_SelectedItem = item;
-    if (!treeitem_iscategory(this->m_TreeCtrl_ROMs, item)) // Handle rom selection
+    if (!treeitem_iscategory(this->m_TreeCtrl_ROMs, item)) // Handle ROM selection
     {
         wxString wip;
         ROM* rom = FindROM(item);
 
-        // Ensure the rom exists
+        // Ensure the ROM exists
         if (rom == NULL)
             return;
 
@@ -670,6 +702,15 @@ void Main::m_TreeCtrl_ROMs_OnTreeSelChanged(wxTreeEvent& event)
         else
             this->m_TextCtrl_ROMs_Date->ChangeValue("");
 
+        wip = wxString("");
+        for (const wxString& author : rom->authors)
+        {
+            if (!wip.IsEmpty())
+                wip += ", ";
+            wip += author;
+        }
+        this->m_TextCtrl_ROMs_Authors->ChangeValue(wip);
+
         // Fill in the tags text control
         wip = wxString("");
         for (wxString str : rom->tags)
@@ -681,6 +722,12 @@ void Main::m_TreeCtrl_ROMs_OnTreeSelChanged(wxTreeEvent& event)
         for (wxString str : rom->images)
             wip += str + wxString(", ");
         this->m_TextCtrl_ROMs_Images->ChangeValue(wip);
+        
+        // Fill in the genres text control
+        wip = wxString("");
+        for (wxString str : rom->genres)
+            wip += str + wxString(", ");
+        this->m_TextCtrl_ROMs_Genres->ChangeValue(wip);
         
         // Fill in the url text control
         wip = wxString("");
@@ -704,7 +751,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeSelChanged(wxTreeEvent& event)
         this->m_TextCtrl_ROMsCategory_DisplayName->ChangeValue(cat->displayname);
         this->m_TextCtrl_ROMsCategory_Description->ChangeValue(cat->description);
 
-        // Show the rom category editor
+        // Show the ROM category editor
         this->ShowROMCategoryEditor(true);
     }
     else
@@ -714,7 +761,7 @@ void Main::m_TreeCtrl_ROMs_OnTreeSelChanged(wxTreeEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_File_OnText
-    Handles the rom filename text control edit event
+    Handles the ROM filename text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -731,7 +778,7 @@ void Main::m_TextCtrl_ROMs_File_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_Name_OnText
-    Handles the rom name text control edit event
+    Handles the ROM name text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -750,7 +797,7 @@ void Main::m_TextCtrl_ROMs_Name_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_Icon_OnText
-    Handles the rom icon text control edit event
+    Handles the ROM icon text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -767,8 +814,36 @@ void Main::m_TextCtrl_ROMs_Icon_OnText(wxCommandEvent& event)
 
 
 /*==============================
+    m_TextCtrl_ROMs_Genres_OnText
+    Handles the ROM genre text control edit event
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_ROMs_Genres_OnText(wxCommandEvent& event)
+{
+    ROM* rom = this->FindROM(this->m_SelectedItem);
+    if (rom != NULL)
+    {
+        wxArrayString strarray = wxSplit(event.GetString(), ',');
+        rom->genres.clear();
+
+        // Split the elements by comma
+        for (wxString str : strarray)
+        {
+            str.Trim(true);
+            str.Trim(false);
+            if (str != "")
+                rom->genres.push_back(str);
+        }
+        rom->wasmodified = true;
+        this->MarkModified();
+    }
+}
+
+
+/*==============================
     m_ComboBox_ROMs_AgeRating_OnCombobox
-    Handles the rom age rating combo box change event
+    Handles the ROM age rating combo box change event
     @param The event that was generated
 ==============================*/
 
@@ -786,7 +861,7 @@ void Main::m_ComboBox_ROMs_AgeRating_OnCombobox(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_ContentWarning_OnText
-    Handles the rom content warning text control edit event
+    Handles the ROM content warning text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -804,7 +879,7 @@ void Main::m_TextCtrl_ROMs_ContentWarning_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_AIDisclosure_OnText
-    Handles the rom ai disclosure text control edit event
+    Handles the ROM ai disclosure text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -832,7 +907,22 @@ void Main::m_Button_ROMs_FindAuthors_OnButton(wxCommandEvent& event)
     if (rom != NULL)
     {
         FrameAuthors* frame = new FrameAuthors(this);
-        frame->ShowModal();
+        frame->SetAuthors(&this->m_Authors, rom->authors);
+        if (frame->ShowModal() == wxID_OK)
+        {
+            wxString finalstr;
+            rom->authors.clear();
+            for (wxString author : *frame->GetSelectedAuthors())
+            {
+                rom->authors.push_back(author);
+                if (!finalstr.IsEmpty())
+                    finalstr += ", ";
+                finalstr += author;
+            }
+            this->m_TextCtrl_ROMs_Authors->ChangeValue(finalstr);
+            rom->wasmodified = true;
+            this->MarkModified();
+        }
     }
     event.Skip();
 }
@@ -932,7 +1022,7 @@ void Main::UpdateROMDate(time_t date)
 
 /*==============================
     m_TextCtrl_ROMs_Images_OnText
-    Handles the rom images text control edit event
+    Handles the ROM images text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -960,7 +1050,7 @@ void Main::m_TextCtrl_ROMs_Images_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_URLs_OnText
-    Handles the rom date text control edit event
+    Handles the ROM date text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -988,7 +1078,7 @@ void Main::m_TextCtrl_ROMs_URLs_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_ToolTip_OnText
-    Handles the rom tooltip text control edit event
+    Handles the ROM tooltip text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -1006,7 +1096,7 @@ void Main::m_TextCtrl_ROMs_ToolTip_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMs_Description_OnText
-    Handles the rom description text control edit event
+    Handles the ROM description text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -1023,7 +1113,7 @@ void Main::m_TextCtrl_ROMs_Description_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMsCategory_Folder_OnText
-    Handles the rom category folder text control edit event
+    Handles the ROM category folder text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -1049,7 +1139,7 @@ void Main::m_TextCtrl_ROMsCategory_Folder_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMsCategory_DisplayName_OnText
-    Handles the rom category name text control edit event
+    Handles the ROM category name text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -1067,7 +1157,7 @@ void Main::m_TextCtrl_ROMsCategory_DisplayName_OnText(wxCommandEvent& event)
 
 /*==============================
     m_TextCtrl_ROMsCategory_Description_OnText
-    Handles the rom category description text control edit event
+    Handles the ROM category description text control edit event
     @param The event that was generated
 ==============================*/
 
@@ -1084,7 +1174,7 @@ void Main::m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event)
 
 /*==============================
     m_Button_ROMs_Preview_OnButtonClick
-    Handles the rom preview button event
+    Handles the ROM preview button event
     @param Unused
 ==============================*/
 
@@ -1094,7 +1184,8 @@ void Main::m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event)
     wxString url = wxString("");
 
     // Save changes
-    this->Save();
+    if (!this->Save())
+        return;
 
     // Compile the relevant page(s)
     if (treeitem_iscategory(this->m_TreeCtrl_ROMs, this->m_SelectedItem)) // Handle category preview
@@ -1170,7 +1261,7 @@ void Main::OnPopupClick_Categories(wxCommandEvent& event)
 
 /*==============================
     OnPopupClick_ROMs
-    Handles the clicking of a rom popup
+    Handles the clicking of a ROM popup
     @param The event that was generated
 ==============================*/
 
@@ -1193,7 +1284,7 @@ void Main::OnPopupClick_ROMs(wxCommandEvent& event)
     // Decide what to do based on the event ID
     switch (event.GetId())
     {
-        case wxID_NEW: // Create a new rom
+        case wxID_NEW: // Create a new ROM
             rom = new ROM();
             rom->index = cat->pages.size();
             rom->filename = "new";
@@ -1206,6 +1297,7 @@ void Main::OnPopupClick_ROMs(wxCommandEvent& event)
             rom->contentwarning = "";
             rom->aidisclosure = "";
             rom->wasmodified = true;
+            rom->genres.clear();
             rom->images.clear();
             rom->urls.clear();
             rom->tags.clear();
@@ -1218,7 +1310,7 @@ void Main::OnPopupClick_ROMs(wxCommandEvent& event)
             cat->wasmodified = true;
             this->MarkModified();
             break;
-        case wxID_DELETE: // Delete an existing rom
+        case wxID_DELETE: // Delete an existing ROM
             rom = this->FindROM(this->m_SelectedItem);
             if (rom != NULL)
             {
@@ -1291,7 +1383,7 @@ void Main::InitialCheck()
 
 /*==============================
     FindCategory_ROMs
-    Finds a rom category object using a tree item id
+    Finds a ROM category object using a tree item id
     @param  The tree item ID to find the category of
     @return The category that was found, or NULL
 ==============================*/
@@ -1307,9 +1399,9 @@ Category* Main::FindCategory_ROMs(wxTreeItemId item)
 
 /*==============================
     FindROM
-    Finds a rom object using a tree item id
-    @param  The tree item ID to find the rom of
-    @return The rom that was found, or NULL
+    Finds a ROM object using a tree item id
+    @param  The tree item ID to find the ROM of
+    @return The ROM that was found, or NULL
 ==============================*/
 
 ROM* Main::FindROM(wxTreeItemId item)
@@ -1412,7 +1504,7 @@ void Main::UpdateTree(wxTreeCtrl* tree, wxString folder, std::vector<Category*>*
 
 /*==============================
     LoadROMs
-    Load all roms stored in the JSON file
+    Load all ROMs stored in the JSON file
 ==============================*/
 
 void Main::LoadROMs()
@@ -1501,7 +1593,7 @@ void Main::EndDrag(wxTreeEvent& event, wxTreeCtrl* tree, std::vector<Category*>*
 
 /*==============================
     EndDrag_ROM
-    Handle the drag end event for roms properly
+    Handle the drag end event for ROMs properly
     @param The generated event
 ==============================*/
 
@@ -1519,7 +1611,7 @@ void Main::EndDrag_ROM(wxTreeEvent& event)
     if (this->m_TreeCtrl_ROMs->GetPrevSibling(src) == dest)
         return;
 
-    // Only work on rom nodes
+    // Only work on ROM nodes
     if (!treeitem_iscategory(this->m_TreeCtrl_ROMs, dest))
     {
         Category* cat;
@@ -1532,7 +1624,7 @@ void Main::EndDrag_ROM(wxTreeEvent& event)
         if (rom_src == NULL || rom_dest == NULL)
             return;
 
-        // Ensure both roms are in the same category
+        // Ensure both ROMs are in the same category
         cat = rom_src->category;
         pages = &cat->pages;
         if (cat != rom_dest->category)
@@ -1559,7 +1651,7 @@ void Main::EndDrag_ROM(wxTreeEvent& event)
             rom->index = index++;
         }
 
-        // Mark the rom and its category as modified
+        // Mark the ROM and its category as modified
         cat->wasmodified = true;
         this->MarkModified();
     }
@@ -1571,13 +1663,15 @@ void Main::EndDrag_ROM(wxTreeEvent& event)
     Save the entire website and compile it
 ==============================*/
 
-void Main::Save()
+bool Main::Save()
 {
     // Save the json files
-    json_save(this->m_WorkingDir, &this->m_Category_ROMs);;
+    if (!json_save(this->m_WorkingDir, &this->m_Category_ROMs, this->m_Authors))
+        return false;
 
     // Mark the program as no longer modified
     this->MarkModified(false);
+    return true;
 }
 
 
@@ -1606,7 +1700,7 @@ void Main::MarkModified(bool modified)
 
 /*==============================
     ShowROMEditor
-    Show or hide the rom editor panel
+    Show or hide the ROM editor panel
     @param Whether to show the editor panel 
 ==============================*/
 
@@ -1630,7 +1724,7 @@ void Main::ShowROMEditor(bool show)
 
 /*==============================
     ShowROMCategoryEditor
-    Show or hide the rom category editor panel
+    Show or hide the ROM category editor panel
     @param Whether to show the editor panel 
 ==============================*/
 

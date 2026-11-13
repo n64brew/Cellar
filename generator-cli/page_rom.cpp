@@ -14,7 +14,7 @@ void Page_ROM::Compile()
     Category* cat = this->category;
     std::string relativepath = "roms/" + cat->foldername + "/";
     std::string projoutpath = relativepath + this->filename + ".html";
-    std::string html_md = "", pagetags = "";
+    std::string html_md = "";
     std::string desccopy = this->description;
     const char* mdstr = desccopy.c_str(); // TODO?: Potentially need to sanitize strings before sending to md_html
     std::vector<std::string> images;
@@ -45,6 +45,13 @@ void Page_ROM::Compile()
     }
     else
         strreplace_all(html_final, "_TEMPLATE_ROMS_AGERATINGSECTION_", "");
+    if (this->date != 0)
+    {
+        strreplace_all(html_final, "_TEMPLATE_ROMS_DATESECTION_", string_fromfile("templates/rom_date.html"));
+        strreplace_all(html_final, "_TEMPLATE_ROMS_DATE_", date_tostring(this->date));
+    }
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_DATESECTION_", "");
     if (this->aidisclosure != "")
     {
         strreplace_all(html_final, "_TEMPLATE_ROMS_AIDISCLOSURESECTION_", string_fromfile("templates/rom_aidisclosure.html"));
@@ -156,6 +163,7 @@ void Page_ROM::Compile()
     // Handle page tags
     if (this->tags.size() > 0)
     {
+        std::string pagetags = "";
         strreplace_all(html_final, "_TEMPLATE_ROMS_TAGSSECTION_", string_fromfile("templates/rom_tags.html"));
         for (std::string tag : this->tags)
         {
@@ -170,6 +178,44 @@ void Page_ROM::Compile()
     }
     else
         strreplace_all(html_final, "_TEMPLATE_ROMS_TAGSSECTION_", "");
+
+    // Handle page authors
+    if (this->authors.size() > 0)
+    {
+        std::string pageauthors = "";
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AUTHORSSECTION_", string_fromfile("templates/rom_authors.html"));
+        for (std::string author : this->authors)
+        {
+            std::string str = string_fromfile("templates/rom_author.html");
+            strreplace_all(str, "_TEMPLATE_AUTHOR_URL_", "../../authors/" + sanitize_tagname(author) + ".html");
+            strreplace_all(str, "_TEMPLATE_AUTHOR_NAME_", author);
+            pageauthors += str;
+            if (author != this->authors.back())
+                pageauthors += ", ";
+        }
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AUTHORS_", pageauthors);
+    }
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_AUTHORSSECTION_", "");
+
+    // Handle page genres
+    if (this->genres.size() > 0)
+    {
+        std::string pagegenres = "";
+        strreplace_all(html_final, "_TEMPLATE_ROMS_GENRESSECTION_", string_fromfile("templates/rom_genres.html"));
+        for (std::string genre : this->genres)
+        {
+            std::string str = string_fromfile("templates/rom_genre.html");
+            strreplace_all(str, "_TEMPLATE_GENRE_URL_", "../../genre/" + sanitize_tagname(genre) + ".html");
+            strreplace_all(str, "_TEMPLATE_GENRE_NAME_", genre);
+            pagegenres += str;
+            if (genre != this->genres.back())
+                pagegenres += ", ";
+        }
+        strreplace_all(html_final, "_TEMPLATE_ROMS_GENRES_", pagegenres);
+    }
+    else
+        strreplace_all(html_final, "_TEMPLATE_ROMS_GENRESSECTION_", "");
 
     // Handle page URLS
     if (this->urls.size() > 0)

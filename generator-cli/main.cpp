@@ -29,6 +29,7 @@ typedef enum
 void compile_roms(std::vector<Category*>* pages);
 void compile_rom(std::vector<Category*>* pages, std::string jsonpath);
 void compile_tags(std::vector<Category*>* pages);
+void compile_genres(std::vector<Category*>* pages);
 void compile_homepage(std::vector<Category*>* pages);
 
 
@@ -102,6 +103,7 @@ int main(int argc, char* argv[])
             compile_rom(&pages, target);
     }
     compile_tags(&pages);
+    compile_genres(&pages);
     compile_homepage(&pages);
     return 0;
 }
@@ -178,12 +180,16 @@ void compile_tags(std::vector<Category*>* pages)
     {
         for (Page* page : cat->pages)
         {
-            for (std::string tag : page->tags)
+            if (dynamic_cast<Page_ROM*>(page))
             {
-                std::map<std::string, std::vector<Page*>>::iterator foundtag = tagmap.find(tag);
-                if (foundtag == tagmap.end())
-                    foundtag = tagmap.insert(std::pair<std::string, std::vector<Page*>>(tag, std::vector<Page*>())).first;
-                foundtag->second.push_back(page);
+                Page_ROM* rom = dynamic_cast<Page_ROM*>(page);
+                for (std::string tag : rom->tags)
+                {
+                    std::map<std::string, std::vector<Page*>>::iterator foundtag = tagmap.find(tag);
+                    if (foundtag == tagmap.end())
+                        foundtag = tagmap.insert(std::pair<std::string, std::vector<Page*>>(tag, std::vector<Page*>())).first;
+                    foundtag->second.push_back(rom);
+                }
             }
         }
     }
@@ -221,6 +227,76 @@ void compile_tags(std::vector<Category*>* pages)
 
         // Generate the page itself
         std::ofstream out(tagspath + "/" + tagname_page + ".html");
+        out << html_final;
+        out.close();
+    }
+}
+
+
+/*==============================
+    compile_genres
+    Compile the genres pages
+    @param A pointer to the list of categories
+==============================*/
+
+void compile_genres(std::vector<Category*>* pages)
+{
+    std::string filename;
+    std::string genrespath = "genre";
+    std::map<std::string, std::vector<Page*>> genremap;
+
+    // Go through all pages and add each one to the genre map
+    for (Category* cat : *pages)
+    {
+        for (Page* page : cat->pages)
+        {
+            if (dynamic_cast<Page_ROM*>(page))
+            {
+                Page_ROM* rom = dynamic_cast<Page_ROM*>(page);
+                for (std::string genre : rom->genres)
+                {
+                    std::map<std::string, std::vector<Page*>>::iterator foundgenre = genremap.find(genre);
+                    if (foundgenre == genremap.end())
+                        foundgenre = genremap.insert(std::pair<std::string, std::vector<Page*>>(genre, std::vector<Page*>())).first;
+                    foundgenre->second.push_back(rom);
+                }
+            }
+        }
+    }
+
+    // Purge the genres folder of html files
+    makedir(genrespath);
+    purge_htmlfiles(genrespath);
+
+    // Now, alphabetically sort all the pages in the tags, and make their respective pages
+    for (std::pair<std::string, std::vector<Page*>> it : genremap)
+    {
+        std::string genrename_page;
+        std::string pagelist;
+        std::string html_final = string_fromfile("templates/genre.html");
+        std::sort(it.second.begin(), it.second.end(), taggedpage_sorter);
+
+        // For a valid genre, its name needs to be sanitized
+        genrename_page = sanitize_tagname(it.first);
+
+        // Fill the genre page
+        strreplace_all(html_final, "_TEMPLATE_GENRE_NAME_", it.first);
+        strreplace_all(html_final, "_TEMPLATE_GENRE_CLEANNAME_", "genres/" + genrename_page + ".html");
+        for (Page* page : it.second)
+        {
+            std::string item = string_fromfile("templates/genre_item.html");
+            if (dynamic_cast<Page_ROM*>(page))
+            {
+                Page_ROM* rom = dynamic_cast<Page_ROM*>(page);
+                strreplace_all(item, "_TEMPLATE_GENRE_PAGENAME_", rom->displayname);
+                strreplace_all(item, "_TEMPLATE_GENRE_PAGEURL_", "../roms/" + rom->category->foldername + "/" + rom->filename + ".html");
+            }
+            pagelist += item + "\r\n";
+        }
+        strreplace_all(html_final, "_TEMPLATE_GENRE_PAGELIST_", pagelist);
+
+        // Generate the page itself
+        std::ofstream out(genrespath + "/" + genrename_page + ".html");
         out << html_final;
         out.close();
     }

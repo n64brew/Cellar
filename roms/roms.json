@@ -14,9 +14,13 @@
                 "netlib": {
                     "AIDisclosure": "",
                     "AgeRating": "",
+                    "Authors": [
+                        "Buu342"
+                    ],
                     "ContentWarning": "",
                     "Date": 1733788800,
                     "DisplayName": "NetLib Examples",
+                    "Genres": null,
                     "Icon": "icons/netlib.png",
                     "Images": [
                         "https://www.youtube.com/watch?v=v9aVrBq0aiY"
@@ -42,9 +46,13 @@
                 "unfloader": {
                     "AIDisclosure": "",
                     "AgeRating": "",
+                    "Authors": [
+                        "Buu342"
+                    ],
                     "ContentWarning": "",
                     "Date": 1614556800,
                     "DisplayName": "UNFLoader Examples",
+                    "Genres": null,
                     "Icon": "icons/unfloader.png",
                     "Images": [
                         "https://www.youtube.com/watch?v=Fr8rSqsFuWk"
@@ -133,9 +141,15 @@
                 "pyoro64": {
                     "AIDisclosure": "",
                     "AgeRating": "All",
+                    "Authors": [
+                        "Buu342"
+                    ],
                     "ContentWarning": "",
                     "Date": 1545696000,
                     "DisplayName": "Pyoro64",
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "icons/pyoro64.png",
                     "Images": [
                         "images/Pyoro64.gif",

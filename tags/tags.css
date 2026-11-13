@@ -1,0 +1,333 @@
+body
+{
+	background-color: #AAAAAA;
+	font: 14px/1.5em Verdana, Arial, Helvetica, sans-serif;
+	background-attachment: fixed;
+}
+
+table
+{
+	font: 14px/1.5em Verdana, Arial, Helvetica, sans-serif;
+	background-attachment: fixed;
+}
+
+.box
+{
+    width: 75%;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px 4px #444444;
+    margin: 32px auto;
+    padding: 32px 64px;
+    text-align: justify;
+}
+
+A {color: #0000AA; text-decoration: none}
+A:link {color: #0000AA; TEXT-DECORATION: none}
+A:visited {color: #0000AA; TEXT-DECORATION: none}
+A:hover {color: #0000AA; TEXT-DECORATION: underline}
+
+h1
+{
+	background-color: #FFFFFF;
+	color: #00;
+    line-height: 1.5em;
+	font-size: 32px;
+    padding: 0px 0px 32px 0px;
+    text-align: center;
+}
+
+h2
+{
+	background-color: #FFFFFF;
+	color: #000;
+	font-size: 20px;
+    line-height: 1.5em;
+    padding: 2px 24px 2px 24px;
+    border: 1px solid #000;
+}
+
+h3
+{
+	background-color: #FFFFFF;
+    color: #000;
+    font-size: 18px;
+    text-decoration: underline;
+    text-align: left;
+}
+
+img 
+{ 
+    max-width: 100%;
+    max-height: 100%;
+}
+
+h1 a, h1 a:link, h1 a:visited, h1 a:hover,
+h2 a, h2 a:link, h2 a:visited, h2 a:hover,
+h3 a, h3 a:link, h3 a:visited, h3 a:hover {
+    color: #000;
+}
+
+pre
+{
+	background-color: #EEEEEE;
+    padding: 0px 24px;
+    border: 1px solid #000;
+    font: 12px/1.5em "Courier New";
+}
+
+.inlinecode
+{
+    font-family: "Courier New";
+}
+
+/* Main project box body */
+.projecticoncontainer
+{
+    width: 249px;
+    margin: 5px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    display: inline-block;
+    vertical-align: bottom;
+    border-spacing: 0px;
+    background-color: #e8e8e8;
+    border: 1px solid #5b5b5b;
+    box-shadow: 2px 2px 2px 0px #6d6d6d;
+}
+
+/* Project header box */
+.projecticonheader
+{
+    width: 233px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    margin: 3px;
+    padding: 0px 3px 0px 3px;
+    overflow: hidden;
+    color: #e8e8e8;
+    outline: 3px solid #e8e8e8;
+    background-color: #a34d4d;
+    border-top: 2px solid #ca6f6f;
+    border-left: 2px solid #ca6f6f;
+    border-right: 2px solid #911414;
+    border-bottom: 2px solid #911414;
+}
+
+/* Project header text */
+.projecticonheadertext
+{
+    width: 235px;
+    height: 30px;
+    font-size: 13px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 100%;
+    text-shadow: 0px 1px #000000;
+}
+
+/* Project icon */
+.projecticonbody
+{
+    width: 240px;
+    height: 125px;
+    background-position: center;
+    background-repeat: repeat;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 150px;
+    border-bottom-right-radius:10px;
+    border-bottom-left-radius:10px;
+    margin: 1px 3px 3px 3px;
+    overflow: hidden;
+    background-color: #a2a2a2;
+    border-left: solid 2px #a2a2a2;
+    border-top: solid 2px #a2a2a2;
+    border-right: solid 1px #a2a2a2;
+    border-bottom: solid 1px #a2a2a2;
+}
+
+.section
+{
+    position: relative;
+    height: 30px;
+    padding-left: 10px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 30px;
+    background-color: #d86363;
+    text-shadow: 1px 1px 1px #492e2e;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.sect-name
+{
+    display: inline-block;
+    width: calc(100% - 40px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ffffff;
+}
+
+.sect-name a
+{
+    color: inherit;
+    line-height: 30px;
+}
+
+.section-contents
+{
+    width: calc(100% - 30px);
+    padding: 00px 10px 10px 0px;
+    text-align: center;
+    transition: max-height 0.2s ease-out;
+    overflow: hidden;
+}
+
+.section-contents .iconcontainer
+{
+    margin: 0px 0px 10px 10px;
+}
+
+.collapse-button
+{
+    float: right;
+    margin-right: 15px;
+    cursor: pointer;
+    height: 30px;
+}
+
+.collapse-button img
+{
+    padding-top: 7px;
+}
+
+@media screen and (min-width: 736px)
+{
+    .carousel-object
+    {
+        width: 540px;
+        height: 310px;
+    }
+}
+
+@media screen and (max-width: 736px)
+{
+    .carousel-object
+    {
+        max-width: 75vw;
+        height: 42vw;
+    }
+}
+
+.carousel-object img
+{
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-object iframe
+{
+    width: 100%;
+    height: 100%;
+    background: black;
+}
+
+.carousel-list
+{
+    background-color: #AAAAAA;
+    overflow: auto;
+    white-space: nowrap;
+    padding: 5px;
+    display: inline-block;
+}
+
+@media screen and (min-width: 736px)
+{
+    .carousel-list
+    {
+        width: 530px;
+    }
+}
+
+@media screen and (max-width: 736px)
+{
+    .carousel-list
+    {
+        max-width: 75vw;
+    }
+}
+
+.carousel-list img
+{
+    margin: 0px;
+}
+
+.carousel-list-object
+{
+    display: inline-block;
+}
+
+.carousel-list-object.video
+{
+    position: relative;
+    z-index: 1;
+}
+
+.video-player
+{
+    position: absolute; 
+    top: 28px;
+    left: 42px;
+    z-index: 2;
+    width:32px;
+    border: none;
+}
+
+.carousel-list-object img
+{
+    width: 116px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+.carousel-list-object:last-child
+{
+    padding-right: 5px;
+}
+
+.carousel-list-object.selected img
+{
+    box-sizing: border-box;
+    border: 1px solid cyan;
+}
+
+.fadeout
+{
+    animation-name: fadeout;
+    animation-duration: 0.5s;
+}
+
+@keyframes fadeout
+{
+    from {opacity: 1}
+    50% {opacity: 0}
+    to {opacity: 0}
+}
+
+.fadein
+{
+    animation-name: fadein;
+    animation-duration: 0.25s;
+}
+
+@keyframes fadein
+{
+    from {opacity: 0}
+    to {opacity: 1}
+}

@@ -154,6 +154,12 @@ void json_loadroms(std::string filepath, std::vector<Category*>* categorylist)
             page->tags.clear();
             for (nlohmann::json::iterator it = (*itproj)["Tags"].begin(); it != (*itproj)["Tags"].end(); ++it)
                 page->tags.push_back(std::string(*it));
+            page->genres.clear();
+            for (nlohmann::json::iterator it = (*itproj)["Genres"].begin(); it != (*itproj)["Genres"].end(); ++it)
+                page->genres.push_back(std::string(*it));
+            page->authors.clear();
+            for (nlohmann::json::iterator it = (*itproj)["Authors"].begin(); it != (*itproj)["Authors"].end(); ++it)
+                page->authors.push_back(std::string(*it));
             pages.push_back(page);
         }
 

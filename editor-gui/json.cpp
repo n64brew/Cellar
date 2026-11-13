@@ -85,6 +85,21 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
     return index;
 }
 
+void json_loadauthors(wxString workingdir, std::vector<wxString>* authors)
+{
+    authors->clear();
+    wxString filepath = workingdir + wxString("/authors/authors.json");
+    if (!wxFileExists(filepath))
+        filepath = workingdir + wxString("/roms/roms.json");
+    if (!wxFileExists(filepath))
+        return;
+    nlohmann::json pagejson = json_fromfilepath(filepath);
+    if (pagejson.contains("Authors") && pagejson["Authors"].is_array())
+        for (const auto& author : pagejson["Authors"])
+            if (author.is_string())
+                authors->push_back(wxString::FromUTF8(author.get<std::string>()));
+}
+
 
 /*==============================
     json_loadroms
@@ -143,6 +158,12 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
             proj->tags.clear();
             for (nlohmann::json::iterator it = (*itproj)["Tags"].begin(); it != (*itproj)["Tags"].end(); ++it)
                 proj->tags.push_back(wxString::FromUTF8(std::string(*it)));
+            proj->genres.clear();
+            for (nlohmann::json::iterator it = (*itproj)["Genres"].begin(); it != (*itproj)["Genres"].end(); ++it)
+                proj->genres.push_back(wxString::FromUTF8(std::string(*it)));
+            if (itproj->contains("Authors") && (*itproj)["Authors"].is_array())
+                for (const auto& author : (*itproj)["Authors"])
+                    proj->authors.push_back(wxString::FromUTF8(author.get<std::string>()));
             proj->category = cat_elem;
             proj->treeid = NULL;
             roms.push_back(proj);
@@ -175,11 +196,36 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
     @param  A pointer to the category list
 ==============================*/
 
-void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
+bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, const std::vector<wxString>& authors)
 {
     wxTextFile out_proj(workingdir + wxString("/roms/roms.json"));
     nlohmann::json romjson = {};
     romjson["Categories"] = {};
+    nlohmann::json authorjson = {};
+    authorjson["Authors"] = nlohmann::json::array();
+    for (const wxString& author : authors)
+        authorjson["Authors"].push_back(author.ToUTF8());
+
+    wxString authorsdir = workingdir + wxString("/authors");
+    if (!wxDirExists(authorsdir) && !wxFileName::Mkdir(authorsdir, 0777, wxPATH_MKDIR_FULL))
+    {
+        wxMessageBox("Could not create the authors directory.", "Error saving authors", wxOK|wxICON_ERROR);
+        return false;
+    }
+    wxTextFile out_authors(authorsdir + wxString("/authors.json"));
+    if (!(out_authors.Exists() ? out_authors.Open() : out_authors.Create()))
+    {
+        wxMessageBox("Could not open the authors file for saving.", "Error saving authors", wxOK|wxICON_ERROR);
+        return false;
+    }
+    out_authors.Clear();
+    out_authors.AddLine(wxString::FromUTF8(authorjson.dump(4)));
+    if (!out_authors.Write())
+    {
+        wxMessageBox("Could not save the authors file.", "Error saving authors", wxOK|wxICON_ERROR);
+        return false;
+    }
+    out_authors.Close();
 
     // Handle roms
     for (Category* cat : *categorylist_roms)
@@ -213,6 +259,12 @@ void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
             romjson["Categories"][catstr]["Pages"][projstr]["Tags"] = {};
             for (wxString str :  proj->tags)
                 romjson["Categories"][catstr]["Pages"][projstr]["Tags"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][projstr]["Genres"] = {};
+            for (wxString str :  proj->genres)
+                romjson["Categories"][catstr]["Pages"][projstr]["Genres"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][projstr]["Authors"] = nlohmann::json::array();
+            for (const wxString& author : proj->authors)
+                romjson["Categories"][catstr]["Pages"][projstr]["Authors"].push_back(author.ToUTF8());
             if (!wxDirExists(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/")))
             {
                 wxFileName dir(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"));
@@ -240,4 +292,5 @@ void json_save(wxString workingdir, std::vector<Category*>* categorylist_roms)
     out_proj.AddLine(wxString::FromUTF8(romjson.dump(4)));
     out_proj.Write();
     out_proj.Close();
+    return true;
 }

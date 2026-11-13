@@ -82,6 +82,7 @@ typedef struct ROM_s {
     std::vector<wxString> images;
     std::vector<wxString> urls;
     std::vector<wxString> tags;
+    std::vector<wxString> authors;
     std::vector<wxString> genres;
     bool wasmodified;
     Category* category;
@@ -98,6 +99,7 @@ class Main : public wxFrame
     private:
         bool m_Modified;
         std::vector<Category*> m_Category_ROMs;
+        std::vector<wxString> m_Authors;
         wxString m_WorkingDir;
         wxTreeItemId m_DraggedItem;
         wxTreeItemId m_SelectedItem;
@@ -124,6 +126,7 @@ class Main : public wxFrame
         wxTextCtrl* m_TextCtrl_ROMs_URLs;
         wxTextCtrl* m_TextCtrl_ROMs_ToolTip;
         wxComboBox* m_ComboBox_ROMs_AgeRating;
+        wxTextCtrl* m_TextCtrl_ROMs_Genres;
         wxTextCtrl* m_TextCtrl_ROMs_ContentWarning;
         wxTextCtrl* m_TextCtrl_ROMs_AIDisclosure;
         wxTextCtrl* m_TextCtrl_ROMs_Description;
@@ -158,6 +161,7 @@ class Main : public wxFrame
         void m_TextCtrl_ROMsCategory_Folder_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_DisplayName_OnText(wxCommandEvent& event);
         void m_ComboBox_ROMs_AgeRating_OnCombobox(wxCommandEvent& event);
+        void m_TextCtrl_ROMs_Genres_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_ContentWarning_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMs_AIDisclosure_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event);
@@ -182,7 +186,7 @@ class Main : public wxFrame
         void LoadROMs();
         void EndDrag(wxTreeEvent& event, wxTreeCtrl* tree, std::vector<Category*>* categorylist);
         void EndDrag_ROM(wxTreeEvent& event);
-        void Save();
+        bool Save();
         void MarkModified(bool modified=true);
         void ShowROMEditor(bool show=true);
         void ShowROMCategoryEditor(bool show=true);
