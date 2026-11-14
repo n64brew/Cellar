@@ -105,7 +105,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/64noid.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=LEQ6tPu-t4s"
                     ],
@@ -137,7 +137,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BigBurger.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=hhZNXj9pTME"
                     ],
@@ -168,7 +168,7 @@
                     "Genres": [
                         "RPG"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Castle64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=5WWj622yLsk"
                     ],
@@ -199,7 +199,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Juicin64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=26CVs6R-WFY"
                     ],
@@ -231,7 +231,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/JustAddWater.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=m6-vxqsInnY"
                     ],
@@ -265,7 +265,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Kumi-DaikoBeatoff64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=gTvFfxZkaRQ"
                     ],
@@ -299,7 +299,7 @@
                     "Genres": [
                         "Third Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/LunarAssault64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=4D9HI-nIohg"
                     ],
@@ -330,7 +330,7 @@
                     "Genres": [
                         "Runner"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/RetroDash.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=TC1EYy3Faf0"
                     ],
@@ -361,7 +361,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Sblobber64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=F7gdtcwCVIg"
                     ],
@@ -393,7 +393,7 @@
                     "Genres": [
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Tecto.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=f6JBRPTfC1g"
                     ],
@@ -426,7 +426,7 @@
                         "Puzzle",
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/TelocationGemini.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=Wfhck7-S64k"
                     ],
@@ -461,7 +461,7 @@
                         "Third Person Shooter",
                         "Action Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Test3rdPersonDemo.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=-9grCztWsUQ"
                     ],
@@ -494,7 +494,7 @@
                     "Genres": [
                         "Action Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/The Swoop64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=VBWiqwRB-is"
                     ],
@@ -525,7 +525,7 @@
                     "Genres": [
                         "Hack and Slash"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Thornmarked.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=vcHrUgboPZs"
                     ],
@@ -548,7 +548,7 @@
             }
         },
         "n64brew-gamejam2021": {
-            "Description": "The N64brew game jam returned for 2021, featuring Giles Goddard, Kaze Emanuar, LuigiBlood, and Samuel “Kaiser” Villarreal as guest judges. This year, the money was decided to be used for charity, with the winner choosing where the money would go. The theme was **Control**, and <ins>Wizard of the Board</ins> won this year, donating the prize pot of $1,254.38 to the [Rainforest Trust](https://www.rainforesttrust.org/). <ins>Mission Lost Control</ins> got second place while <ins>Voidblade</ins> got third.",
+            "Description": "",
             "DisplayName": "N64brew Game Jam #2",
             "Index": 5,
             "Pages": {
@@ -564,7 +564,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Asteroids64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=gEhEoUaE_Ng"
                     ],
@@ -596,7 +596,7 @@
                     "Genres": [
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BugGame.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=K6JS0ttwyoY"
                     ],
@@ -626,7 +626,7 @@
                     "Genres": [
                         "Side Scrolling Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Featherlight.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=rkE_V89PM3I"
                     ],
@@ -658,7 +658,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/FissionFailure64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=3J_7XEn3EsY"
                     ],
@@ -690,7 +690,7 @@
                     "Genres": [
                         "Racing"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BirdKart.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=mLQiTpELDqE"
                     ],
@@ -722,7 +722,7 @@
                     "Genres": [
                         "Realtime Strategy"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/MissionLostControl.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=O6aTcppKZcs"
                     ],
@@ -759,7 +759,7 @@
                         "Platformer",
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/PowerStruggle.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=MKJOTaFO178"
                     ],
@@ -793,7 +793,7 @@
                     "Genres": [
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/TandemTrouble.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=9WpzKl-lcPs"
                     ],
@@ -829,7 +829,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Voidblade.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=2GZiu8VvCyg"
                     ],
@@ -865,7 +865,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/WizardoftheBoard.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=0pY0p_ncCpg"
                     ],
@@ -900,7 +900,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/sUGGOH.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=QdZ5MrJzE2Y"
                     ],
@@ -930,7 +930,7 @@
                         "Shooter",
                         "Bullet Hell"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/zzgunner.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=CFNRegquCUA"
                     ],
@@ -951,7 +951,7 @@
             }
         },
         "n64brew-gamejam2022": {
-            "Description": "N64brew's game jam returned for 2022, with a **Spooky** theme. Judges this year were N64 Squid, Gerry (BehindTheCode.ca), and Buu342. The final prize pool of  $1369.65 was donated to [Child’s Play](https://childsplaycharity.org/) by the winning entry <ins>Styx</ins>. Second place was taken by <ins>Super Snooper Spookers</ins> while third place was <ins>Spirit Harvest</ins>.",
+            "Description": "",
             "DisplayName": "N64brew Spooky Jam",
             "Index": 4,
             "Pages": {
@@ -969,7 +969,7 @@
                     "Genres": [
                         "First Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/DeadRitual.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=CWuPhrATV1s"
                     ],
@@ -1001,7 +1001,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/FangersLightmare.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=XS7-zWjRCnM"
                     ],
@@ -1031,7 +1031,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SlimeHeist.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=bCI25FMCa_0"
                     ],
@@ -1063,7 +1063,7 @@
                     "Genres": [
                         "Action Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SpiritHarvest.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=rM8RJgieIWE"
                     ],
@@ -1094,7 +1094,7 @@
                     "Genres": [
                         "Simulation"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Styx.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=b0MsNjnya4g"
                     ],
@@ -1123,7 +1123,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SuperSnooperSpookers.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=4mN0cK_cYvM"
                     ],
@@ -1152,7 +1152,7 @@
                     "Genres": [
                         "Third Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SwampHero64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=FD81A_lHspQ"
                     ],
@@ -1184,7 +1184,7 @@
                     "Genres": [
                         "Action Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/TinyNightmare.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=6xzvZ9X-DYU"
                     ],
@@ -1204,7 +1204,7 @@
             }
         },
         "n64brew-gamejam2023": {
-            "Description": "For the fourth year in a row, N64brew hosted a game jam. This year the theme was **Summer*, and the community voted on their favorite entries. <ins>Summer's Story</ins> got first place, the <ins>Megatextures demo</ins> got second, and <ins>Alien Sun</ins> got third. $776.76 was raised for the [Michael J. Fox Foundation for Parkinson’s Research](https://www.michaeljfox.org/)",
+            "Description": "",
             "DisplayName": "N64brew Summer Game Jam",
             "Index": 3,
             "Pages": {
@@ -1220,7 +1220,7 @@
                     "Genres": [
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/AlienSun.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=cXMMXLoOnq8"
                     ],
@@ -1249,7 +1249,7 @@
                     "Genres": [
                         "Sports"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BrewVolley.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=AcwvWK3quHI"
                     ],
@@ -1280,7 +1280,7 @@
                     "Genres": [
                         "Demo"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/MegatexturesTechDemo.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=plh9OGel-lM"
                     ],
@@ -1308,7 +1308,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SandCastleClamour.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=WJXv9obtsgk"
                     ],
@@ -1340,7 +1340,7 @@
                         "Realtime Strategy",
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SandCity.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=dwH7yVGouPU"
                     ],
@@ -1372,7 +1372,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SummersStory.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=MF9AGF3hq8Q"
                     ],
@@ -1487,7 +1487,7 @@
                     "Genres": [
                         "Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/AsteRisk.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=fq96Ov1huZs"
                     ],
@@ -1522,7 +1522,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Biosphere64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=hPyRjDIJ-kE"
                     ],
@@ -1560,7 +1560,7 @@
                     "Genres": [
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BotBoy64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=zxTwY_nq_Lc"
                     ],
@@ -1596,7 +1596,7 @@
                         "Puzzle",
                         "First Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BoxFixBoxwithBox.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=ciBjht1sB7I"
                     ],
@@ -1634,7 +1634,7 @@
                         "Point and Click",
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/BunbrushinOperationFriendshipRepair.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=I8IhjqLPi5Q"
                     ],
@@ -1665,7 +1665,7 @@
                     "Genres": [
                         "Platformer"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/CathodeQuest64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=tMPgMgaCFks"
                     ],
@@ -1702,7 +1702,7 @@
                         "Puzzle",
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/ConsoleClash.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=0UVDae6cVIw"
                     ],
@@ -1739,7 +1739,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/DamN64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=csj1eFb8So8"
                     ],
@@ -1775,7 +1775,7 @@
                     "Genres": [
                         "Hack and Slash"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Fallout.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=1USHJaGa31w"
                     ],
@@ -1814,7 +1814,7 @@
                     "Genres": [
                         "Simulation"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Icefishing.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=qrUc-IQmv18"
                     ],
@@ -1854,7 +1854,7 @@
                     "Genres": [
                         "Action Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/JunkRunner64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=N4DGzLnpqN0"
                     ],
@@ -1891,7 +1891,7 @@
                     "Genres": [
                         "Third Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/KaijuResponseTeam.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=jDecfYymH3A"
                     ],
@@ -1926,7 +1926,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/MysteriousBarricades.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=paQaTM_43NQ"
                     ],
@@ -1961,7 +1961,7 @@
                     "Genres": [
                         "Choose Your Own Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/N64Giallo.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=i41aIYfc__k"
                     ],
@@ -1997,7 +1997,7 @@
                     "Genres": [
                         "Soulslike"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Pandemonium.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=TD6IwKuiHts"
                     ],
@@ -2033,7 +2033,7 @@
                         "Side Scrolling Platformer",
                         "Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Phazer64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=geFmJRfoz_w"
                     ],
@@ -2069,7 +2069,7 @@
                         "Puzzle",
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Plug-N-Repair.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=MHLKCJwfNno"
                     ],
@@ -2104,7 +2104,7 @@
                     "Genres": [
                         "First Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/RepairmanvsCreatures.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=fRKFMxn9CT8"
                     ],
@@ -2140,7 +2140,7 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/RoboRenovations.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=AluRIpxzJlI"
                     ],
@@ -2175,7 +2175,7 @@
                     "Genres": [
                         "Action Adventure"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/SomewheretoEscape.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=MHTUCdY1RCA"
                     ],
@@ -2211,7 +2211,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/TheBigFix.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=iDx8vVDBjmU"
                     ],
@@ -2247,7 +2247,7 @@
                     "Genres": [
                         "Puzzle"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/UnchartedTerra2264.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=RIAkb_hQzLo"
                     ],
@@ -2285,7 +2285,7 @@
                     "Genres": [
                         "Simulation"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/UntitledRacingGame.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=jaSlwMRqT_E"
                     ],
@@ -2322,7 +2322,7 @@
                     "Genres": [
                         "Twin-stick Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/WizardCritter64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=t7x9hytnDlg"
                     ],
@@ -2358,7 +2358,7 @@
                         "Puzzle",
                         "Strategy"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/WrenchWrangle.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=oIVFJShVUjY"
                     ],
@@ -2398,7 +2398,7 @@
                     "Genres": [
                         "Simulation"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/Moonfish.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=UjQNXANZWRo"
                     ],
@@ -2433,7 +2433,7 @@
                     "Genres": [
                         "Fighting"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/someone2639sUltimateGadgetGameofMartialArts.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=OXuXcsfumh0"
                     ],
@@ -2470,7 +2470,7 @@
                     "Genres": [
                         "First Person Shooter"
                     ],
-                    "Icon": "",
+                    "Icon": "icons/ToolTime64.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=AGB8IND4bM4"
                     ],
