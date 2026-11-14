@@ -21,7 +21,7 @@
                     "Date": 1733788800,
                     "DisplayName": "NetLib Examples",
                     "Genres": null,
-                    "Icon": "icons/netlib.png",
+                    "Icon": "icons/netlib.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=v9aVrBq0aiY"
                     ],
@@ -55,7 +55,7 @@
                     "Date": 1614556800,
                     "DisplayName": "UNFLoader Examples",
                     "Genres": null,
-                    "Icon": "icons/unfloader.png",
+                    "Icon": "icons/unfloader.jpg",
                     "Images": [
                         "https://www.youtube.com/watch?v=Fr8rSqsFuWk"
                     ],
@@ -2530,10 +2530,10 @@
                     "Genres": [
                         "Arcade"
                     ],
-                    "Icon": "icons/pyoro64.png",
+                    "Icon": "icons/pyoro64.jpg",
                     "Images": [
                         "images/Pyoro64.gif",
-                        "images/PyoroDocs.png"
+                        "images/PyoroDocs.jpg"
                     ],
                     "Index": 0,
                     "Tags": [

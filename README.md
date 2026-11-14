@@ -35,6 +35,12 @@ where `category` is the category key in the JSON file (AKA `Folder:` in the GUI)
 1) Make a fork of this repo.
 2) Use the GUI tool to make relevant changes, or do it manually by editing the JSON file.
 3) Compile the whole website and then submit a PR with your changes.
+
+**Reccomendations:**
+1) Prefer jpg images to pngs to save space. For author pages, don't use images larger than 512x512.
+2) ROM icons should be 240x125, and should be placed in the icons folder of their respective category. Use `icons/iconname.jpg` in the editor. 
+3) Images should be placed in the `images/` folder of their respective category. Use `images/imagename.jpg` in the editor. You can also place YouTube links in the images section.
+4) Descriptions all accept embedded HTML and markdown.
 </br></br>
 
 
