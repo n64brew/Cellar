@@ -89,25 +89,31 @@
             "Pages": null
         },
         "n64brew-gamejam2020": {
-            "Description": "",
+            "Description": "In 2020, the N64brew Discord community hosted their first N64 homebrew game jam, with the theme **Size**. The jam featured judges David Doak, Allan Findlay, Neil Voss, Youtuber Snooplax, and N64brew user Buu342. The winner of the Jam this year was <ins>Telocation Gemini</ins>, taking home $676.26 of the $1,127.10 prize pool. Second place was tied by <ins>Kumi-Daiki Beatoff 64</ins> and <ins>Sblobber 64</ins>, third place was tied by <ins>Lunar Assault 64</ins> and <ins>The Swoop 64</ins>.",
             "DisplayName": "N64brew Game Jam #1",
             "Index": 6,
             "Pages": {
                 "64noid": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "gamemasterplc"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "64noid",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=LEQ6tPu-t4s"
+                    ],
                     "Index": 0,
                     "Tags": [
+                        "1 Player",
                         "EEPROM Saves",
+                        "Libultra",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator",
@@ -121,18 +127,24 @@
                 },
                 "BigBurger": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Allie"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Big Burger",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=hhZNXj9pTME"
+                    ],
                     "Index": 1,
                     "Tags": [
+                        "1 Player",
+                        "Libultra",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -141,25 +153,30 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/allie/bigburger",
-                        "downloads/BigBurgerBig_Burger_10_NTSC.n64",
-                        "downloads/BigBurgerBig_Burger_10_PAL.n64"
+                        "downloads/Big_Burger_1.0.zip"
                     ]
                 },
                 "Castle64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "manfried"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Castle64",
-                    "Genres": null,
+                    "Genres": [
+                        "RPG"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=5WWj622yLsk"
+                    ],
                     "Index": 2,
                     "Tags": [
+                        "1 Player",
                         "Expansion Pak Required",
+                        "Libultra",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Inaccurate Emulator"
@@ -167,50 +184,60 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/manfriedn64/castlen64",
-                        "downloads/Castle64.n64"
+                        "downloads/castle.n64"
                     ]
                 },
                 "Juicin64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "kivan117"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Juicin64",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=26CVs6R-WFY"
+                    ],
                     "Index": 3,
                     "Tags": [
+                        "1 Player",
                         "EEPROM Saves",
                         "Libdragon",
                         "NTSC Console",
+                        "PAL Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/kivan117/juicin64",
-                        "downloads/Juicin64_ntsc.z64",
-                        "downloads/Juicin64_pal.z64"
+                        "downloads/juicin64.zip"
                     ]
                 },
                 "JustAddWater": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "joeldipops"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Just Add Water",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=m6-vxqsInnY"
+                    ],
                     "Index": 4,
                     "Tags": [
+                        "1 Player",
                         "Libdragon",
                         "NTSC Console",
                         "PAL Console",
@@ -220,12 +247,12 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/joeldipops/just-add-water",
-                        "downloads/JustAddWater.z64"
+                        "downloads/just_add_water.z64"
                     ]
                 },
                 "KumiDaikoBeatoff64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Samuli",
                         "Routalanttu",
@@ -235,11 +262,20 @@
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Kumi-Daiko Beatoff 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=gTvFfxZkaRQ"
+                    ],
                     "Index": 5,
                     "Tags": [
+                        "1 Player",
+                        "2 Players",
+                        "3 Players",
+                        "4 Players",
+                        "Libultra",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -248,23 +284,29 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/ptimonen/n64-riistahillo",
-                        "downloads/KumiDaikoBeatoff64.n64"
+                        "downloads/Kumi-Daiko-Beatoff-64.n64"
                     ]
                 },
                 "LunarAssault64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "danielface"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Lunar Assault 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Third Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=4D9HI-nIohg"
+                    ],
                     "Index": 6,
                     "Tags": [
+                        "1 Player",
+                        "Libultra",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -273,24 +315,28 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/danbolt/n64-jam-1",
-                        "downloads/LunarAssault64lunar_assault_64_1_0_NTSC.n64",
-                        "downloads/LunarAssault64lunar_assault_64_1_0_PAL.n64"
+                        "downloads/lunar_assault_64_1_0.zip"
                     ]
                 },
                 "RetroDash": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "SpiritOf1776"
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Retro Dash",
-                    "Genres": null,
+                    "Genres": [
+                        "Runner"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=TC1EYy3Faf0"
+                    ],
                     "Index": 7,
                     "Tags": [
+                        "1 Player",
                         "Libdragon",
                         "NTSC Console",
                         "Source Code Available",
@@ -299,12 +345,12 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/matthewcpp/retrodash",
-                        "downloads/RetroDash.z64"
+                        "downloads/RetroDash_final.z64"
                     ]
                 },
                 "Sblobber64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "vieux",
                         "Isabel"
@@ -312,25 +358,31 @@
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Sblobber64",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=F7gdtcwCVIg"
+                    ],
                     "Index": 8,
                     "Tags": [
+                        "1 Player",
                         "Libdragon",
                         "NTSC Console",
+                        "Rumble Pak",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/vrgl117-games/sblobber64",
-                        "downloads/Sblobber64.z64"
+                        "downloads/sblobber64.z64"
                     ]
                 },
                 "Tecto": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "InTheBeef",
                         "Wiseguy"
@@ -338,11 +390,17 @@
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Tecto",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=f6JBRPTfC1g"
+                    ],
                     "Index": 9,
                     "Tags": [
+                        "1 Player",
+                        "Libultra",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -350,12 +408,12 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/TheShaders/Tecto",
-                        "downloads/Tecto.z64"
+                        "downloads/tecto.z64"
                     ]
                 },
                 "Telocation": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "lambertjamesd",
                         "jtn191",
@@ -363,13 +421,21 @@
                     ],
                     "ContentWarning": "",
                     "Date": 1577836800,
-                    "DisplayName": "Telocation",
-                    "Genres": null,
+                    "DisplayName": "Telocation Gemini",
+                    "Genres": [
+                        "Puzzle",
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=Wfhck7-S64k"
+                    ],
                     "Index": 10,
                     "Tags": [
+                        "1 Player",
+                        "2 Players",
                         "EEPROM Saves",
+                        "Libultra",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -378,12 +444,12 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/lambertjamesd/N64GameJam",
-                        "downloads/Telocation.n64"
+                        "downloads/TelocationFinal.n64"
                     ]
                 },
                 "Test3rdPersonDemo": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "WadeMalone",
                         "Geist"
@@ -391,24 +457,31 @@
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Test 3rd Person Demo",
-                    "Genres": null,
+                    "Genres": [
+                        "Third Person Shooter",
+                        "Action Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=-9grCztWsUQ"
+                    ],
                     "Index": 11,
                     "Tags": [
+                        "1 Player",
+                        "Libultra",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Inaccurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
-                        "https://drive.google.com/file/d/1MXSf4lrRpUz5_O7HZXR99uhahz8r088I/view?usp=sharing",
-                        "downloads/Test3rdPersonDemo.n64"
+                        "downloads/Test3rdPersonDemo-source.zip",
+                        "downloads/3rdpersondemo.n64"
                     ]
                 },
                 "TheSwoop64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Zest",
                         "Catonator",
@@ -418,11 +491,17 @@
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "The Swoop 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Action Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=VBWiqwRB-is"
+                    ],
                     "Index": 12,
                     "Tags": [
+                        "1 Player",
+                        "Libultra",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Inaccurate Emulator"
@@ -430,52 +509,68 @@
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/zestydevy/birdjam",
-                        "downloads/TheSwoop64.n64"
+                        "downloads/bird.n64"
                     ]
                 },
                 "Thornmarked": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
-                    "Authors": [],
+                    "AgeRating": "All",
+                    "Authors": [
+                        "Vanadium",
+                        "Wallmasterr"
+                    ],
                     "ContentWarning": "",
                     "Date": 1577836800,
                     "DisplayName": "Thornmarked",
-                    "Genres": null,
+                    "Genres": [
+                        "Hack and Slash"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=vcHrUgboPZs"
+                    ],
                     "Index": 13,
                     "Tags": [
+                        "1 Player",
+                        "2 Players",
+                        "Libultra",
                         "NTSC Console",
-                        "Source Code Available"
+                        "PAL Console",
+                        "Source Code Available",
+                        "Supports Inaccurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2020 submission.",
                     "URLs": [
                         "https://github.com/depp/thornmarked",
-                        "downloads/Thornmarked_NTSC.n64",
-                        "downloads/Thornmarked_PAL.n64"
+                        "downloads/Thornmarked.zip"
                     ]
                 }
             }
         },
         "n64brew-gamejam2021": {
-            "Description": "",
+            "Description": "The N64brew game jam returned for 2021, featuring Giles Goddard, Kaze Emanuar, LuigiBlood, and Samuel “Kaiser” Villarreal as guest judges. This year, the money was decided to be used for charity, with the winner choosing where the money would go. The theme was **Control**, and <ins>Wizard of the Board</ins> won this year, donating the prize pot of $1,254.38 to the [Rainforest Trust](https://www.rainforesttrust.org/). <ins>Mission Lost Control</ins> got second place while <ins>Voidblade</ins> got third.",
             "DisplayName": "N64brew Game Jam #2",
             "Index": 5,
             "Pages": {
                 "Asteroids64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "gamemasterplc"
                     ],
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Asteroids 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=gEhEoUaE_Ng"
+                    ],
                     "Index": 0,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -484,12 +579,12 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/gamemasterplc/n64game",
-                        "downloads/Asteroids64.z64"
+                        "downloads/asteroids64.z64"
                     ]
                 },
                 "BugGame": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Hazematman",
                         "Darklink623",
@@ -498,11 +593,16 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Bug Game",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
-                    "Index": 1,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=K6JS0ttwyoY"
+                    ],
+                    "Index": 2,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -510,12 +610,12 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/Hazematman/Bug-Game",
-                        "downloads/BugGame.z64"
+                        "downloads/bug_game.z64"
                     ]
                 },
                 "Featherlight": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "YoshiMaster96",
                         "lepidotós"
@@ -523,11 +623,16 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Featherlight",
-                    "Genres": null,
+                    "Genres": [
+                        "Side Scrolling Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
-                    "Index": 2,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=rkE_V89PM3I"
+                    ],
+                    "Index": 3,
                     "Tags": [
+                        "1 Player",
                         "Source Code Available",
                         "Supports Accurate Emulator",
                         "Supports Inaccurate Emulator"
@@ -535,13 +640,12 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/Yoshimaster96/N64BrewGameJam2021",
-                        "downloads/Featherlight.z64",
-                        "downloads/FeatherlightFixed.z64"
+                        "downloads/featherlight.zip"
                     ]
                 },
                 "FissionFailure64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "vieux",
                         "Isabel",
@@ -551,12 +655,18 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Fission Failure 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
-                    "Index": 3,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=3J_7XEn3EsY"
+                    ],
+                    "Index": 4,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
+                        "Rumble Pak",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -568,7 +678,7 @@
                 },
                 "Game": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Zest",
                         "Squiddy",
@@ -576,12 +686,17 @@
                     ],
                     "ContentWarning": "",
                     "Date": 1609459200,
-                    "DisplayName": "Game",
-                    "Genres": null,
+                    "DisplayName": "Bird Kart",
+                    "Genres": [
+                        "Racing"
+                    ],
                     "Icon": "",
-                    "Images": null,
-                    "Index": 4,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=mLQiTpELDqE"
+                    ],
+                    "Index": 1,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Inaccurate Emulator"
@@ -589,13 +704,12 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/zestydevy/jam2",
-                        "downloads/Game.z64",
-                        "downloads/GameBackupMightWorkBetter.z64"
+                        "downloads/game.zip"
                     ]
                 },
                 "MissionLostControl": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "lambertjamesd",
                         "jtn191",
@@ -605,11 +719,19 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Mission Lost Control",
-                    "Genres": null,
+                    "Genres": [
+                        "Realtime Strategy"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=O6aTcppKZcs"
+                    ],
                     "Index": 5,
                     "Tags": [
+                        "1 Player",
+                        "2 Players",
+                        "3 Players",
+                        "4 Players",
                         "EEPROM Saves",
                         "NTSC Console",
                         "PAL Console",
@@ -624,7 +746,7 @@
                 },
                 "PowerStruggle": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Wiseguy",
                         "InTheBeef",
@@ -633,11 +755,17 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Power Struggle",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer",
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=MKJOTaFO178"
+                    ],
                     "Index": 6,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -647,12 +775,12 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/TheShaders/PowerStruggle",
-                        "downloads/PowerStruggle.z64"
+                        "downloads/powerstruggle.z64"
                     ]
                 },
                 "TandemTrouble": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "kivan117",
                         "Quilt",
@@ -662,14 +790,23 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Tandem Trouble",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=9WpzKl-lcPs"
+                    ],
                     "Index": 8,
                     "Tags": [
-                        "MPAL Console",
+                        "1 Player",
+                        "2 Players",
+                        "64Drive",
+                        "Everdrive",
+                        "Libultra",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator",
                         "Supports Inaccurate Emulator"
@@ -677,32 +814,43 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/matthewcpp/n64brew-gamejam-2021",
-                        "downloads/TandemTroubletandem_trouble_ntsc.n64",
-                        "downloads/TandemTroubletandem_trouble_pal.n64"
+                        "downloads/tandem_trouble.zip"
                     ]
                 },
                 "Voidblade": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "anacierdem"
                     ],
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Voidblade",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=2GZiu8VvCyg"
+                    ],
                     "Index": 9,
                     "Tags": [
+                        "1 Player",
+                        "2 Players",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/anacierdem/n64brew-jam",
-                        "downloads/Voidblade.z64"
+                        "downloads/voidblade.z64"
                     ]
                 },
                 "WizardoftheBoard": {
@@ -714,35 +862,48 @@
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "Wizard of the Board",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=0pY0p_ncCpg"
+                    ],
                     "Index": 10,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libultra",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
-                        "Supports Accurate Emulator"
+                        "Supports Accurate Emulator",
+                        "Supports Inaccurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/danbolt/n64-jam-2",
-                        "downloads/WizardoftheBoardWizard_of_the_Board_1_0_NTSC.z64",
-                        "downloads/WizardoftheBoardWizard_of_the_Board_1_0_PAL.z64"
+                        "downloads/Wizard_of_the_Board_1_0.zip"
                     ]
                 },
-                "sUGGOH_someone2639_sUltraGalacticGameOfHorse!": {
+                "sUGGOH_someone2639sUltraGalacticGameOfHorse!": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "someone2639"
                     ],
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "sUGGOH: someone2639's Ultra-Galactic Game Of Horse!",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=QdZ5MrJzE2Y"
+                    ],
                     "Index": 7,
                     "Tags": [
                         "2 Players",
@@ -753,24 +914,29 @@
                     "ToolTip": "N64brew Game Jam 2021 submission.",
                     "URLs": [
                         "https://github.com/farisawan-2000/n64gamejam-2/",
-                        "downloads/sUGGOH_someone2639_sUltraGalacticGameOfHorse!.z64",
-                        "downloads/sUGGOH_someone2639_sUltraGalacticGameOfHorse!Day2Patch.z64"
+                        "downloads/suggoh.zip"
                     ]
                 },
                 "zzgunner": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Ryzee119"
                     ],
                     "ContentWarning": "",
                     "Date": 1609459200,
                     "DisplayName": "zzgunner",
-                    "Genres": null,
+                    "Genres": [
+                        "Shooter",
+                        "Bullet Hell"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=CFNRegquCUA"
+                    ],
                     "Index": 11,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "PAL Console",
                         "Source Code Available",
@@ -785,26 +951,31 @@
             }
         },
         "n64brew-gamejam2022": {
-            "Description": "",
-            "DisplayName": "N64brew Game Jam #3",
+            "Description": "N64brew's game jam returned for 2022, with a **Spooky** theme. Judges this year were N64 Squid, Gerry (BehindTheCode.ca), and Buu342. The final prize pool of  $1369.65 was donated to [Child’s Play](https://childsplaycharity.org/) by the winning entry <ins>Styx</ins>. Second place was taken by <ins>Super Snooper Spookers</ins> while third place was <ins>Spirit Harvest</ins>.",
+            "DisplayName": "N64brew Spooky Jam",
             "Index": 4,
             "Pages": {
                 "DeadRitual": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "Teens",
                     "Authors": [
                         "kivan117",
                         "SpiritOf1776",
                         "Hypatia"
                     ],
-                    "ContentWarning": "",
+                    "ContentWarning": "Contains zombies",
                     "Date": 1640995200,
                     "DisplayName": "Dead Ritual",
-                    "Genres": null,
+                    "Genres": [
+                        "First Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=CWuPhrATV1s"
+                    ],
                     "Index": 0,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -812,12 +983,12 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/matthewcpp/n64brew-gamejam-2022",
-                        "downloads/DeadRitual.z64"
+                        "downloads/deadritual.z64"
                     ]
                 },
-                "Fanger_sLightmare": {
+                "FangersLightmare": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "pepsiman",
                         "Brozilla",
@@ -827,11 +998,16 @@
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Fanger's Lightmare",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=XS7-zWjRCnM"
+                    ],
                     "Index": 1,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -839,12 +1015,12 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/pepsiman3/nightlight-vampire",
-                        "downloads/FangersLightmare.z64"
+                        "downloads/fangerslightmare.z64"
                     ]
                 },
                 "SlimeHeist": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "YoshiMaster96",
                         "Raphaël"
@@ -852,11 +1028,16 @@
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Slime Heist",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=bCI25FMCa_0"
+                    ],
                     "Index": 2,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator",
@@ -865,12 +1046,12 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/Yoshimaster96/N64BrewGameJam2022",
-                        "downloads/SlimeHeist.z64"
+                        "downloads/slimeheist.z64"
                     ]
                 },
                 "SpiritHarvest": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "WadeMalone",
                         "bryc",
@@ -879,11 +1060,16 @@
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Spirit Harvest",
-                    "Genres": null,
+                    "Genres": [
+                        "Action Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=rM8RJgieIWE"
+                    ],
                     "Index": 3,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -891,12 +1077,12 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/N64brew-Game-Jam-2022/Spirit-Harvest",
-                        "downloads/SpiritHarvest.n64"
+                        "downloads/spiritharvest.n64"
                     ]
                 },
                 "Styx": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "lambertjamesd",
                         "jtn191",
@@ -905,11 +1091,16 @@
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Styx",
-                    "Genres": null,
+                    "Genres": [
+                        "Simulation"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=b0MsNjnya4g"
+                    ],
                     "Index": 4,
                     "Tags": [
+                        "1 Player",
                         "Expansion Pak Required",
                         "NTSC Console",
                         "Source Code Available"
@@ -917,23 +1108,28 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/lambertjamesd/n64brew2022",
-                        "downloads/Styx.z64"
+                        "downloads/styx.z64"
                     ]
                 },
                 "SuperSnooperSpookers": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "CardboardBox"
                     ],
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Super Snooper Spookers",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=4mN0cK_cYvM"
+                    ],
                     "Index": 5,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -941,23 +1137,28 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/0xB0C5/spook64",
-                        "downloads/SuperSnooperSpookers.z64"
+                        "downloads/supersnooperspookers.z64"
                     ]
                 },
                 "SwampHero64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "torte00"
                     ],
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Swamp Hero 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Third Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=FD81A_lHspQ"
+                    ],
                     "Index": 6,
                     "Tags": [
+                        "1 Player",
                         "Source Code Available",
                         "Supports Accurate Emulator",
                         "Supports Inaccurate Emulator"
@@ -965,12 +1166,12 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/torte00/Swamp-Hero-64",
-                        "downloads/SwampHero64.n64"
+                        "downloads/swamphero64.n64"
                     ]
                 },
                 "TinyNightmare": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "zoncabe",
                         "jaltekruse",
@@ -980,11 +1181,16 @@
                     "ContentWarning": "",
                     "Date": 1640995200,
                     "DisplayName": "Tiny Nightmare",
-                    "Genres": null,
+                    "Genres": [
+                        "Action Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=6xzvZ9X-DYU"
+                    ],
                     "Index": 7,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -992,30 +1198,35 @@
                     "ToolTip": "N64brew Game Jam 2022 submission.",
                     "URLs": [
                         "https://github.com/MrGlitchByte/TinyNightmare64",
-                        "downloads/TinyNightmare.z64"
+                        "downloads/tinynightmare.z64"
                     ]
                 }
             }
         },
         "n64brew-gamejam2023": {
-            "Description": "",
-            "DisplayName": "N64brew Game Jam #4",
+            "Description": "For the fourth year in a row, N64brew hosted a game jam. This year the theme was **Summer*, and the community voted on their favorite entries. <ins>Summer's Story</ins> got first place, the <ins>Megatextures demo</ins> got second, and <ins>Alien Sun</ins> got third. $776.76 was raised for the [Michael J. Fox Foundation for Parkinson’s Research](https://www.michaeljfox.org/)",
+            "DisplayName": "N64brew Summer Game Jam",
             "Index": 3,
             "Pages": {
                 "AlienSun": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "9_nova"
                     ],
                     "ContentWarning": "",
                     "Date": 1672531200,
                     "DisplayName": "Alien Sun",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=cXMMXLoOnq8"
+                    ],
                     "Index": 0,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -1023,23 +1234,28 @@
                     "ToolTip": "N64brew Game Jam 2023 submission.",
                     "URLs": [
                         "https://github.com/9nova/aliensun",
-                        "downloads/AlienSun.z64"
+                        "downloads/aliensun.z64"
                     ]
                 },
                 "BrewVolley": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "tfmoe__"
                     ],
                     "ContentWarning": "",
                     "Date": 1672531200,
                     "DisplayName": "Brew Volley",
-                    "Genres": null,
+                    "Genres": [
+                        "Sports"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=AcwvWK3quHI"
+                    ],
                     "Index": 1,
                     "Tags": [
+                        "2 Players",
                         "PAL Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -1047,12 +1263,12 @@
                     "ToolTip": "N64brew Game Jam 2023 submission.",
                     "URLs": [
                         "https://github.com/marian-m12l/n64brew-gamejam-4",
-                        "downloads/BrewVolley.z64"
+                        "downloads/brew_volley.z64"
                     ]
                 },
                 "MegatexturesTechDemo": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "lambertjamesd",
                         "jtn191",
@@ -1061,34 +1277,44 @@
                     "ContentWarning": "",
                     "Date": 1672531200,
                     "DisplayName": "Megatextures Tech Demo",
-                    "Genres": null,
+                    "Genres": [
+                        "Demo"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=plh9OGel-lM"
+                    ],
                     "Index": 2,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
                         "Source Code Available"
                     ],
                     "ToolTip": "N64brew Game Jam 2023 submission.",
                     "URLs": [
                         "https://github.com/lambertjamesd/n64brew2023",
-                        "downloads/MegatexturesTechDemo.z64"
+                        "downloads/megatextures-techdemo.z64"
                     ]
                 },
                 "SandCastleClamour": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "traill"
                     ],
                     "ContentWarning": "",
                     "Date": 1672531200,
                     "DisplayName": "Sand Castle Clamour",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=WJXv9obtsgk"
+                    ],
                     "Index": 3,
                     "Tags": [
+                        "1 Player",
                         "Expansion Pak Required",
                         "NTSC Console",
                         "Source Code Available",
@@ -1097,12 +1323,12 @@
                     "ToolTip": "N64brew Game Jam 2023 submission.",
                     "URLs": [
                         "https://github.com/Traillio/sand_castle_clamour",
-                        "downloads/SandCastleClamour.z64"
+                        "downloads/Sand_castle_clamour.z64"
                     ]
                 },
                 "SandCity": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "wadetyhon",
                         "cryb"
@@ -1110,11 +1336,17 @@
                     "ContentWarning": "",
                     "Date": 1672531200,
                     "DisplayName": "Sand City",
-                    "Genres": null,
+                    "Genres": [
+                        "Realtime Strategy",
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=dwH7yVGouPU"
+                    ],
                     "Index": 4,
                     "Tags": [
+                        "1 Player",
                         "Expansion Pak Required",
                         "Libdragon",
                         "NTSC Console",
@@ -1127,9 +1359,9 @@
                         "downloads/SandCity.z64"
                     ]
                 },
-                "Summer_sStory": {
+                "SummersStory": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "anacierdem",
                         "DC.all"
@@ -1137,11 +1369,16 @@
                     "ContentWarning": "",
                     "Date": 1672531200,
                     "DisplayName": "Summer's Story",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=MF9AGF3hq8Q"
+                    ],
                     "Index": 5,
                     "Tags": [
+                        "1 Player",
                         "PAL Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -1149,13 +1386,13 @@
                     "ToolTip": "N64brew Game Jam 2023 submission.",
                     "URLs": [
                         "https://github.com/anacierdem/summers_story",
-                        "downloads/SummersStory.z64"
+                        "downloads/summers_story.z64"
                     ]
                 }
             }
         },
         "n64brew-gamejam2024": {
-            "Description": "Unlike previous years, the 2024 game jam only has one submission because it was a collaborative minigame jam. Everyone was given the same template and required to submit a minigame for the collection, similar to Pokemon Stadium's minigame Kids Club. The winner of this year's competition was Coin Rush. $1754 was raised for the Alzheimer's Association.",
+            "Description": "Unlike previous years, the 2024 game jam only has one submission because it was a collaborative minigame jam. Everyone was given the same template and required to submit a minigame for the collection, similar to Pokemon Stadium's minigame Kids Club. The winner of this year's competition was <ins>Coin Rush</ins>, with <ins>SpaceWaves</ins> taking second and <ins>Hydra Harmonics</ins> taking third, all entries voted once again by the community. $1754 was raised for the [Alzheimer's Association](https://www.alz.org/).",
             "DisplayName": "N64brew Game Jam #5",
             "Index": 2,
             "Pages": {
@@ -1234,62 +1471,82 @@
             }
         },
         "n64brew-gamejam2025": {
-            "Description": "",
-            "DisplayName": "N64brew Game Jam 2025",
+            "Description": "In 2025, the N64brew Game Jam returned to form, featuring Peter Lemon, Mike Ryan, and Ppcasm as guest judges. The winner this year was <ins>Junk Runner 64</ins>, donating $3340.29 to [AbleGamers](https://ablegamers.org/). Second place was <ins>Cathode Quest 64</ins> and third place was <ins>Phazer 64</ins>. The theme this year was **Repair**.",
+            "DisplayName": "N64brew Game Jam #6",
             "Index": 1,
             "Pages": {
                 "AsteRisk": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "brainpann"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "AsteRisk",
-                    "Genres": null,
+                    "Genres": [
+                        "Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=fq96Ov1huZs"
+                    ],
                     "Index": 0,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/sethgabrielbrady/moonshot",
-                        "downloads/AsteRisk.z64"
+                        "downloads/asterisk.z64"
                     ]
                 },
                 "Biosphere64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "milton7854"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Biosphere 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=hPyRjDIJ-kE"
+                    ],
                     "Index": 1,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://codeberg.org/flaviozavan/biosphere64",
-                        "downloads/Biosphere64.z64"
+                        "downloads/biosphere64.z64"
                     ]
                 },
                 "BotBoy!64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "CYPRESS",
                         "dakodacomposer",
@@ -1300,48 +1557,71 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "BotBoy!64",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=zxTwY_nq_Lc"
+                    ],
                     "Index": 2,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/Psyop-Studios/BotBoy64",
-                        "downloads/BotBoy!64.z64"
+                        "downloads/BotBoy64.z64"
                     ]
                 },
                 "Boxfixboxwithbox": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Razz"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
-                    "DisplayName": "Box fix box with box",
-                    "Genres": null,
+                    "DisplayName": "Box Fix Box with Box",
+                    "Genres": [
+                        "Puzzle",
+                        "First Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=ciBjht1sB7I"
+                    ],
                     "Index": 3,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/Razz64/N64GameJam2025-BoxFixBoxWithBox/tree/main",
-                        "downloads/Boxfixboxwithbox.z64"
+                        "downloads/BoxFixBoxWithBox.z64"
                     ]
                 },
                 "BunbrushinOperationFriendshipRepair": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Happy-Ferret",
                         "Sloan 누구",
@@ -1350,12 +1630,19 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Bunbrush in Operation Friendship Repair",
-                    "Genres": null,
+                    "Genres": [
+                        "Point and Click",
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=I8IhjqLPi5Q"
+                    ],
                     "Index": 4,
                     "Tags": [
+                        "1 Player",
                         "NTSC Console",
+                        "Other SDK",
                         "PAL Console",
                         "Source Code Available",
                         "Supports Accurate Emulator"
@@ -1363,51 +1650,72 @@
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/mark-temporary/Bunbrush",
-                        "downloads/BunbrushinOperationFriendshipRepair.v64"
+                        "downloads/bunbrush.v64"
                     ]
                 },
                 "CathodeQuest64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "HailToDodongo"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Cathode Quest 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Platformer"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=tMPgMgaCFks"
+                    ],
                     "Index": 5,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/HailToDodongo/pyrite64/tree/main/n64/examples/jam25",
-                        "downloads/CathodeQuest64.z64"
+                        "downloads/cathode_quest.z64"
                     ]
                 },
                 "ConsoleClash": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "tfmoe__"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Console Clash",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle",
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=0UVDae6cVIw"
+                    ],
                     "Index": 6,
                     "Tags": [
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -1419,7 +1727,7 @@
                 },
                 "DamN64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "vieux - vrgl117",
                         "Isabel",
@@ -1428,12 +1736,24 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "DamN64",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=csj1eFb8So8"
+                    ],
                     "Index": 7,
                     "Tags": [
+                        "1 Player",
+                        "2 Players",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -1443,33 +1763,44 @@
                         "downloads/DamN64.z64"
                     ]
                 },
-                "Fallout_Vault64": {
+                "FalloutVault64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "rumbarrel64"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Fallout: Vault 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Hack and Slash"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=1USHJaGa31w"
+                    ],
                     "Index": 8,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/rumbarrel64/N64brew-GameJam2025",
-                        "downloads/FalloutVault64.z64"
+                        "downloads/fallout_vault_64.z64"
                     ]
                 },
                 "Icefishing": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Zest",
                         "Ghumdraup",
@@ -1480,25 +1811,36 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Icefishing",
-                    "Genres": null,
+                    "Genres": [
+                        "Simulation"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=qrUc-IQmv18"
+                    ],
                     "Index": 9,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/zestydevy/icefishing",
-                        "downloads/Icefishing.z64"
+                        "downloads/icefishing.z64"
                     ]
                 },
                 "JunkRunner64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "lambertjamesd",
                         "Pyroxene",
@@ -1509,25 +1851,36 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Junk Runner 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Action Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=N4DGzLnpqN0"
+                    ],
                     "Index": 10,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/lambertjamesd/n64brew2025",
-                        "downloads/JunkRunner64.z64"
+                        "downloads/junkrunner64.z64"
                     ]
                 },
                 "KaijuResponseTeam": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Xtagon",
                         "Will"
@@ -1535,11 +1888,23 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Kaiju Response Team",
-                    "Genres": null,
+                    "Genres": [
+                        "Third Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=jDecfYymH3A"
+                    ],
                     "Index": 11,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -1551,55 +1916,77 @@
                 },
                 "MysteriousBarricades": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "visualculture"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Mysterious Barricades",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=paQaTM_43NQ"
+                    ],
                     "Index": 13,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/genecro/MysteriousBarricades",
-                        "downloads/MysteriousBarricades.z64"
+                        "downloads/mystbar.z64"
                     ]
                 },
-                "N64GialloCrystaldreamsondeath_swing": {
+                "N64GialloCrystaldreamsondeathswing": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "bop0880"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
-                    "DisplayName": "N64 Giallo - Crystal dreams on death's wing",
-                    "Genres": null,
+                    "DisplayName": "N64 Giallo: Crystal Dreams on Death's Wing",
+                    "Genres": [
+                        "Choose Your Own Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=i41aIYfc__k"
+                    ],
                     "Index": 14,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
                         "PAL Console",
-                        "Source Code Available"
+                        "SC64",
+                        "Source Code Available",
+                        "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://gitlab.com/bopbopbopbop/n64_giallo-crystal-dreams-on-deaths-wing",
-                        "downloads/N64GialloCrystaldreamsondeathswing.z64"
+                        "downloads/crystal_dreams_on_deaths_wing.z64"
                     ]
                 },
                 "Pandemonium": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "BoxingBruin",
                         "HelloNewman"
@@ -1607,98 +1994,142 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Pandemonium",
-                    "Genres": null,
+                    "Genres": [
+                        "Soulslike"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=TD6IwKuiHts"
+                    ],
                     "Index": 15,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/Boxingbruin/Pandemonium",
-                        "downloads/Pandemonium.z64"
+                        "downloads/pandemonium.z64"
                     ]
                 },
                 "Phazer64": {
-                    "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AIDisclosure": "Contains AI generated imagery",
+                    "AgeRating": "All",
                     "Authors": [
                         "darkrage64"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Phazer 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Side Scrolling Platformer",
+                        "Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=geFmJRfoz_w"
+                    ],
                     "Index": 16,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/johannesroth-coreproduction/phazer64/",
-                        "downloads/Phazer64.z64"
+                        "downloads/phazer64.z64"
                     ]
                 },
                 "PlugNRepair": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "dr.ludos"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Plug-N-Repair",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle",
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=MHLKCJwfNno"
+                    ],
                     "Index": 17,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://drludos.itch.io/plug-n-repair",
-                        "downloads/PlugNRepair.z64"
+                        "downloads/Plug-N-Repair.z64"
                     ]
                 },
                 "RepairmanvsCreatures": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "valtherabbit"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Repairman vs Creatures",
-                    "Genres": null,
+                    "Genres": [
+                        "First Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=fRKFMxn9CT8"
+                    ],
                     "Index": 18,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://codeberg.org/valconiglio/n64_fps_game",
-                        "downloads/RepairmanvsCreatures.z64"
+                        "downloads/Repairman.z64"
                     ]
                 },
                 "RoboRenovations": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Gary Jones III",
                         "N64 Squid"
@@ -1706,12 +2137,23 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Robo Renovations",
-                    "Genres": null,
+                    "Genres": [
+                        "Arcade"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=AluRIpxzJlI"
+                    ],
                     "Index": 19,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -1723,81 +2165,114 @@
                 },
                 "SomewheretoEscape": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "raisedwizardry"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Somewhere to Escape",
-                    "Genres": null,
+                    "Genres": [
+                        "Action Adventure"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=MHTUCdY1RCA"
+                    ],
                     "Index": 21,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/raisedwizardry/somewhere-to-escape/",
-                        "downloads/SomewheretoEscape.z64"
+                        "downloads/somewheretoescape.z64"
                     ]
                 },
                 "TheBigFix": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Shootfast"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "The Big Fix",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=iDx8vVDBjmU"
+                    ],
                     "Index": 22,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/Shootfast/the_big_fix",
-                        "downloads/TheBigFix.z64"
+                        "downloads/the_big_fix.z64"
                     ]
                 },
                 "UnchartedTerra2264": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "spookyiluha"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Uncharted Terra 2264",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=RIAkb_hQzLo"
+                    ],
                     "Index": 24,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/SpookyIluha/uncharted-terra-2264",
-                        "downloads/UnchartedTerra2264.z64"
+                        "downloads/uncharted-terra-2264.z64"
                     ]
                 },
                 "Untitledracinggame": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "lepidotós",
                         "chr0nomaton",
@@ -1806,25 +2281,36 @@
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
-                    "DisplayName": "Untitled racing game",
-                    "Genres": null,
+                    "DisplayName": "Untitled Racing Game",
+                    "Genres": [
+                        "Simulation"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=jaSlwMRqT_E"
+                    ],
                     "Index": 25,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/oschijns/n64brew-gamejam-2025",
-                        "downloads/Untitledracinggame.z64"
+                        "downloads/UntitledRacingGame.z64"
                     ]
                 },
                 "WizardCritter64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Digi-Space Productions",
                         "CandiedCat",
@@ -1833,12 +2319,23 @@
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Wizard Critter 64",
-                    "Genres": null,
+                    "Genres": [
+                        "Twin-stick Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=t7x9hytnDlg"
+                    ],
                     "Index": 26,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -1850,22 +2347,37 @@
                 },
                 "WrenchWrangle": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "Fazana"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "Wrench Wrangle",
-                    "Genres": null,
+                    "Genres": [
+                        "Puzzle",
+                        "Strategy"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=oIVFJShVUjY"
+                    ],
                     "Index": 27,
                     "Tags": [
+                        "1 Player",
                         "2 Players",
+                        "3 Players",
+                        "4 Players",
+                        "64Drive",
+                        "Everdrive",
                         "Expansion Pak Required",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
                         "PAL Console",
-                        "Source Code Available"
+                        "SC64",
+                        "Source Code Available",
+                        "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
@@ -1875,19 +2387,31 @@
                 },
                 "moonfish": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "ася",
                         "themoonmademehigh"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
-                    "DisplayName": "moonfish",
-                    "Genres": null,
+                    "DisplayName": "Moonfish",
+                    "Genres": [
+                        "Simulation"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=UjQNXANZWRo"
+                    ],
                     "Index": 12,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
@@ -1897,34 +2421,44 @@
                         "downloads/moonfish.z64"
                     ]
                 },
-                "someone2639_sUltimateGadgetGameofMartialArts": {
+                "suggoma": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "someone2639"
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
                     "DisplayName": "someone2639's Ultimate Gadget Game of Martial Arts",
-                    "Genres": null,
+                    "Genres": [
+                        "Fighting"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=OXuXcsfumh0"
+                    ],
                     "Index": 20,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
                         "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],
                     "ToolTip": "N64brew Game Jam 2025 submission.",
                     "URLs": [
                         "https://github.com/farisawan-2000/n64gamejam-2025/",
-                        "downloads/someone2639sUltimateGadgetGameofMartialArts.z64"
+                        "downloads/suggoma.z64"
                     ]
                 },
                 "tt64": {
                     "AIDisclosure": "",
-                    "AgeRating": "",
+                    "AgeRating": "All",
                     "Authors": [
                         "tree",
                         "FadedParadigm",
@@ -1932,13 +2466,24 @@
                     ],
                     "ContentWarning": "",
                     "Date": 1735689600,
-                    "DisplayName": "tt64",
-                    "Genres": null,
+                    "DisplayName": "Tool Time 64",
+                    "Genres": [
+                        "First Person Shooter"
+                    ],
                     "Icon": "",
-                    "Images": null,
+                    "Images": [
+                        "https://www.youtube.com/watch?v=AGB8IND4bM4"
+                    ],
                     "Index": 23,
                     "Tags": [
+                        "1 Player",
+                        "64Drive",
+                        "Everdrive",
+                        "Libdragon",
+                        "MPAL Console",
                         "NTSC Console",
+                        "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator"
                     ],

@@ -24,7 +24,7 @@
         "Brozilla": {
             "Credits": [
                 "n64brew-gamejam2024/minigamejam",
-                "n64brew-gamejam2022/Fanger_sLightmare"
+                "n64brew-gamejam2022/FangersLightmare"
             ],
             "DisplayName": "Brozilla",
             "Image": ""
@@ -79,7 +79,7 @@
         "DCall": {
             "Credits": [
                 "n64brew-gamejam2025/BotBoy!64",
-                "n64brew-gamejam2023/Summer_sStory"
+                "n64brew-gamejam2023/SummersStory"
             ],
             "DisplayName": "DC.all",
             "Image": ""
@@ -100,7 +100,7 @@
         },
         "Erockbrox": {
             "Credits": [
-                "n64brew-gamejam2022/Fanger_sLightmare"
+                "n64brew-gamejam2022/FangersLightmare"
             ],
             "DisplayName": "Erockbrox",
             "Image": ""
@@ -123,7 +123,7 @@
             "Credits": [
                 "n64brew-gamejam2025/RoboRenovations",
                 "n64brew-gamejam2024/minigamejam",
-                "n64brew-gamejam2022/Fanger_sLightmare"
+                "n64brew-gamejam2022/FangersLightmare"
             ],
             "DisplayName": "Gary Jones III",
             "Image": ""
@@ -423,12 +423,26 @@
             "DisplayName": "TurtleBox",
             "Image": ""
         },
+        "Vanadium": {
+            "Credits": [
+                "n64brew-gamejam2020/Thornmarked"
+            ],
+            "DisplayName": "Vanadium",
+            "Image": ""
+        },
         "WadeMalone": {
             "Credits": [
                 "n64brew-gamejam2022/SpiritHarvest",
                 "n64brew-gamejam2020/Test3rdPersonDemo"
             ],
             "DisplayName": "WadeMalone",
+            "Image": ""
+        },
+        "Wallmasterr": {
+            "Credits": [
+                "n64brew-gamejam2020/Thornmarked"
+            ],
+            "DisplayName": "Wallmasterr",
             "Image": ""
         },
         "Will": {
@@ -473,7 +487,7 @@
         "anacierdem": {
             "Credits": [
                 "n64brew-gamejam2024/minigamejam",
-                "n64brew-gamejam2023/Summer_sStory",
+                "n64brew-gamejam2023/SummersStory",
                 "n64brew-gamejam2021/Voidblade"
             ],
             "DisplayName": "anacierdem",
@@ -509,7 +523,7 @@
         },
         "bop0880": {
             "Credits": [
-                "n64brew-gamejam2025/N64GialloCrystaldreamsondeath_swing"
+                "n64brew-gamejam2025/N64GialloCrystaldreamsondeathswing"
             ],
             "DisplayName": "bop0880",
             "Image": ""
@@ -720,7 +734,7 @@
         },
         "pepsiman": {
             "Credits": [
-                "n64brew-gamejam2022/Fanger_sLightmare"
+                "n64brew-gamejam2022/FangersLightmare"
             ],
             "DisplayName": "pepsiman",
             "Image": ""
@@ -756,7 +770,7 @@
         },
         "rumbarrel64": {
             "Credits": [
-                "n64brew-gamejam2025/Fallout_Vault64"
+                "n64brew-gamejam2025/FalloutVault64"
             ],
             "DisplayName": "rumbarrel64",
             "Image": ""
@@ -777,8 +791,8 @@
         },
         "someone2639": {
             "Credits": [
-                "n64brew-gamejam2025/someone2639_sUltimateGadgetGameofMartialArts",
-                "n64brew-gamejam2021/sUGGOH_someone2639_sUltraGalacticGameOfHorse!"
+                "n64brew-gamejam2025/suggoma",
+                "n64brew-gamejam2021/sUGGOH_someone2639sUltraGalacticGameOfHorse!"
             ],
             "DisplayName": "someone2639",
             "Image": ""

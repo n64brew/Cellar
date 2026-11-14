@@ -1,1 +1,22 @@
-
+Contains 21 minigames:
+- 64Beats
+- Coin Rush
+- Destroy!
+- FurBall
+- Halcyon Hexagons
+- holes
+- Hot Hot Hexagons
+- Hydra Harmonics
+- Land Grab
+- Larceny
+- Le Tohu Bohu
+- Lucker's Arena
+- Mallard
+- May the Best Snowman Win
+- Paintball
+- Sauna Rush
+- Sneks
+- Spacewaves
+- Sword Strike
+- The Third Arm
+- Underground Grind
