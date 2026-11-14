@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "page.h"
+#include "page_author.h"
 
 class Page_ROM : public Page 
 {
@@ -17,7 +18,7 @@ class Page_ROM : public Page
         std::string agerating;
         std::string contentwarning;
         std::string aidisclosure;
-        std::vector<std::string> authors;
+        std::vector<Page_Author*> authors;
         std::vector<std::string> images;
         std::vector<std::string> genres;
         std::vector<std::string> urls;

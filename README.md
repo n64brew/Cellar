@@ -12,17 +12,21 @@ This repository contains a static webpage for N64brew's homebrew repository. It 
 4) When finished, recompile the website with `CTRL + R` or by going to `File -> Full Website Recompile`. This will update all the pages, including the index, lists, tags, and content pages.
 
 If you want to edit it manually, just modify any relevant JSON files:
-* The list of ROMs are in `roms/roms.json`.
+* The list of ROMs are in `roms/roms.json`, with descriptions in `roms/markdown/`.
+* The list of authors is in `authors/authors.json`, with descriptions in `authors/markdown/`.
+
 Then, to compile the website, call:
 ```
-./cellar-generator roms
+./cellar-generator all
 ```
+
+Replace `all` with `roms` or `authors` to compile only that type of page.
 
 If you wish to only compile a single page (faster for previewing), then do:
 ```
 ./cellar-generator roms -single category/name
 ```
-where `category` is the category key in the JSON file (AKA `Folder:` in the GUI), and the name is the ROM key in the JSON file (AKA `File:` in the GUI). As a concrete example, the `Pyoro64` page inside the `Ports and Clones` category would be: `portsclones/pyoro64`.
+where `category` is the category key in the JSON file (AKA `Folder:` in the GUI), and the name is the ROM key in the JSON file (AKA `File:` in the GUI). As a concrete example, the `Pyoro64` page inside the `Ports and Clones` category would be: `portsclones/pyoro64`. Compiling authors follows the same syntax, but with `authors` instead of `roms`, and without the `category`.
 </br></br>
 
 

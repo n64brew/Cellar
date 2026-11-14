@@ -21,13 +21,12 @@ class FrameCalendar : public wxDialog
     protected:
         wxCalendarCtrl* m_Calendar;
 
-        virtual void m_Calendar_OnCalendar(wxCalendarEvent& event);
-
+        void m_Calendar_OnCalendar(wxCalendarEvent& event);
 
     public:
         FrameCalendar(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Calendar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 480), long style = wxDEFAULT_DIALOG_STYLE);
         ~FrameCalendar();
 
         void SetDate(time_t date);
-
+        wxDateTime GetDate();
 };

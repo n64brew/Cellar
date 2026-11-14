@@ -42,6 +42,9 @@
     <ClInclude Include="list_roms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="list_authors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="markdown.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -49,6 +52,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="page_rom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="page_author.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\json.hpp">
@@ -74,6 +80,9 @@
     <ClCompile Include="list_roms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="list_authors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="page_rom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="page_author.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\md4c\md4c-html.c">

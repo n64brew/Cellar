@@ -1,3 +1,10 @@
+/***************************************************************
+                            json.cpp
+
+JSON handling functions. This file was created to isolate the 
+bulky JSON header only library. 
+***************************************************************/
+
 #include <fstream>
 #include "page.h"
 #include "page_rom.h"
@@ -25,6 +32,7 @@ static nlohmann::json json_fromfilepath(std::string filepath)
     catch (nlohmann::json::exception e)
     {
         printf("Error parsing JSON\n");
+        exit(10);
     }
     return NULL;
 }
@@ -104,9 +112,11 @@ int json_loadcategories(std::string filepath, std::vector<Category*>* categoryli
     Load a list of roms from a JSON file
     @param  The path to the JSON file
     @param A pointer to the category list
+    @param A pointer to the author list
+    @param A pointer to the unregistered author list
 ==============================*/
 
-void json_loadroms(std::string filepath, std::vector<Category*>* categorylist)
+void json_loadroms(std::string filepath, std::vector<Category*>* categorylist, const std::vector<Page_Author*>* authors, std::vector<std::unique_ptr<Page_Author>>* unknownauthors)
 {
     std::size_t found = filepath.find_last_of("/\\");
     std::string workingdir = filepath.substr(0, found);
@@ -159,7 +169,31 @@ void json_loadroms(std::string filepath, std::vector<Category*>* categorylist)
                 page->genres.push_back(std::string(*it));
             page->authors.clear();
             for (nlohmann::json::iterator it = (*itproj)["Authors"].begin(); it != (*itproj)["Authors"].end(); ++it)
-                page->authors.push_back(std::string(*it));
+            {
+                std::string name = std::string(*it);
+                Page_Author* author = NULL;
+                for (Page_Author* candidate : *authors)
+                    if (candidate->displayname == name)
+                    {
+                        author = candidate;
+                        break;
+                    }
+                if (author == NULL)
+                    for (const std::unique_ptr<Page_Author>& candidate : *unknownauthors)
+                        if (candidate->displayname == name)
+                        {
+                            author = candidate.get();
+                            break;
+                        }
+                if (author == NULL)
+                {
+                    unknownauthors->emplace_back(new Page_Author());
+                    author = unknownauthors->back().get();
+                    author->displayname = name;
+                    author->filename = sanitize_tagname(name);
+                }
+                page->authors.push_back(author);
+            }
             pages.push_back(page);
         }
 
@@ -175,5 +209,39 @@ void json_loadroms(std::string filepath, std::vector<Category*>* categorylist)
             for (Page* page : pages)
                 cat_elem->pages.push_back(page);
         }
+    }
+}
+
+
+/*==============================
+    json_loadauthors
+    Load the authors from a JSON file
+    @param The path to the JSON file
+    @param A pointer to the author list
+==============================*/
+
+void json_loadauthors(std::string filepath, std::vector<Page_Author*>* authors)
+{
+    std::size_t found = filepath.find_last_of("/\\");
+    std::string workingdir = filepath.substr(0, found);
+    nlohmann::json json = json_fromfilepath(filepath);
+    if (!json.is_object() || !json.contains("Authors") || !json["Authors"].is_object())
+        return;
+
+    // Add the authors from the JSON file
+    for (nlohmann::json::iterator it = json["Authors"].begin(); it != json["Authors"].end(); ++it)
+    {
+        if (!it.value().is_object())
+            continue;
+        Page_Author* author = new Page_Author();
+        author->filename = it.key();
+        author->displayname = it.value().value("DisplayName", author->filename);
+        author->image = it.value().value("Image", std::string());
+        author->description = string_fromfile(workingdir + "/markdown/" + author->filename + ".md");
+        if (it.value().contains("Credits") && it.value()["Credits"].is_array())
+            for (const nlohmann::json& credit : it.value()["Credits"])
+                if (credit.is_string())
+                    author->credits.push_back(credit.get<std::string>());
+        authors->push_back(author);
     }
 }

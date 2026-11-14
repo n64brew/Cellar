@@ -54,12 +54,8 @@ FrameCalendar::~FrameCalendar()
 
 void FrameCalendar::m_Calendar_OnCalendar(wxCalendarEvent& event)
 {
-    wxDateTime date = this->m_Calendar->GetDate();
-    date.MakeUTC();
-    time_t utc = date.GetTicks();
-    ((Main*)(this->GetParent()))->UpdateROMDate(utc);
     event.Skip();
-    this->Close();
+    this->EndModal(wxID_OK);
 }
 
 
@@ -77,4 +73,16 @@ void FrameCalendar::SetDate(time_t date)
     int day = utcdate.GetDay(wxDateTime::UTC);
     wxDateTime finaldate(day, month, year);
     this->m_Calendar->SetDate(finaldate);
+}
+
+
+/*==============================
+    GetDate
+    Gets the date on the calendar
+    @return The date
+==============================*/
+
+wxDateTime FrameCalendar::GetDate()
+{
+    return this->m_Calendar->GetDate();
 }

@@ -125,6 +125,8 @@ wxString string_fromfile(wxString path)
 
     // Read the file into the string, and return it
     linecount = file.GetLineCount();
+    if (linecount == 0)
+        return str;
     str += file.GetFirstLine();
     while (!file.Eof())
     {
@@ -145,12 +147,20 @@ wxString string_fromfile(wxString path)
 
 wxString sanitize_tagname(wxString tagname)
 {
+    tagname.Trim(true).Trim(false);
     tagname.Replace("#", "s");
     tagname.Replace("+", "p");
     tagname.Replace(":", "");
     tagname.Replace("-", "");
     tagname.Replace("/", "");
     tagname.Replace(".", "");
+    tagname.Replace("[", "");
+    tagname.Replace("]", "");
+    tagname.Replace("<", "");
+    tagname.Replace(">", "");
+    tagname.Replace("\"", "");
+    tagname.Replace("\\", "");
+    tagname.Replace("?", "");
     tagname.Replace(" ", "");
     return tagname;
 }

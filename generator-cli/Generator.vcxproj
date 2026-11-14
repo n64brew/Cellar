@@ -28,9 +28,11 @@
     <ClInclude Include="json.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="list_roms.h" />
+    <ClInclude Include="list_authors.h" />
     <ClInclude Include="markdown.h" />
     <ClInclude Include="page.h" />
     <ClInclude Include="page_rom.h" />
+    <ClInclude Include="page_author.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="helper.cpp" />
@@ -39,9 +41,11 @@
     <ClCompile Include="include\md4c\md4c.c" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="list_roms.cpp" />
+    <ClCompile Include="list_authors.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="markdown.cpp" />
     <ClCompile Include="page_rom.cpp" />
+    <ClCompile Include="page_author.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

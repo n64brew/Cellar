@@ -1,5 +1,5 @@
 TARGET = cellar-generator
-SOURCES = main.cpp json.cpp markdown.cpp helper.cpp page_rom.cpp list_roms.cpp \
+SOURCES = main.cpp json.cpp markdown.cpp helper.cpp page_rom.cpp page_author.cpp list_roms.cpp list_authors.cpp \
 	      include/md4c/md4c.c include/md4c/md4c-html.c include/md4c/entity.c
 BUILD_FOLDER = build
 

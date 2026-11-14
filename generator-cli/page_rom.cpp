@@ -1,3 +1,9 @@
+/***************************************************************
+                          page_rom.cpp
+
+Handle the individual ROM page.
+***************************************************************/
+
 #include <string.h>
 #include <ctime>
 #include <sstream>
@@ -5,8 +11,15 @@
 #include <iomanip>
 #include "category.h"
 #include "page_rom.h"
+#include "page_author.h"
 #include "markdown.h"
 #include "helper.h"
+
+
+/*==============================
+    Compile
+    Compiles an individual ROM page
+==============================*/
 
 void Page_ROM::Compile()
 {
@@ -184,11 +197,11 @@ void Page_ROM::Compile()
     {
         std::string pageauthors = "";
         strreplace_all(html_final, "_TEMPLATE_ROMS_AUTHORSSECTION_", string_fromfile("templates/rom_authors.html"));
-        for (std::string author : this->authors)
+        for (Page_Author* author : this->authors)
         {
             std::string str = string_fromfile("templates/rom_author.html");
-            strreplace_all(str, "_TEMPLATE_AUTHOR_URL_", "../../authors/" + sanitize_tagname(author) + ".html");
-            strreplace_all(str, "_TEMPLATE_AUTHOR_NAME_", author);
+            strreplace_all(str, "_TEMPLATE_AUTHOR_URL_", "../../authors/" + sanitize_tagname(author->filename) + ".html");
+            strreplace_all(str, "_TEMPLATE_AUTHOR_NAME_", author->displayname);
             pageauthors += str;
             if (author != this->authors.back())
                 pageauthors += ", ";

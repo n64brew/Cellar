@@ -20,6 +20,7 @@ The main code of the static site generator
 #include <wx/dirdlg.h>
 #include <wx/regex.h>
 #include <wx/wx.h>
+#include <algorithm>
 #include "resource.h"
 
 
@@ -33,15 +34,20 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     // Initialize the program state
     this->m_WorkingDir = wxGetCwd();
     this->m_SelectedItem = NULL;
+    this->m_SelectedAuthor = wxTreeItemId();
     this->MarkModified(false);
 
     // Create the main frame elements
     this->SetSizeHints(wxDefaultSize, wxDefaultSize);
     wxBoxSizer* m_Sizer_Main;
     m_Sizer_Main = new wxBoxSizer(wxVERTICAL);
+    this->m_ChoiceBook_PageSelection = new wxChoicebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxCHB_DEFAULT);
+
+
+    // ========================= ROM Panel ========================= 
 
     // Create the main ROM panels
-    this->m_Panel_ROMs = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    this->m_Panel_ROMs = new wxPanel(this->m_ChoiceBook_PageSelection, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxBoxSizer* m_Sizer_ROMs;
     m_Sizer_ROMs = new wxBoxSizer(wxVERTICAL);
     this->m_Splitter_ROMs = new wxSplitterWindow(this->m_Panel_ROMs, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
@@ -336,9 +342,127 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_Panel_ROMs->SetSizer(m_Sizer_ROMs);
     this->m_Panel_ROMs->Layout();
     m_Sizer_ROMs->Fit(this->m_Panel_ROMs);
+    this->m_ChoiceBook_PageSelection->AddPage(m_Panel_ROMs, wxT("ROMs"), true);
+
+
+    // ========================= Authors Panel ========================= 
+
+    // Create the main authors panels
+    this->m_Panel_Authors = new wxPanel(m_ChoiceBook_PageSelection, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxBoxSizer* m_Sizer_Authors;
+    m_Sizer_Authors = new wxBoxSizer(wxVERTICAL);
+    this->m_Splitter_Authors = new wxSplitterWindow(this->m_Panel_Authors, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
+    this->m_Splitter_Authors->SetSashGravity(0);
+    this->m_Splitter_Authors->Connect(wxEVT_IDLE, wxIdleEventHandler(Main::m_Splitter_AuthorsOnIdle), NULL, this);
+
+    // Create the authors tree
+    this->m_Panel_Authors_Tree = new wxPanel(this->m_Splitter_Authors, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxFlexGridSizer* m_Sizer_Authors_Tree;
+    m_Sizer_Authors_Tree = new wxFlexGridSizer(0, 1, 0, 0);
+    m_Sizer_Authors_Tree->AddGrowableCol(0);
+    m_Sizer_Authors_Tree->AddGrowableRow(1);
+    m_Sizer_Authors_Tree->SetFlexibleDirection(wxBOTH);
+    m_Sizer_Authors_Tree->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    this->m_SearchCtrl_Authors = new wxSearchCtrl(this->m_Panel_Authors_Tree, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    #ifndef __WXMAC__
+        this->m_SearchCtrl_Authors->ShowSearchButton(true);
+    #endif
+    this->m_SearchCtrl_Authors->ShowCancelButton(false);
+    m_Sizer_Authors_Tree->Add(this->m_SearchCtrl_Authors, 0, wxALL|wxEXPAND, 5);
+    this->m_TreeCtrl_Authors = new wxTreeCtrl(this->m_Panel_Authors_Tree, wxID_ANY, wxDefaultPosition, wxSize(-1,-1), wxTR_DEFAULT_STYLE|wxTR_EDIT_LABELS|wxTR_HIDE_ROOT);
+    m_Sizer_Authors_Tree->Add(this->m_TreeCtrl_Authors, 0, wxALL|wxEXPAND, 5);
+    this->m_Panel_Authors_Tree->SetSizer(m_Sizer_Authors_Tree);
+    this->m_Panel_Authors_Tree->Layout();
+    m_Sizer_Authors_Tree->Fit(this->m_Panel_Authors_Tree);
+
+
+    // ========================= Author Page Editor Controls ========================= 
+
+    this->m_Panel_Authors_Editor = new wxPanel(this->m_Splitter_Authors, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxFlexGridSizer* m_Sizer_Authors_Editor;
+    m_Sizer_Authors_Editor = new wxFlexGridSizer(3, 1, 0, 0);
+    m_Sizer_Authors_Editor->AddGrowableCol(0);
+    m_Sizer_Authors_Editor->AddGrowableRow(0);
+    m_Sizer_Authors_Editor->AddGrowableRow(1);
+    m_Sizer_Authors_Editor->SetFlexibleDirection(wxBOTH);
+    m_Sizer_Authors_Editor->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
+    this->m_ScrolledWindow_Author_Editor = new wxScrolledWindow(this->m_Panel_Authors_Editor, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL);
+    this->m_ScrolledWindow_Author_Editor->SetScrollRate(5, 5);
+    this->m_ScrolledWindow_Author_Editor->SetMinSize(wxSize(0,0));
+    wxFlexGridSizer* m_Sizer_ScrolledWindow_EditorAuthor;
+    m_Sizer_ScrolledWindow_EditorAuthor = new wxFlexGridSizer(0, 1, 0, 0);
+    m_Sizer_ScrolledWindow_EditorAuthor->AddGrowableCol(0);
+    m_Sizer_ScrolledWindow_EditorAuthor->AddGrowableRow(1);
+    m_Sizer_ScrolledWindow_EditorAuthor->SetFlexibleDirection(wxBOTH);
+    m_Sizer_ScrolledWindow_EditorAuthor->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    m_Sizer_ScrolledWindow_EditorAuthor->SetMinSize(wxSize(0,0));
+    wxFlexGridSizer* m_Sizer_ScrolledWindow_EditorAuthor_Main;
+    m_Sizer_ScrolledWindow_EditorAuthor_Main = new wxFlexGridSizer(0, 2, 0, 0);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->AddGrowableCol(1);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->SetFlexibleDirection(wxBOTH);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->SetMinSize(wxSize(0,0));
+
+    // Author file name
+    wxStaticText* m_Label_Authors_File;
+    m_Label_Authors_File = new wxStaticText(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxT("File:"), wxDefaultPosition, wxDefaultSize, 0);
+    m_Label_Authors_File->Wrap(-1);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->Add(m_Label_Authors_File, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    this->m_TextCtrl_Authors_File = new wxTextCtrl(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_TextCtrl_Authors_File->Enable(false);
+    this->m_TextCtrl_Authors_File->SetToolTip(wxT("The filename of the author page"));
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->Add(this->m_TextCtrl_Authors_File, 0, wxALL|wxEXPAND, 5);
+
+    // Author display name
+    wxStaticText* m_Label_Authors_Name;
+    m_Label_Authors_Name = new wxStaticText(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxT("Name:"), wxDefaultPosition, wxDefaultSize, 0);
+    m_Label_Authors_Name->Wrap(-1);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->Add(m_Label_Authors_Name, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    this->m_TextCtrl_Authors_Name = new wxTextCtrl(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_TextCtrl_Authors_Name->SetToolTip(wxT("The display name of the author"));
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->Add(this->m_TextCtrl_Authors_Name, 0, wxALL|wxEXPAND, 5);
+
+    // Author profile image
+    wxStaticText* m_Label_Authors_Image;
+    m_Label_Authors_Image = new wxStaticText(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxT("Image:"), wxDefaultPosition, wxDefaultSize, 0);
+    m_Label_Authors_Image->Wrap(-1);
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->Add(m_Label_Authors_Image, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    this->m_TextCtrl_Authors_Image = new wxTextCtrl(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+    this->m_TextCtrl_Authors_Image->SetToolTip(wxT("The author's image path, relative to the working directory"));
+    m_Sizer_ScrolledWindow_EditorAuthor_Main->Add(this->m_TextCtrl_Authors_Image, 0, wxALL|wxEXPAND, 5);
+    m_Sizer_ScrolledWindow_EditorAuthor->Add(m_Sizer_ScrolledWindow_EditorAuthor_Main, 1, wxEXPAND, 5);
+
+    // Author description
+    this->m_TextCtrl_Authors_Description = new wxTextCtrl(this->m_ScrolledWindow_Author_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1,-1), wxTE_MULTILINE);
+    this->m_TextCtrl_Authors_Description->SetToolTip(wxT("The author description. Supports markdown."));
+    m_Sizer_ScrolledWindow_EditorAuthor->Add(this->m_TextCtrl_Authors_Description, 0, wxALL|wxEXPAND, 5);
+    this->m_ScrolledWindow_Author_Editor->SetSizer(m_Sizer_ScrolledWindow_EditorAuthor);
+    this->m_ScrolledWindow_Author_Editor->Layout();
+    m_Sizer_ScrolledWindow_EditorAuthor->Fit(this->m_ScrolledWindow_Author_Editor);
+    m_Sizer_Authors_Editor->Add(this->m_ScrolledWindow_Author_Editor, 0, wxALL|wxEXPAND, 5);
+
+    // Preview button
+    this->m_Button_Authors_Preview = new wxButton(this->m_Panel_Authors_Editor, wxID_ANY, wxT("Preview"), wxDefaultPosition, wxDefaultSize, 0);
+    this->m_Button_Authors_Preview->Hide();
+    this->m_Button_Authors_Preview->SetMinSize(wxSize(-1,24));
+    m_Sizer_Authors_Editor->Add(this->m_Button_Authors_Preview, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    // Finalize the layout of the author page
+    this->m_Panel_Authors_Editor->SetSizer(m_Sizer_Authors_Editor);
+    this->m_Panel_Authors_Editor->Layout();
+    m_Sizer_Authors_Editor->Fit(this->m_Panel_Authors_Editor);
+    this->m_Splitter_Authors->SplitVertically(this->m_Panel_Authors_Tree, this->m_Panel_Authors_Editor, 200);
+    m_Sizer_Authors->Add(this->m_Splitter_Authors, 1, wxEXPAND, 5);
+    this->m_Panel_Authors->SetSizer(m_Sizer_Authors);
+    this->m_Panel_Authors->Layout();
+    m_Sizer_Authors->Fit(this->m_Panel_Authors);
+    this->m_ChoiceBook_PageSelection->AddPage(this->m_Panel_Authors, wxT("Authors"), false);
+    m_Sizer_Main->Add(this->m_ChoiceBook_PageSelection, 1, wxEXPAND | wxALL, 5);
+
+
+    // ================================================== 
 
     // Finalize
-    m_Sizer_Main->Add(m_Panel_ROMs, 1, wxEXPAND | wxALL, 5);
     this->SetSizer(m_Sizer_Main);
     this->Layout();
 
@@ -395,6 +519,20 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     this->m_TextCtrl_ROMsCategory_DisplayName->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_DisplayName_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Description->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Description_OnText), NULL, this);
     this->m_Button_ROMs_Preview->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Preview_OnButtonClick), NULL, this);
+    this->m_SearchCtrl_Authors->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_SearchCtrl_AuthorsOnText), NULL, this);
+    this->m_TreeCtrl_Authors->Connect(wxEVT_COMMAND_TREE_END_LABEL_EDIT, wxTreeEventHandler(Main::m_TreeCtrl_Authors_OnTreeEndLabelEdit), NULL, this);
+    this->m_TreeCtrl_Authors->Connect(wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler(Main::m_TreeCtrl_Authors_OnTreeItemMenu), NULL, this);
+    this->m_TreeCtrl_Authors->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(Main::m_TreeCtrl_Authors_OnTreeSelChanged), NULL, this);
+    this->m_TextCtrl_Authors_Name->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_Authors_Name_OnText), NULL, this);
+    this->m_TextCtrl_Authors_Image->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_Authors_Image_OnText), NULL, this);
+    this->m_TextCtrl_Authors_Description->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_Authors_Description_OnText), NULL, this);
+    this->m_Button_Authors_Preview->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_Authors_Preview_OnButtonClick), NULL, this);
+    this->m_TextCtrl_Authors_Name->Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent& event) {
+        Author* author = this->FindAuthor(this->m_SelectedAuthor);
+        if (author && this->m_TextCtrl_Authors_Name->GetValue().Trim(true).Trim(false) != author->displayname)
+            this->m_TextCtrl_Authors_Name->ChangeValue(author->displayname);
+        event.Skip();
+    });
     this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_Save_OnMenuSelection), this, m_MenuItem_Save->GetId());
     this->m_Menu_File->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_FullRecompile_OnMenuSelection), this, m_MenuItem_FullRecompile->GetId());
     this->m_Menu_Edit->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::m_MenuItem_Find_OnMenuSelection), this, m_MenuItem_Find->GetId());
@@ -407,6 +545,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     json_loadauthors(this->m_WorkingDir, &this->m_Authors);
     this->UpdateTree(this->m_TreeCtrl_ROMs, "roms", &this->m_Category_ROMs);
     this->LoadROMs();
+    this->RefreshAuthorTree();
     this->m_TreeCtrl_ROMs->SetFocus();
 }
 
@@ -444,7 +583,21 @@ Main::~Main()
     this->m_TextCtrl_ROMsCategory_DisplayName->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_DisplayName_OnText), NULL, this);
     this->m_TextCtrl_ROMsCategory_Description->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(Main::m_TextCtrl_ROMsCategory_Description_OnText), NULL, this);
     this->m_Button_ROMs_Preview->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_ROMs_Preview_OnButtonClick), NULL, this);
+    this->m_Button_Authors_Preview->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Main::m_Button_Authors_Preview_OnButtonClick), NULL, this);
     this->m_Timer->Disconnect(wxEVT_TIMER, wxTimerEventHandler(Main::m_Timer_OnTimer), NULL, this);
+}
+
+
+/*==============================
+    m_Timer_OnTimer
+    Handles the timer that starts with the program to fix the
+    initial sash positions
+    @param Unused
+==============================*/
+
+void Main::m_Timer_OnTimer(wxTimerEvent&)
+{
+    this->m_Splitter_ROMs->SetSashPosition(200);
 }
 
 
@@ -458,6 +611,19 @@ void Main::m_Splitter_ROMsOnIdle(wxIdleEvent&)
 {
     this->m_Splitter_ROMs->SetSashPosition(0);
     this->m_Splitter_ROMs->Disconnect(wxEVT_IDLE, wxIdleEventHandler(Main::m_Splitter_ROMsOnIdle), NULL, this);
+}
+
+
+/*==============================
+    m_Splitter_AuthorsOnIdle
+    Handles the author splitter event
+    @param Unused
+==============================*/
+
+void Main::m_Splitter_AuthorsOnIdle(wxIdleEvent&)
+{
+    this->m_Splitter_Authors->SetSashPosition(200);
+    this->m_Splitter_Authors->Disconnect(wxEVT_IDLE, wxIdleEventHandler(Main::m_Splitter_AuthorsOnIdle), NULL, this);
 }
 
 
@@ -498,7 +664,7 @@ void Main::m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent&)
 {
     if (!this->Save())
         return;
-    long ret = wxExecute("./cellar-generator roms", wxEXEC_SYNC);
+    long ret = wxExecute("./cellar-generator all", wxEXEC_SYNC);
     if (ret == 0)
         wxMessageBox("Website recompiled successfully!", wxString("Great success"), wxICON_INFORMATION);
     else
@@ -911,10 +1077,9 @@ void Main::m_Button_ROMs_FindAuthors_OnButton(wxCommandEvent& event)
         if (frame->ShowModal() == wxID_OK)
         {
             wxString finalstr;
-            rom->authors.clear();
-            for (wxString author : *frame->GetSelectedAuthors())
+            rom->authors = *frame->GetSelectedAuthors();
+            for (wxString author : rom->authors)
             {
-                rom->authors.push_back(author);
                 if (!finalstr.IsEmpty())
                     finalstr += ", ";
                 finalstr += author;
@@ -922,6 +1087,7 @@ void Main::m_Button_ROMs_FindAuthors_OnButton(wxCommandEvent& event)
             this->m_TextCtrl_ROMs_Authors->ChangeValue(finalstr);
             rom->wasmodified = true;
             this->MarkModified();
+            this->RefreshAuthorTree();
         }
     }
     event.Skip();
@@ -994,29 +1160,17 @@ void Main::m_Button_ROMs_Date_OnButton(wxCommandEvent& event)
     {
         FrameCalendar* frame = new FrameCalendar(this);
         frame->SetDate(rom->date);
-        frame->ShowModal();
+        if (frame->ShowModal() == wxID_OK)
+        {
+            wxDateTime date = frame->GetDate();
+            this->m_TextCtrl_ROMs_Date->ChangeValue(date.Format("%B %d, %Y", wxDateTime::UTC));
+            rom->date = date.GetTicks();
+            rom->wasmodified = true;
+            this->MarkModified();
+        }
+
     }
     event.Skip();
-}
-
-
-/*==============================
-    UpdateROMDate
-    Updates the ROM date into a nice readable string
-    @param The timestamp
-==============================*/
-
-void Main::UpdateROMDate(time_t date)
-{
-    ROM* rom = this->FindROM(this->m_SelectedItem);
-    if (rom != NULL && rom->date != date)
-    {
-        wxDateTime utc(date);
-        this->m_TextCtrl_ROMs_Date->ChangeValue(utc.Format("%B %d, %Y", wxDateTime::UTC));
-        rom->date = date;
-        rom->wasmodified = true;
-        this->MarkModified();
-    }
 }
 
 
@@ -1226,15 +1380,153 @@ void Main::m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event)
 
 
 /*==============================
-    m_Timer_OnTimer
-    Handles the timer that starts with the program to fix the
-    initial sash positions
-    @param Unused
+    m_Button_Authors_Preview_OnButtonClick
+    Handles the author preview button event
+    @param The event that was generated
 ==============================*/
 
-void Main::m_Timer_OnTimer(wxTimerEvent&)
+void Main::m_Button_Authors_Preview_OnButtonClick(wxCommandEvent& event)
 {
-    this->m_Splitter_ROMs->SetSashPosition(200);
+    Author* author = this->FindAuthor(this->m_SelectedAuthor);
+    if (author == NULL || !this->Save())
+        return;
+
+    // Compile and open the selected author page
+    long ret = wxExecute("./cellar-generator authors -single \"" + author->filename + "\"", wxEXEC_SYNC);
+    if (ret != 0)
+    {
+        wxMessageBox(wxString::Format("Generator returned error code %d", ret), wxString("Generator error"), wxICON_ERROR);
+        return;
+    }
+    wxLaunchDefaultBrowser(wxString("file:") + this->m_WorkingDir + "/authors/" + author->filename + ".html");
+    event.Skip();
+}
+
+
+/*==============================
+    m_SearchCtrl_AuthorsOnText
+    Handles input into the author search bar
+    @param The event that was generated
+==============================*/
+
+void Main::m_SearchCtrl_AuthorsOnText(wxCommandEvent& event)
+{
+    this->RefreshAuthorTree();
+    event.Skip();
+}
+
+
+/*==============================
+    m_TreeCtrl_Authors_OnTreeSelChanged
+    Handles author tree selection changes
+    @param The event that was generated
+==============================*/
+
+void Main::m_TreeCtrl_Authors_OnTreeSelChanged(wxTreeEvent& event)
+{
+    this->m_SelectedAuthor = event.GetItem();
+    Author* author = this->FindAuthor(this->m_SelectedAuthor);
+    if (!author)
+    {
+        this->m_ScrolledWindow_Author_Editor->Hide();
+        this->m_Button_Authors_Preview->Hide();
+    }
+    else
+    {
+        this->m_TextCtrl_Authors_File->ChangeValue(author->filename);
+        this->m_TextCtrl_Authors_Name->ChangeValue(author->displayname);
+        this->m_TextCtrl_Authors_Image->ChangeValue(author->image);
+        this->m_TextCtrl_Authors_Description->ChangeValue(author->description);
+        this->m_ScrolledWindow_Author_Editor->Show();
+        this->m_Button_Authors_Preview->Show();
+    }
+    this->m_Panel_Authors_Editor->Layout();
+}
+
+
+/*==============================
+    m_TreeCtrl_Authors_OnTreeEndLabelEdit
+    Handles author tree label edits
+    @param The event that was generated
+==============================*/
+
+void Main::m_TreeCtrl_Authors_OnTreeEndLabelEdit(wxTreeEvent& event)
+{
+    Author* author = this->FindAuthor(event.GetItem());
+    if (event.IsEditCancelled() || !author || !this->RenameAuthor(author, event.GetLabel()))
+    {
+        event.Veto();
+        return;
+    }
+    if (event.GetItem() == this->m_SelectedAuthor)
+        this->m_TextCtrl_Authors_Name->ChangeValue(author->displayname);
+    event.SetLabel(author->displayname);
+}
+
+
+/*==============================
+    m_TreeCtrl_Authors_OnTreeItemMenu
+    Opens the author tree context menu
+    @param The event that was generated
+==============================*/
+
+void Main::m_TreeCtrl_Authors_OnTreeItemMenu(wxTreeEvent& event)
+{
+    if (!this->FindAuthor(event.GetItem()))
+        return;
+    this->m_TreeCtrl_Authors->SelectItem(event.GetItem());
+    wxMenu menu;
+    menu.Append(wxID_DELETE, "Delete author");
+    menu.Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Main::OnPopupClick_Authors), NULL, this);
+    PopupMenu(&menu, event.GetPoint());
+}
+
+
+/*==============================
+    m_TextCtrl_Authors_Name_OnText
+    Handles author name edits
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_Authors_Name_OnText(wxCommandEvent& event)
+{
+    Author* author = this->FindAuthor(this->m_SelectedAuthor);
+    if (author)
+        this->RenameAuthor(author, event.GetString());
+}
+
+
+/*==============================
+    m_TextCtrl_Authors_Image_OnText
+    Handles author image edits
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_Authors_Image_OnText(wxCommandEvent& event)
+{
+    Author* author = this->FindAuthor(this->m_SelectedAuthor);
+    if (author && author->image != event.GetString())
+    {
+        author->image = event.GetString();
+        this->MarkModified();
+    }
+}
+
+
+/*==============================
+    m_TextCtrl_Authors_Description_OnText
+    Handles author description edits
+    @param The event that was generated
+==============================*/
+
+void Main::m_TextCtrl_Authors_Description_OnText(wxCommandEvent& event)
+{
+    Author* author = this->FindAuthor(this->m_SelectedAuthor);
+    if (author && author->description != event.GetString())
+    {
+        author->description = event.GetString();
+        this->MarkModified();
+    }
 }
 
 
@@ -1335,6 +1627,59 @@ void Main::OnPopupClick_ROMs(wxCommandEvent& event)
 
 
 /*==============================
+    OnPopupClick_Authors
+    Handles deleting an author from the context menu
+    @param The event that was generated
+==============================*/
+
+void Main::OnPopupClick_Authors(wxCommandEvent& event)
+{
+    wxString name;
+    ROM* selected;
+    Author* author = this->FindAuthor(this->m_SelectedAuthor);
+    if (event.GetId() != wxID_DELETE || !author)
+        return;
+
+    // Remove old author file names
+    name = author->displayname;
+    if (!author->oldfilename.IsEmpty())
+        this->m_ObsoleteAuthorFiles.push_back(author->oldfilename);
+
+    // Remove the author from every credited ROM
+    for (Category* category : this->m_Category_ROMs)
+    {
+        for (void* child : category->pages)
+        {
+            ROM* rom = (ROM*)child;
+            std::vector<wxString>::iterator end = std::remove(rom->authors.begin(), rom->authors.end(), name);
+            if (end != rom->authors.end())
+            {
+                rom->authors.erase(end, rom->authors.end());
+                rom->wasmodified = true;
+            }
+        }
+    }
+    this->m_Authors.erase(this->m_Authors.begin() + (&author - this->m_Authors.data()));
+
+    // If the currently selected ROM is visible, update the author list display
+    selected = this->FindROM(this->m_SelectedItem);
+    if (selected)
+    {
+        wxString display;
+        for (wxString credited : selected->authors)
+        {
+            if (!display.IsEmpty())
+                display += ", ";
+            display += credited;
+        }
+        this->m_TextCtrl_ROMs_Authors->ChangeValue(display);
+    }
+    this->RefreshAuthorTree();
+    this->MarkModified();
+}
+
+
+/*==============================
     OnClose
     Handles the frame close event
     @param  The event that was generated
@@ -1409,7 +1754,7 @@ ROM* Main::FindROM(wxTreeItemId item)
     wxTreeItemId cat_id;
     Category* cat_elem;
 
-    if (treeitem_iscategory(this->m_TreeCtrl_ROMs, item))
+    if (!item.IsOk() || treeitem_iscategory(this->m_TreeCtrl_ROMs, item))
         return NULL;
 
     cat_id = this->m_TreeCtrl_ROMs->GetItemParent(item);
@@ -1421,6 +1766,115 @@ ROM* Main::FindROM(wxTreeItemId item)
         if (((ROM*)rom)->treeid == item)
             return (ROM*)rom;
     return NULL;
+}
+
+
+/*==============================
+    FindAuthor
+    Finds an author using a tree item id
+    @param  The tree item ID to find the author of
+    @return The author that was found, or NULL
+==============================*/
+
+Author* Main::FindAuthor(wxTreeItemId item)
+{
+    if (!item.IsOk())
+        return NULL;
+    for (Author* author : this->m_Authors)
+        if (author->treeid == item)
+            return author;
+    return NULL;
+}
+
+
+/*==============================
+    RefreshAuthorTree
+    Updates the author tree using the search filter
+==============================*/
+
+void Main::RefreshAuthorTree()
+{
+    wxString filter = this->m_SearchCtrl_Authors->GetValue().Lower();
+    this->m_SelectedAuthor = wxTreeItemId();
+    this->m_ScrolledWindow_Author_Editor->Hide();
+    this->m_Button_Authors_Preview->Hide();
+    this->m_Panel_Authors_Editor->Layout();
+    this->m_TreeCtrl_Authors->Freeze();
+    this->m_TreeCtrl_Authors->DeleteAllItems();
+    wxTreeItemId root = this->m_TreeCtrl_Authors->AddRoot("Root");
+    for (Author* author : this->m_Authors)
+    {
+        author->treeid = wxTreeItemId();
+        if (author->displayname.Lower().Contains(filter))
+            author->treeid = this->m_TreeCtrl_Authors->AppendItem(root, author->displayname);
+    }
+    this->m_TreeCtrl_Authors->Thaw();
+}
+
+
+/*==============================
+    RenameAuthor
+    Renames an author and updates their ROM credits
+    @param  A pointer to the author to rename
+    @param  The new display name
+    @return Whether the new name is valid
+==============================*/
+
+bool Main::RenameAuthor(Author* author, wxString name)
+{
+    name.Trim(true).Trim(false);
+    wxString filename = sanitize_tagname(name);
+    wxString oldName;
+
+    // Check for a valid rename
+    if (name.IsEmpty() || filename.IsEmpty())
+        return false;
+    for (Author* other : this->m_Authors)
+        if (other != author && (!other->displayname.CmpNoCase(name) || !other->filename.CmpNoCase(filename)))
+            return false;
+    if (author->displayname == name)
+        return true;
+
+    // Store the old filename for cleanup later
+    oldName = author->displayname;
+    if (!author->oldfilename.IsEmpty() && author->oldfilename != filename && std::find(this->m_ObsoleteAuthorFiles.begin(), this->m_ObsoleteAuthorFiles.end(), author->oldfilename) == this->m_ObsoleteAuthorFiles.end())
+        this->m_ObsoleteAuthorFiles.push_back(author->oldfilename);
+    author->filename = filename;
+    author->displayname = name;
+
+    // Replace the author's name in every credited ROM
+    for (Category* category : this->m_Category_ROMs)
+    {
+        for (void* child : category->pages)
+        {
+            ROM* rom = (ROM*)child;
+            for (wxString& credited : rom->authors)
+                if (credited == oldName)
+                {
+                    credited = name;
+                    rom->wasmodified = true;
+                }
+        }
+    }
+    if (author->treeid.IsOk())
+        this->m_TreeCtrl_Authors->SetItemText(author->treeid, name);
+    this->m_TextCtrl_Authors_File->ChangeValue(sanitize_tagname(filename));
+
+    // If the currently selected ROM is visible, update the author list display
+    ROM* selected = this->FindROM(this->m_SelectedItem);
+    if (selected)
+    {
+        wxString display;
+        for (const wxString& credited : selected->authors)
+        {
+            if (!display.IsEmpty())
+                display += ", ";
+            display += credited;
+        }
+        this->m_TextCtrl_ROMs_Authors->ChangeValue(display);
+    }
+    this->MarkModified();
+    return true;
 }
 
 
@@ -1660,14 +2114,40 @@ void Main::EndDrag_ROM(wxTreeEvent& event)
 
 /*==============================
     Save
-    Save the entire website and compile it
+    Save the website data
+    @return Whether the data was saved successfully
 ==============================*/
 
 bool Main::Save()
 {
-    // Save the json files
-    if (!json_save(this->m_WorkingDir, &this->m_Category_ROMs, this->m_Authors))
+    Author* selectedAuthor = this->FindAuthor(this->m_SelectedAuthor);
+    if (selectedAuthor && !this->RenameAuthor(selectedAuthor, this->m_TextCtrl_Authors_Name->GetValue()))
+    {
+        wxMessageBox("Enter a unique author name with a valid filename.", "Error saving authors", wxOK|wxICON_ERROR, this);
         return false;
+    }
+    
+    // Save the JSON files
+    if (!json_save(this->m_WorkingDir, &this->m_Category_ROMs, &this->m_Authors))
+        return false;
+
+    // Remove descriptions for authors that were deleted or renamed
+    for (const wxString& filename : this->m_ObsoleteAuthorFiles)
+    {
+        bool stillused = false;
+        for (Author* author : this->m_Authors)
+            if (author->filename.CmpNoCase(filename) == 0)
+                stillused = true;
+        if (!stillused)
+        {
+            wxString markdown = this->m_WorkingDir + "/authors/markdown/" + filename + ".md";
+            if (wxFileExists(markdown))
+                wxRemoveFile(markdown);
+        }
+    }
+    this->m_ObsoleteAuthorFiles.clear();
+    for (Author* author : this->m_Authors)
+        author->oldfilename = author->filename;
 
     // Mark the program as no longer modified
     this->MarkModified(false);

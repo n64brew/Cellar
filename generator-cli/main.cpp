@@ -1,3 +1,9 @@
+/***************************************************************
+                            main.cpp
+
+The main code of the static site generator compiler
+***************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include <string>
@@ -7,6 +13,7 @@
 #include "page.h"
 #include "category.h"
 #include "list_roms.h"
+#include "list_authors.h"
 #include "helper.h"
 
 
@@ -28,6 +35,8 @@ typedef enum
 
 void compile_roms(std::vector<Category*>* pages);
 void compile_rom(std::vector<Category*>* pages, std::string jsonpath);
+void compile_authors(std::vector<Page_Author*>* authors);
+void compile_author(std::vector<Page_Author*>* authors, std::string jsonpath);
 void compile_tags(std::vector<Category*>* pages);
 void compile_genres(std::vector<Category*>* pages);
 void compile_homepage(std::vector<Category*>* pages);
@@ -43,19 +52,23 @@ void compile_homepage(std::vector<Category*>* pages);
 int main(int argc, char* argv[])
 {
     char* target = NULL;
-    std::string contentfolder, jsonname;
     ProgramMode mode = MODE_ALL;
+    std::string rompath = "roms/roms.json";
+    std::string authorpath = "authors/authors.json";
+    std::string contentfolder, jsonname;
     nlohmann::json json;
     std::vector<Category*> pages;
+    std::vector<Page_Author*> authors;
+    std::vector<std::unique_ptr<Page_Author>> unknownauthors;
 
     // Ensure we have some cli arguments
     if (argc < 2)
     {
         printf("Usage:\n");
-        printf("    %s folder/to/read <options>\n\n", argv[0]);
+        printf("    %s all|roms|authors <options>\n\n", argv[0]);
         printf("Available options:\n");
-        printf("-all            (default, assumed) Full recompile\n");
-        printf("-single <name>  Compile a single page (in category/internalname format)\n");
+        printf("-all            (default, assumed) Compile all pages of the selected type\n");
+        printf("-single <name>  Compile one ROM (category/internalname) or author (filename)\n");
         return 1;
     }
 
@@ -67,6 +80,11 @@ int main(int argc, char* argv[])
         {
             if (!strcmp(argv[i], "-single"))
             {
+                if (i + 1 >= argc)
+                {
+                    printf("Missing page name after -single\n");
+                    return 2;
+                }
                 mode = MODE_SINGLE;
                 i++;
                 target = argv[i];
@@ -85,26 +103,53 @@ int main(int argc, char* argv[])
     }
 
     // Get the folder name and try to read the JSON file from it
-    if (contentfolder.back() == '\\' || contentfolder.back() == '/')
+    if (!contentfolder.empty() && (contentfolder.back() == '\\' || contentfolder.back() == '/'))
         contentfolder.pop_back();
     std::size_t found = contentfolder.find_last_of("/\\");
     jsonname = contentfolder.substr(found+1);
+    if (jsonname != "all" && jsonname != "roms" && jsonname != "authors")
+    {
+        printf("Unknown target %s (expected 'all', 'roms', or 'authors')\n", contentfolder.c_str());
+        return 2;
+    }
+    if (jsonname == "all" && mode == MODE_SINGLE)
+    {
+        printf("-single requires the roms or authors target\n");
+        return 2;
+    }
 
-    // Open the JSON file and load its content
-    json_loadcategories(contentfolder + "/" + jsonname + ".json", &pages);
-    json_loadroms(contentfolder + "/" + jsonname + ".json", &pages);
+    // Load the ROMs and the authors
+    json_loadcategories(rompath, &pages);
+    json_loadauthors(authorpath, &authors);
+    json_loadroms(rompath, &pages, &authors, &unknownauthors);
+    for (Page_Author* author : authors)
+        author->categories = &pages;
 
     // Compile the website
-    if (jsonname == "roms")
+    if (jsonname == "all")
+    {
+        compile_roms(&pages);
+        compile_authors(&authors);
+        compile_tags(&pages);
+        compile_genres(&pages);
+        compile_homepage(&pages);
+    }
+    else if (jsonname == "roms")
     {
         if (mode == MODE_ALL)
             compile_roms(&pages);
         else
             compile_rom(&pages, target);
     }
-    compile_tags(&pages);
-    compile_genres(&pages);
-    compile_homepage(&pages);
+    else if (jsonname == "authors")
+    {
+        if (mode == MODE_ALL)
+            compile_authors(&authors);
+        else
+            compile_author(&authors, target);
+    }
+
+    printf("Site compiled successfully.\n");
     return 0;
 }
 
@@ -160,6 +205,57 @@ void compile_rom(std::vector<Category*>* pages, std::string jsonpath)
             }
         }
     }
+    printf("ROM '%s' not found\n", jsonpath.c_str());
+    exit(8);
+}
+
+
+/*==============================
+    compile_authors
+    Compile the author list and author pages
+    @param A pointer to the author list
+==============================*/
+
+void compile_authors(std::vector<Page_Author*>* authors)
+{
+    // Author list page
+    ListPage_Authors* list = new ListPage_Authors();
+    list->authors = authors;
+    list->Compile();
+    delete list;
+
+    // Now create the page for each author
+    makedir("authors");
+    for (Page_Author* author : *authors)
+        author->Compile();
+}
+
+
+/*==============================
+    compile_author
+    Compile a single author page
+    @param A pointer to the author list
+    @param The filename of a single author, or an empty string
+==============================*/
+
+void compile_author(std::vector<Page_Author*>* authors, std::string jsonpath)
+{
+    ListPage_Authors* list = new ListPage_Authors();
+    list->authors = authors;
+    list->Compile();
+    delete list;
+
+    makedir("authors");
+    for (Page_Author* author : *authors)
+    {
+        if (author->filename == jsonpath)
+        {
+            author->Compile();
+            return;
+        }
+    }
+    printf("Author '%s' not found\n", jsonpath.c_str());
+    exit(9);
 }
 
 

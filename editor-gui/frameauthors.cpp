@@ -1,17 +1,18 @@
 /***************************************************************
                        frameauthors.cpp
 
-TODO
+Frame that's used to create authors
 ***************************************************************/
 
 #include "frameauthors.h"
+#include "helper.h"
 #include <algorithm>
 #include <wx/msgdlg.h>
 #include <wx/textdlg.h>
 
 
 /*==============================
-    Main (Constructor)
+    FrameAuthors (Constructor)
     Initializes the class
 ==============================*/
 
@@ -68,7 +69,7 @@ FrameAuthors::FrameAuthors(wxWindow* parent, wxWindowID id, const wxString& titl
 
 
 /*==============================
-    App (Destructor)
+    FrameAuthors (Destructor)
     Cleans up the class before deletion
 ==============================*/
 
@@ -80,36 +81,71 @@ FrameAuthors::~FrameAuthors()
     this->m_Button_Ok->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FrameAuthors::m_Button_Ok_OnClick), NULL, this);
 }
 
-void FrameAuthors::SetAuthors(std::vector<wxString>* allauthors, std::vector<wxString> romauthors)
+
+/*==============================
+    SetAuthors
+    Sets the available and selected authors
+    @param The list of available authors
+    @param The authors selected for the ROM
+==============================*/
+
+void FrameAuthors::SetAuthors(std::vector<Author*>* allauthors, std::vector<wxString> romauthors)
 {
     this->m_Authors = allauthors;
     this->m_SelectedAuthors = romauthors;
     this->RefreshAuthors();
 }
 
+
+/*==============================
+    RefreshAuthors
+    Updates the author checklist using the search filter
+==============================*/
+
 void FrameAuthors::RefreshAuthors()
 {
     wxString filter = this->m_SearchCtrl_Authors->GetValue().Lower();
     this->m_CheckList_Authors->Clear();
-    for (wxString author : *this->m_Authors)
+    for (Author* author : *this->m_Authors)
     {
         int index;
-        if (!author.Lower().Contains(filter))
+        if (!author->displayname.Lower().Contains(filter))
             continue;
-        index = this->m_CheckList_Authors->Append(author);
-        this->m_CheckList_Authors->Check(index, std::find(m_SelectedAuthors.begin(), m_SelectedAuthors.end(), author) != m_SelectedAuthors.end());
+        index = this->m_CheckList_Authors->Append(author->displayname);
+        this->m_CheckList_Authors->Check(index, std::find(this->m_SelectedAuthors.begin(), this->m_SelectedAuthors.end(), author->displayname) != this->m_SelectedAuthors.end());
     }
 }
 
+
+/*==============================
+    GetSelectedAuthors
+    Retrieves the selected authors
+    @return A pointer to the list of selected authors
+==============================*/
+
 std::vector<wxString>* FrameAuthors::GetSelectedAuthors()
-{ 
+{
     return &this->m_SelectedAuthors;
 }
+
+
+/*==============================
+    m_SearchCtrl_Authors_OnText
+    Handles changes to the author search filter
+    @param Unused
+==============================*/
 
 void FrameAuthors::m_SearchCtrl_Authors_OnText(wxCommandEvent&)
 {
     this->RefreshAuthors();
 }
+
+
+/*==============================
+    m_CheckList_Authors_OnBoxToggled
+    Handles changes to the selected authors
+    @param The event that was generated
+==============================*/
 
 void FrameAuthors::m_CheckList_Authors_OnBoxToggled(wxCommandEvent& event)
 {
@@ -121,12 +157,20 @@ void FrameAuthors::m_CheckList_Authors_OnBoxToggled(wxCommandEvent& event)
         if (found == this->m_SelectedAuthors.end())
             this->m_SelectedAuthors.push_back(author);
     }
-    else if (found !=this-> m_SelectedAuthors.end())
+    else if (found != this->m_SelectedAuthors.end())
         this->m_SelectedAuthors.erase(found);
 }
 
+
+/*==============================
+    m_Button_New_OnClick
+    Creates an author in the dialog
+    @param Unused
+==============================*/
+
 void FrameAuthors::m_Button_New_OnClick(wxCommandEvent&)
 {
+    Author* author;
     wxTextEntryDialog dialog(this, "Author name:", "New Author");
     if (dialog.ShowModal() != wxID_OK)
         return;
@@ -136,21 +180,38 @@ void FrameAuthors::m_Button_New_OnClick(wxCommandEvent&)
         wxMessageBox("Enter an author name.", "New Author", wxOK|wxICON_WARNING, this);
         return;
     }
-    for (wxString author : *this->m_Authors)
+    wxString filename = sanitize_tagname(name);
+    if (filename.IsEmpty())
     {
-        if (author.CmpNoCase(name) == 0)
+        wxMessageBox("Enter a name that can be used as a filename.", "New Author", wxOK|wxICON_WARNING, this);
+        return;
+    }
+    for (Author* a : *this->m_Authors)
+    {
+        if (a->displayname.CmpNoCase(name) == 0 || a->filename.CmpNoCase(filename) == 0)
         {
             wxMessageBox("This author already exists.", "New Author", wxOK|wxICON_WARNING, this);
             return;
         }
     }
-    this->m_Authors->push_back(name);
+    author = new Author();
+    author->displayname = name;
+    author->filename = filename;
+    this->m_Authors->push_back(author);
     this->m_SelectedAuthors.push_back(name);
     this->m_SearchCtrl_Authors->ChangeValue(wxEmptyString);
     this->RefreshAuthors();
 }
 
-void FrameAuthors::m_Button_Ok_OnClick(wxCommandEvent&)
+
+/*==============================
+    m_Button_Ok_OnClick
+    Applies the selected authors
+    @param Unused
+==============================*/
+
+void FrameAuthors::m_Button_Ok_OnClick(wxCommandEvent& event)
 {
-    EndModal(wxID_OK);
+    event.Skip();
+    this->EndModal(wxID_OK);
 }

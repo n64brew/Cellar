@@ -85,21 +85,6 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
     return index;
 }
 
-void json_loadauthors(wxString workingdir, std::vector<wxString>* authors)
-{
-    authors->clear();
-    wxString filepath = workingdir + wxString("/authors/authors.json");
-    if (!wxFileExists(filepath))
-        filepath = workingdir + wxString("/roms/roms.json");
-    if (!wxFileExists(filepath))
-        return;
-    nlohmann::json pagejson = json_fromfilepath(filepath);
-    if (pagejson.contains("Authors") && pagejson["Authors"].is_array())
-        for (const auto& author : pagejson["Authors"])
-            if (author.is_string())
-                authors->push_back(wxString::FromUTF8(author.get<std::string>()));
-}
-
 
 /*==============================
     json_loadroms
@@ -189,43 +174,90 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
 
 
 /*==============================
-    json_save
-    Load a list of roms from a JSON file and populate the
-    rom tree
-    @param  The working directory of the program
-    @param  A pointer to the category list
+    json_loadauthors
+    Loads the registered authors from the JSON file
+    @param The working directory of the program
+    @param A pointer to the author list
 ==============================*/
 
-bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, const std::vector<wxString>& authors)
+void json_loadauthors(wxString workingdir, std::vector<Author*>* authors)
+{
+    nlohmann::json pagejson = json_fromfilepath(workingdir + wxString("/authors/authors.json"));
+
+    // Add authors from the JSON file
+    for (nlohmann::json::iterator itauthor = pagejson["Authors"].begin(); itauthor != pagejson["Authors"].end(); ++itauthor)
+    {
+        Author* author = new Author();
+        author->filename = wxString::FromUTF8(itauthor.key());
+        author->oldfilename = author->filename;
+        author->displayname = wxString::FromUTF8(itauthor.value().value("DisplayName", itauthor.key()));
+        author->image = wxString::FromUTF8(itauthor.value().value("Image", std::string()));
+        wxString markdown = workingdir + "/authors/markdown/" + author->filename + ".md";
+        if (wxFileExists(markdown))
+            author->description = string_fromfile(markdown);
+        authors->push_back(author);
+    }
+}
+
+
+/*==============================
+    json_save
+    Save the ROM and author data to JSON and markdown files
+    @param  The working directory of the program
+    @param  A pointer to the category list
+    @param  A pointer to the author list
+    @return Whether the save worked or not
+==============================*/
+
+bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, std::vector<Author*>* authors)
 {
     wxTextFile out_proj(workingdir + wxString("/roms/roms.json"));
+    wxTextFile out_authors(workingdir + wxString("/authors/authors.json"));
     nlohmann::json romjson = {};
     romjson["Categories"] = {};
     nlohmann::json authorjson = {};
-    authorjson["Authors"] = nlohmann::json::array();
-    for (const wxString& author : authors)
-        authorjson["Authors"].push_back(author.ToUTF8());
 
-    wxString authorsdir = workingdir + wxString("/authors");
-    if (!wxDirExists(authorsdir) && !wxFileName::Mkdir(authorsdir, 0777, wxPATH_MKDIR_FULL))
+    // Build author credits from the ROM assignments
+    if (!wxDirExists(workingdir + "/authors"))
+        wxFileName::Mkdir(workingdir + "/authors", 0777, wxPATH_MKDIR_FULL);
+    authorjson["Authors"] = {};
+    for (Author* author : *authors)
     {
-        wxMessageBox("Could not create the authors directory.", "Error saving authors", wxOK|wxICON_ERROR);
-        return false;
+        std::string key = author->filename.ToUTF8().data();
+        authorjson["Authors"][key]["DisplayName"] = author->displayname.ToUTF8();
+        authorjson["Authors"][key]["Image"] = author->image.ToUTF8();
+        authorjson["Authors"][key]["Credits"] = {};
+        for (Category* category : *categorylist_roms)
+        {
+            for (void* child : category->pages)
+            {
+                ROM* rom = (ROM*)child;
+                if (std::find(rom->authors.begin(), rom->authors.end(), author->displayname) != rom->authors.end())
+                    authorjson["Authors"][key]["Credits"].push_back((category->foldername + "/" + rom->filename).ToUTF8());
+            }
+        }
     }
-    wxTextFile out_authors(authorsdir + wxString("/authors.json"));
-    if (!(out_authors.Exists() ? out_authors.Open() : out_authors.Create()))
+
+    // Handle authors markdown files
+    if (!wxDirExists(workingdir + "/authors/markdown"))
+        wxFileName::Mkdir(workingdir + wxString("/authors/markdown"), 0777, wxPATH_MKDIR_FULL);
+    for (Author* author : *authors)
     {
-        wxMessageBox("Could not open the authors file for saving.", "Error saving authors", wxOK|wxICON_ERROR);
-        return false;
+        wxTextFile markdown(workingdir + wxString("/authors/markdown") + "/" + author->filename + ".md");
+        if (!(markdown.Exists() ? markdown.Open() : markdown.Create()))
+        {
+            wxMessageBox("Could not open an author description for saving.", "Error saving authors", wxOK|wxICON_ERROR);
+            return false;
+        }
+        markdown.Clear();
+        markdown.AddLine(author->description);
+        if (!markdown.Write())
+        {
+            wxMessageBox("Could not save an author description.", "Error saving authors", wxOK|wxICON_ERROR);
+            return false;
+        }
+        markdown.Close();
     }
-    out_authors.Clear();
-    out_authors.AddLine(wxString::FromUTF8(authorjson.dump(4)));
-    if (!out_authors.Write())
-    {
-        wxMessageBox("Could not save the authors file.", "Error saving authors", wxOK|wxICON_ERROR);
-        return false;
-    }
-    out_authors.Close();
 
     // Handle roms
     for (Category* cat : *categorylist_roms)
@@ -236,6 +268,13 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, c
         romjson["Categories"][catstr]["DisplayName"] = cat->displayname.ToUTF8();
         romjson["Categories"][catstr]["Description"] = cat->description.ToUTF8();
         romjson["Categories"][catstr]["Pages"] = {};
+        if (!wxDirExists(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/")))
+        {
+            wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"), 0777, wxPATH_MKDIR_FULL);
+            wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/images/"), 0777, wxPATH_MKDIR_FULL);
+            wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/icons/"), 0777, wxPATH_MKDIR_FULL);
+            wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/downloads/"), 0777, wxPATH_MKDIR_FULL);
+        }
         for (void* child : cat->pages)
         {
             ROM* proj = (ROM*)child;
@@ -265,17 +304,6 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, c
             romjson["Categories"][catstr]["Pages"][projstr]["Authors"] = nlohmann::json::array();
             for (const wxString& author : proj->authors)
                 romjson["Categories"][catstr]["Pages"][projstr]["Authors"].push_back(author.ToUTF8());
-            if (!wxDirExists(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/")))
-            {
-                wxFileName dir(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"));
-                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
-                dir.SetPath(workingdir + wxString("/roms/") + cat->foldername + wxString("/images/"));
-                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
-                dir.SetPath(workingdir + wxString("/roms/") + cat->foldername + wxString("/icons/"));
-                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
-                dir.SetPath(workingdir + wxString("/roms/") + cat->foldername + wxString("/downloads/"));
-                dir.Mkdir(0777, wxPATH_MKDIR_FULL);
-            }
             if (!projmd.Exists())
                 projmd.Create();
             projmd.Clear();
@@ -286,11 +314,31 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, c
     }
 
     // Dump the JSONs to text files
-    if (!out_proj.Exists())
-        out_proj.Create();
+    if (!(out_proj.Exists() ? out_proj.Open() : out_proj.Create()))
+    {
+        wxMessageBox("Could not open the ROM file for saving.", "Error saving ROMs", wxOK|wxICON_ERROR);
+        return false;
+    }
     out_proj.Clear();
     out_proj.AddLine(wxString::FromUTF8(romjson.dump(4)));
-    out_proj.Write();
+    if (!out_proj.Write())
+    {
+        wxMessageBox("Could not save the ROM file.", "Error saving ROMs", wxOK|wxICON_ERROR);
+        return false;
+    }
     out_proj.Close();
+    if (!(out_authors.Exists() ? out_authors.Open() : out_authors.Create()))
+    {
+        wxMessageBox("Could not open the authors file for saving.", "Error saving authors", wxOK|wxICON_ERROR);
+        return false;
+    }
+    out_authors.Clear();
+    out_authors.AddLine(wxString::FromUTF8(authorjson.dump(4)));
+    if (!out_authors.Write())
+    {
+        wxMessageBox("Could not save the authors file.", "Error saving authors", wxOK|wxICON_ERROR);
+        return false;
+    }
+    out_authors.Close();
     return true;
 }

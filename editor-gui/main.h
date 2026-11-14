@@ -49,6 +49,16 @@ typedef enum
 typedef struct Category_s Category;
 typedef struct ROM_s ROM;
 
+typedef struct Author_s
+{
+    wxString filename;
+    wxString oldfilename;
+    wxString displayname;
+    wxString image;
+    wxString description;
+    wxTreeItemId treeid;
+} Author;
+
 // Helper struct for sorting tagged pages
 typedef struct TaggedPage_s
 {
@@ -57,7 +67,8 @@ typedef struct TaggedPage_s
 } TaggedPage;
 
 // Category structure
-typedef struct Category_s {
+typedef struct Category_s
+{
     int index;
     wxString foldername;
     wxString displayname;
@@ -68,7 +79,8 @@ typedef struct Category_s {
 } Category;
 
 // ROM page structure
-typedef struct ROM_s {
+typedef struct ROM_s
+{
     int index;
     wxString filename;
     wxString displayname;
@@ -99,10 +111,12 @@ class Main : public wxFrame
     private:
         bool m_Modified;
         std::vector<Category*> m_Category_ROMs;
-        std::vector<wxString> m_Authors;
+        std::vector<Author*> m_Authors;
+        std::vector<wxString> m_ObsoleteAuthorFiles;
         wxString m_WorkingDir;
         wxTreeItemId m_DraggedItem;
         wxTreeItemId m_SelectedItem;
+        wxTreeItemId m_SelectedAuthor;
 
     protected:
         wxChoicebook* m_ChoiceBook_PageSelection;
@@ -135,12 +149,25 @@ class Main : public wxFrame
         wxTextCtrl* m_TextCtrl_ROMsCategory_DisplayName;
         wxTextCtrl* m_TextCtrl_ROMsCategory_Description;
         wxButton* m_Button_ROMs_Preview;
+        wxPanel* m_Panel_Authors;
+        wxSplitterWindow* m_Splitter_Authors;
+        wxPanel* m_Panel_Authors_Tree;
+        wxSearchCtrl* m_SearchCtrl_Authors;
+        wxTreeCtrl* m_TreeCtrl_Authors;
+        wxPanel* m_Panel_Authors_Editor;
+        wxScrolledWindow* m_ScrolledWindow_Author_Editor;
+        wxTextCtrl* m_TextCtrl_Authors_File;
+        wxTextCtrl* m_TextCtrl_Authors_Name;
+        wxTextCtrl* m_TextCtrl_Authors_Image;
+        wxTextCtrl* m_TextCtrl_Authors_Description;
+        wxButton* m_Button_Authors_Preview;
         wxMenuBar* m_Menubar_Main;
         wxMenu* m_Menu_File;
         wxMenu* m_Menu_Edit;
         wxTimer* m_Timer;
         
         void m_Splitter_ROMsOnIdle(wxIdleEvent& event);
+        void m_Splitter_AuthorsOnIdle(wxIdleEvent& event);
         void m_SearchCtrl_ROMsOnText(wxCommandEvent& event);
         void m_TreeCtrl_ROMs_OnTreeRightClick(wxMouseEvent& event);
         void m_TreeCtrl_ROMs_OnTreeBeginDrag(wxTreeEvent& event);
@@ -166,6 +193,14 @@ class Main : public wxFrame
         void m_TextCtrl_ROMs_AIDisclosure_OnText(wxCommandEvent& event);
         void m_TextCtrl_ROMsCategory_Description_OnText(wxCommandEvent& event);
         void m_Button_ROMs_Preview_OnButtonClick(wxCommandEvent& event);
+        void m_SearchCtrl_AuthorsOnText(wxCommandEvent& event);
+        void m_TreeCtrl_Authors_OnTreeEndLabelEdit(wxTreeEvent& event);
+        void m_TreeCtrl_Authors_OnTreeItemMenu(wxTreeEvent& event);
+        void m_TreeCtrl_Authors_OnTreeSelChanged(wxTreeEvent& event);
+        void m_TextCtrl_Authors_Name_OnText(wxCommandEvent& event);
+        void m_TextCtrl_Authors_Image_OnText(wxCommandEvent& event);
+        void m_TextCtrl_Authors_Description_OnText(wxCommandEvent& event);
+        void m_Button_Authors_Preview_OnButtonClick(wxCommandEvent& event);
         void m_MenuItem_Save_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_FullRecompile_OnMenuSelection(wxCommandEvent& event);
         void m_MenuItem_Find_OnMenuSelection(wxCommandEvent& event);
@@ -182,6 +217,10 @@ class Main : public wxFrame
         Category* FindCategory_ROMs(wxTreeItemId item);
         Category* FindCategory_Blog(wxTreeItemId item);
         ROM* FindROM(wxTreeItemId item);
+        Author* FindAuthor(wxTreeItemId item);
+        void RefreshAuthorTree();
+        bool RenameAuthor(Author* author, wxString name);
+        void OnPopupClick_Authors(wxCommandEvent& event);
         void UpdateTree(wxTreeCtrl* tree, wxString folder, std::vector<Category*>* categorylist);
         void LoadROMs();
         void EndDrag(wxTreeEvent& event, wxTreeCtrl* tree, std::vector<Category*>* categorylist);
@@ -191,5 +230,4 @@ class Main : public wxFrame
         void ShowROMEditor(bool show=true);
         void ShowROMCategoryEditor(bool show=true);
         void UpdateROMTags(wxString tags);
-        void UpdateROMDate(time_t date);
 };

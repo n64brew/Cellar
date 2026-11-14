@@ -1,5 +1,13 @@
 {
-    "Authors": [
-        "Buu342"
-    ]
+    "Authors": {
+        "Buu342": {
+            "Credits": [
+                "portsclones/pyoro64",
+                "examples/netlib",
+                "examples/unfloader"
+            ],
+            "DisplayName": "Buu342",
+            "Image": "images/buu342.png"
+        }
+    }
 }

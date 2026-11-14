@@ -1,3 +1,10 @@
+/***************************************************************
+                           helper.cpp
+
+This file contains a bunch of helper functions for transforming,
+sorting, and finding data types
+***************************************************************/
+
 #ifdef _WIN32
     typedef struct IUnknown IUnknown;
     #include <windows.h>
@@ -62,8 +69,48 @@ std::string sanitize_tagname(std::string tagname)
     strreplace_all(tagname, "-", "");
     strreplace_all(tagname, "/", "");
     strreplace_all(tagname, ".", "");
+    strreplace_all(tagname, "[", "");
+    strreplace_all(tagname, "]", "");
+    strreplace_all(tagname, "<", "");
+    strreplace_all(tagname, ">", "");
+    strreplace_all(tagname, "\"", "");
+    strreplace_all(tagname, "\\", "");
+    strreplace_all(tagname, "?", "");
     strreplace_all(tagname, " ", "");
     return tagname;
+}
+
+
+/*==============================
+    sanitize_html
+    Sanitizes HTML text
+    @param  The text to sanitize
+    @return The sanitized text
+==============================*/
+
+std::string sanitize_html(std::string text)
+{
+    strreplace_all(text, "&", "&amp;");
+    strreplace_all(text, "<", "&lt;");
+    strreplace_all(text, ">", "&gt;");
+    strreplace_all(text, "\"", "&quot;");
+    strreplace_all(text, "'", "&#39;");
+    return text;
+}
+
+
+/*==============================
+    author_imagepath
+    Gets an author's image path relative to the authors folder
+    @param  The stored image path
+    @return The relative image path
+==============================*/
+
+std::string author_imagepath(std::string image)
+{
+    if (image.compare(0, 8, "authors/") == 0)
+        image.erase(0, 8);
+    return image;
 }
 
 
@@ -147,6 +194,20 @@ bool taggedpage_sorter(Page* lhs, Page* rhs)
     else
         rhs_name = "";
     return lhs_name < rhs_name;
+}
+
+
+/*==============================
+    author_sorter
+    Sorts authors by their display names
+    @param  The first author
+    @param  The second author
+    @return Whether the first author should be ordered first
+==============================*/
+
+bool author_sorter(Page_Author* lhs, Page_Author* rhs)
+{
+    return lhs->displayname < rhs->displayname;
 }
 
 

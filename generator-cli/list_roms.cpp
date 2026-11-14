@@ -1,3 +1,9 @@
+/***************************************************************
+                         list_roms.cpp
+
+Handle the ROM list page.
+***************************************************************/
+
 #include <string.h>
 #include <ctime>
 #include <sstream>
