@@ -2539,11 +2539,14 @@
                     "Tags": [
                         "1 Player",
                         "2 Players",
+                        "64Drive",
                         "EEPROM Saves",
+                        "Everdrive",
                         "Libultra",
                         "MPAL Console",
                         "NTSC Console",
                         "PAL Console",
+                        "SC64",
                         "Source Code Available",
                         "Supports Accurate Emulator",
                         "Supports Inaccurate Emulator"
