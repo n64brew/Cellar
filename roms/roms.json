@@ -548,7 +548,7 @@
             }
         },
         "n64brew-gamejam2021": {
-            "Description": "",
+            "Description": "The N64brew game jam returned for 2021, featuring Giles Goddard, Kaze Emanuar, LuigiBlood, and Samuel \"Kaiser\" Villarreal as guest judges. This year, the money was decided to be used for charity, with the winner choosing where the money would go. The theme was **Control**, and <ins>Wizard of the Board</ins> won this year, donating the prize pot of $1,254.38 to the [Rainforest Trust](https://www.rainforesttrust.org/). <ins>Mission Lost Control</ins> got second place while <ins>Voidblade</ins> got third.",
             "DisplayName": "N64brew Game Jam #2",
             "Index": 5,
             "Pages": {
@@ -951,7 +951,7 @@
             }
         },
         "n64brew-gamejam2022": {
-            "Description": "",
+            "Description": "N64brew's game jam returned for 2022, with a **Spooky** theme. Judges this year were N64 Squid, Gerry (BehindTheCode.ca), and Buu342. The final prize pool of  $1369.65 was donated to [Child’s Play](https://childsplaycharity.org/) by the winning entry <ins>Styx</ins>. Second place was taken by <ins>Super Snooper Spookers</ins> while third place was <ins>Spirit Harvest</ins>.",
             "DisplayName": "N64brew Spooky Jam",
             "Index": 4,
             "Pages": {
@@ -1204,7 +1204,7 @@
             }
         },
         "n64brew-gamejam2023": {
-            "Description": "",
+            "Description": "For the fourth year in a row, N64brew hosted a game jam. This year the theme was **Summer*, and the community voted on their favorite entries. <ins>Summer's Story</ins> got first place, the <ins>Megatextures demo</ins> got second, and <ins>Alien Sun</ins> got third. $776.76 was raised for the [Michael J. Fox Foundation for Parkinson’s Research](https://www.michaeljfox.org/)",
             "DisplayName": "N64brew Summer Game Jam",
             "Index": 3,
             "Pages": {
@@ -1392,7 +1392,7 @@
             }
         },
         "n64brew-gamejam2024": {
-            "Description": "Unlike previous years, the 2024 game jam only has one submission because it was a collaborative minigame jam. Everyone was given the same template and required to submit a minigame for the collection, similar to Pokemon Stadium's minigame Kids Club. The winner of this year's competition was <ins>Coin Rush</ins>, with <ins>SpaceWaves</ins> taking second and <ins>Hydra Harmonics</ins> taking third, all entries voted once again by the community. $1754 was raised for the [Alzheimer's Association](https://www.alz.org/).",
+            "Description": "Unlike previous years, the 2024 game jam only has one submission because it was a collaborative minigame jam, similar to Pokemon Stadium's Kids Club. Everyone was given the same template and was required to use it to submit a minigame for the collection. The winner of this year's competition was <ins>Coin Rush</ins>, with <ins>SpaceWaves</ins> taking second and <ins>Hydra Harmonics</ins> taking third, all entries voted once again by the community. $1754 was raised for the [Alzheimer's Association](https://www.alz.org/).",
             "DisplayName": "N64brew Game Jam #5",
             "Index": 2,
             "Pages": {
