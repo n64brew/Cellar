@@ -50,7 +50,7 @@
       <property name="minimum_size"></property>
       <property name="name">Main</property>
       <property name="pos"></property>
-      <property name="size">780,600</property>
+      <property name="size">800,700</property>
       <property name="style">wxDEFAULT_FRAME_STYLE</property>
       <property name="subclass">; ; forward_declare</property>
       <property name="title"></property>
@@ -3551,7 +3551,7 @@
                                 <property name="floatable">1</property>
                                 <property name="font"></property>
                                 <property name="gripper">0</property>
-                                <property name="hidden">1</property>
+                                <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>

@@ -210,7 +210,7 @@ class Main : public wxFrame
         void OnClose(wxCloseEvent& event);
     
     public:
-        Main(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 600), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
+        Main(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 700), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
         ~Main();
 
         void InitialCheck();

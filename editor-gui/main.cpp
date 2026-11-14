@@ -383,7 +383,6 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_Authors_Editor = new wxFlexGridSizer(3, 1, 0, 0);
     m_Sizer_Authors_Editor->AddGrowableCol(0);
     m_Sizer_Authors_Editor->AddGrowableRow(0);
-    m_Sizer_Authors_Editor->AddGrowableRow(1);
     m_Sizer_Authors_Editor->SetFlexibleDirection(wxBOTH);
     m_Sizer_Authors_Editor->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
     this->m_ScrolledWindow_Author_Editor = new wxScrolledWindow(this->m_Panel_Authors_Editor, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL);

@@ -64,7 +64,7 @@ class FrameTags : public wxDialog
         void m_Button_Ok_OnClick(wxCommandEvent& event);
 
     public:
-        FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 500), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+        FrameTags(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Tags"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(640, 680), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
         ~FrameTags();
         
         void ActivateTags(wxString tags);

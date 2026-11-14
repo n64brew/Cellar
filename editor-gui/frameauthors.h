@@ -39,7 +39,7 @@ class FrameAuthors : public wxDialog
         void m_Button_Ok_OnClick(wxCommandEvent& event);
 
     public:
-        FrameAuthors(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Authors"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(400, 300), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+        FrameAuthors(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Authors"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(400, 500), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
         ~FrameAuthors();
 
         void SetAuthors(std::vector<Author*>* allauthors, std::vector<wxString> romauthors);
