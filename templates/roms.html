@@ -17,6 +17,39 @@
             <p>This page is a collection of N64 homebrew ROMs.</p>
             <h5>Last updated _TEMPLATE_ROMS_DATE_</h5>
             <hr>
+
+            <div id="rom-filter-header" class="rom-filter-header" hidden>
+                <center>
+                    <span id="filter-count" role="status" aria-live="polite"></span><br></br>
+                    <button id="filter-toggle" type="button" aria-expanded="false" aria-controls="rom-filters">Filters</button>
+                </center>
+            </div>
+            <form id="rom-filters" class="rom-filters" hidden>
+                <label for="filter-name">Name
+                    <input id="filter-name" type="search" autocomplete="off">
+                </label>
+                <label for="filter-author">Author
+                    <input id="filter-author" type="search" autocomplete="off">
+                </label>
+                <label for="filter-genre">Genre
+                    <select id="filter-genre"><option value="">All genres</option></select>
+                </label>
+                <label for="filter-tag">Tag
+                    <select id="filter-tag"><option value="">All tags</option></select>
+                </label>
+                <label for="filter-age">Age rating
+                    <select id="filter-age"><option value="">All ratings</option></select>
+                </label>
+                <label for="filter-ai">AI disclosure
+                    <select id="filter-ai">
+                        <option value="">Any</option>
+                        <option value="yes">Present</option>
+                        <option value="no">Not present</option>
+                    </select>
+                </label>
+                <button id="filter-clear" type="button">Clear filters</button>
+            </form>
+            <p id="filter-empty" hidden>No ROMs match these filters.</p>
             
 _TEMPLATE_ROMS_LIST_
             

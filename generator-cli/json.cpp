@@ -116,7 +116,7 @@ int json_loadcategories(std::string filepath, std::vector<Category*>* categoryli
     @param A pointer to the unregistered author list
 ==============================*/
 
-void json_loadroms(std::string filepath, std::vector<Category*>* categorylist, const std::vector<Page_Author*>* authors, std::vector<std::unique_ptr<Page_Author>>* unknownauthors)
+void json_loadroms(std::string filepath, std::vector<Category*>* categorylist, std::vector<Page_Author*>* authors, std::vector<std::unique_ptr<Page_Author>>* unknownauthors)
 {
     std::size_t found = filepath.find_last_of("/\\");
     std::string workingdir = filepath.substr(0, found);
@@ -173,18 +173,24 @@ void json_loadroms(std::string filepath, std::vector<Category*>* categorylist, c
                 std::string name = std::string(*it);
                 Page_Author* author = NULL;
                 for (Page_Author* candidate : *authors)
+                {
                     if (candidate->displayname == name)
                     {
                         author = candidate;
                         break;
                     }
+                }
                 if (author == NULL)
-                    for (const std::unique_ptr<Page_Author>& candidate : *unknownauthors)
+                {
+                    for (std::unique_ptr<Page_Author>& candidate : *unknownauthors)
+                    {
                         if (candidate->displayname == name)
                         {
                             author = candidate.get();
                             break;
                         }
+                    }
+                }
                 if (author == NULL)
                 {
                     unknownauthors->emplace_back(new Page_Author());
@@ -239,9 +245,31 @@ void json_loadauthors(std::string filepath, std::vector<Page_Author*>* authors)
         author->image = it.value().value("Image", std::string());
         author->description = string_fromfile(workingdir + "/markdown/" + author->filename + ".md");
         if (it.value().contains("Credits") && it.value()["Credits"].is_array())
-            for (const nlohmann::json& credit : it.value()["Credits"])
-                if (credit.is_string())
-                    author->credits.push_back(credit.get<std::string>());
+            for (nlohmann::json& credit : it.value()["Credits"])
+                author->credits.push_back(credit.get<std::string>());
         authors->push_back(author);
     }
+}
+
+
+/*==============================
+    json_romfilter
+    Create a filter for the clientside filtering on
+    the website.
+    @param  The page to get the contents of
+    @return The HTML filter string.
+==============================*/
+
+std::string json_romfilter(Page_ROM* page)
+{
+    nlohmann::json filter;
+    filter["name"] = page->displayname;
+    filter["authors"] = nlohmann::json::array();
+    for (Page_Author* author : page->authors)
+        filter["authors"].push_back(author->displayname);
+    filter["genres"] = page->genres;
+    filter["tags"] = page->tags;
+    filter["age"] = page->agerating;
+    filter["ai"] = !page->aidisclosure.empty();
+    return filter.dump();
 }

@@ -311,7 +311,7 @@ Main::Main(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint
     m_Sizer_ScrolledWindow_ROMCategory_Editor_Main->Add(0, 0, 1, wxEXPAND, 5);
     m_Sizer_ScrolledWindow_ROMCategory_Editor->Add(m_Sizer_ScrolledWindow_ROMCategory_Editor_Main, 1, wxEXPAND, 5);
     this->m_TextCtrl_ROMsCategory_Description = new wxTextCtrl(this->m_ScrolledWindow_ROMCategory_Editor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2);
-    this->m_TextCtrl_ROMsCategory_Description->SetToolTip(wxT("The filename of the ROM"));
+    this->m_TextCtrl_ROMsCategory_Description->SetToolTip(wxT("A description for the category. Supports markdown."));
     this->m_TextCtrl_ROMsCategory_Description->SetMinSize(wxSize(-1,200));
     #if wxUSE_SPELLCHECK
         this->m_TextCtrl_ROMsCategory_Description->EnableProofCheck();
@@ -1095,40 +1095,6 @@ void Main::m_Button_ROMs_FindAuthors_OnButton(wxCommandEvent& event)
 
 
 /*==============================
-    UpdateROMTags
-    Updates the tags of the currently selected ROM
-    @param The string with comma separated tags
-==============================*/
-
-void Main::UpdateROMTags(wxString tags)
-{
-    ROM* rom = this->FindROM(this->m_SelectedItem);
-    if (rom != NULL)
-    {
-        wxString old = this->m_TextCtrl_ROMs_Tags->GetValue();
-        if (old != tags)
-        {
-            this->m_TextCtrl_ROMs_Tags->SetValue(tags);
-
-            wxArrayString strarray = wxSplit(tags, ',');
-            rom->tags.clear();
-
-            // Split the elements by comma
-            for (wxString str : strarray)
-            {
-                str.Trim(true);
-                str.Trim(false);
-                if (str != "")
-                    rom->tags.push_back(str);
-            }
-            rom->wasmodified = true;
-            this->MarkModified();
-        }
-    }
-}
-
-
-/*==============================
     m_Button_ROMs_Tags_OnButton
     Handles the ROM tags button click event
     @param The event that was generated
@@ -1141,7 +1107,29 @@ void Main::m_Button_ROMs_Tags_OnButton(wxCommandEvent& event)
     {
         FrameTags* frame = new FrameTags(this);
         frame->ActivateTags(this->m_TextCtrl_ROMs_Tags->GetValue());
-        frame->ShowModal();
+        if (frame->ShowModal() == wxID_OK)
+        {
+            wxString tags = frame->GetTagString();
+            wxString old = this->m_TextCtrl_ROMs_Tags->GetValue();
+            if (old != tags)
+            {
+                this->m_TextCtrl_ROMs_Tags->SetValue(tags);
+
+                wxArrayString strarray = wxSplit(tags, ',');
+                rom->tags.clear();
+
+                // Split the elements by comma
+                for (wxString str : strarray)
+                {
+                    str.Trim(true);
+                    str.Trim(false);
+                    if (str != "")
+                        rom->tags.push_back(str);
+                }
+                rom->wasmodified = true;
+                this->MarkModified();
+            }
+        }
     }
     event.Skip();
 }

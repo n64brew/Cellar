@@ -15,7 +15,6 @@ This file contains a frame for setting tags on a ROM
 
 FrameTags::FrameTags(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
-    this->m_PressedOK = false;
     this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 
     wxFlexGridSizer* m_Sizer_Tags;
@@ -210,17 +209,6 @@ FrameTags::FrameTags(wxWindow* parent, wxWindowID id, const wxString& title, con
 
 FrameTags::~FrameTags()
 {
-    // Transfer changes over to the parent window
-    if (this->m_PressedOK)
-    {
-        wxString final;
-        std::map<wxString, wxCheckBox*>::iterator it;
-        for (it = this->m_TagDictionary.begin(); it != this->m_TagDictionary.end(); it++)
-            if (it->second->GetValue())
-                final += it->first + ", ";
-        ((Main*)(this->GetParent()))->UpdateROMTags(final);
-    }
-
     // Disconnect events
     this->m_Button_Ok->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FrameTags::m_Button_Ok_OnClick), NULL, this);
 }
@@ -234,8 +222,7 @@ FrameTags::~FrameTags()
 
 void FrameTags::m_Button_Ok_OnClick(wxCommandEvent& event)
 {
-    this->m_PressedOK = true;
-    this->Close();
+    this->EndModal(wxID_OK);
     event.Skip();
 }
 
@@ -263,4 +250,22 @@ void FrameTags::ActivateTags(wxString tags)
                 pos->second->SetValue(true);
         }
     }
+}
+
+
+/*==============================
+    ActivateTags
+    Activates all the tag checkboxes in the given 
+    comma separated string
+    @param The comma separated string with the tags
+==============================*/
+
+wxString FrameTags::GetTagString()
+{
+    wxString final;
+    std::map<wxString, wxCheckBox*>::iterator it;
+    for (it = this->m_TagDictionary.begin(); it != this->m_TagDictionary.end(); it++)
+        if (it->second->GetValue())
+            final += it->first + ", ";
+    return final;
 }

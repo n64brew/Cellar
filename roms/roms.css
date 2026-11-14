@@ -80,6 +80,113 @@ pre
     font-family: "Courier New";
 }
 
+.rom-filter-header:not([hidden])
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0px;
+}
+
+#filter-toggle
+{
+    border: 1px solid #888;
+    border-radius: 2px;
+    background: #e8e8e8;
+    color: #222;
+    padding: 6px 10px;
+    font: 13px Verdana, Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+#filter-toggle::before
+{
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 9px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg);
+    vertical-align: 3px;
+}
+
+#filter-toggle[aria-expanded="true"]::before
+{
+    transform: rotate(225deg);
+    vertical-align: 0px;
+}
+
+.rom-filters:not([hidden])
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 10px 12px;
+    align-items: end;
+    margin: 16px 0px;
+    text-align: left;
+}
+
+.rom-filters label
+{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.rom-filters input, .rom-filters select, .rom-filters button
+{
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+    border: 1px solid #888;
+    border-radius: 2px;
+    background: #fff;
+    color: #222;
+    padding: 3px 6px;
+    font: 13px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.rom-filters button
+{
+    cursor: pointer;
+    background: #e8e8e8;
+}
+
+.rom-filters input:focus, .rom-filters select:focus, .rom-filters button:focus, #filter-toggle:focus
+{
+    outline: 2px solid #934444;
+    outline-offset: 1px;
+}
+
+#filter-count
+{
+    align-self: center;
+    font-size: 12px;
+}
+
+.rom-filter-item:not([hidden])
+{
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+@media screen and (max-width: 736px)
+{
+    .box
+    {
+        box-sizing: border-box;
+        width: calc(100% - 16px);
+        margin: 16px auto;
+        padding: 24px 16px;
+    }
+}
+
 /* Main ROM box body */
 .romiconcontainer
 {

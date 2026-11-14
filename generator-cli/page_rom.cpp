@@ -81,9 +81,9 @@ void Page_ROM::Compile()
     }
     strreplace_all(html_final, "_TEMPLATE_ROMS_DESCRIPTION_", html_md); // TODO?: Potentially need to unsanitize strings if sanitized before
     strreplace_all(html_final, "_TEMPLATE_ROMS_CATEGORY_", this->category->foldername);
-    strreplace_all(html_final, "_TEMPLATE_ROM_URL_", relativepath + this->filename + ".html");
-    strreplace_all(html_final, "_TEMPLATE_ROM_IMAGE_", relativepath + this->icon);
-    strreplace_all(html_final, "_TEMPLATE_ROM_TOOLTIP_", this->tooltip);
+    strreplace_all(html_final, "_TEMPLATE_ROMS_URL_", relativepath + this->filename + ".html");
+    strreplace_all(html_final, "_TEMPLATE_ROM_IMAGE_", this->icon.empty() ? "roms/noicon.png" : relativepath + this->icon);
+    strreplace_all(html_final, "_TEMPLATE_ROMS_TOOLTIP_", sanitize_html(this->tooltip));
 
     // Handle image carousel
     for (std::string str : this->images)
@@ -240,6 +240,8 @@ void Page_ROM::Compile()
             strreplace_all(str, "\"", "");
             if (str.find("github.com") != std::string::npos)
                 strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadgh.png");
+            else if (str.find("codeberg.org") != std::string::npos)
+                strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadcb.png");
             else if (str.find("gitlab.com") != std::string::npos)
                 strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadgl.png");
             else if (str.find("itch.io") != std::string::npos)

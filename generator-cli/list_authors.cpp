@@ -30,7 +30,7 @@ void ListPage_Authors::Compile()
         std::string item = string_fromfile("templates/authors_author.html");
         strreplace_all(item, "_TEMPLATE_AUTHOR_URL_", "authors/" + author->filename + ".html");
         strreplace_all(item, "_TEMPLATE_AUTHOR_TITLE_", sanitize_html(author->displayname));
-        strreplace_all(item, "_TEMPLATE_AUTHOR_IMAGE_", "authors/" + author->image);
+        strreplace_all(item, "_TEMPLATE_AUTHOR_IMAGE_", author->image.empty() ? "authors/noimage.png" : "authors/" + author->image);
         html_authors += item + "\r\n";
     }
     strreplace_all(html_final, "_TEMPLATE_AUTHORS_LIST_", html_authors);

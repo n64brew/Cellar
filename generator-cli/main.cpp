@@ -6,6 +6,8 @@ The main code of the static site generator compiler
 
 #include <stdio.h>
 #include <string.h>
+#include <algorithm>
+#include <ctime>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -56,7 +58,6 @@ int main(int argc, char* argv[])
     std::string rompath = "roms/roms.json";
     std::string authorpath = "authors/authors.json";
     std::string contentfolder, jsonname;
-    nlohmann::json json;
     std::vector<Category*> pages;
     std::vector<Page_Author*> authors;
     std::vector<std::unique_ptr<Page_Author>> unknownauthors;

@@ -23,13 +23,10 @@ Handle the individual author page.
 void Page_Author::Compile()
 {
     std::string html_final = string_fromfile("templates/author.html");
-    std::string html_image;
     std::string html_description;
     std::string html_credits;
 
     // Generate the author image and markdown description
-    if (!image.empty())
-        html_image = "<img class=\"authorimage\" src=\"" + this->image + "\" alt=\"" + sanitize_html(this->displayname) + "\">";
     if (!this->description.empty())
     {
         MD_TOC_OPTIONS options = {};
@@ -50,25 +47,40 @@ void Page_Author::Compile()
             {
                 for (Page* page : category->pages)
                 {
-                    if (category->foldername + "/" + page->filename == credit)
+                    Page_ROM* rom = dynamic_cast<Page_ROM*>(page);
+                    if (category->foldername + "/" + rom->filename == credit)
                     {
-                        std::string item = string_fromfile("templates/tag_item.html");
-                        strreplace_all(item, "_TEMPLATE_TAG_PAGEURL_", "../roms/" + sanitize_html(credit) + ".html");
-                        strreplace_all(item, "_TEMPLATE_TAG_PAGENAME_", sanitize_html(page->displayname));
+                        std::string item = string_fromfile("templates/author_credit.html");
+                        strreplace_all(item, "_TEMPLATE_ROM_URL_", "../roms/" + sanitize_html(credit) + ".html");
+                        strreplace_all(item, "_TEMPLATE_ROM_FILTER_", "");
+                        if (rom->icon.empty())
+                            strreplace_all(item, "_TEMPLATE_ROM_IMAGE_", "../roms/noicon.png");
+                        else
+                            strreplace_all(item, "_TEMPLATE_ROM_IMAGE_", "../roms/" + category->foldername + "/" + rom->icon);
+                        strreplace_all(item, "_TEMPLATE_ROM_TITLE_", sanitize_html(rom->displayname));
+                        strreplace_all(item, "_TEMPLATE_ROM_TOOLTIP_", sanitize_html(rom->tooltip));
                         html_credits += item + "\r\n";
                     }
                 }
             }
         }
     }
-    if (!html_credits.empty())
-        html_credits = "<h2>Credits</h2>\n" + html_credits;
 
     // Fill the author template and write the page
     strreplace_all(html_final, "_TEMPLATE_AUTHOR_NAME_", sanitize_html(this->displayname));
     strreplace_all(html_final, "_TEMPLATE_AUTHOR_URL_", "authors/" + this->filename + ".html");
-    strreplace_all(html_final, "_TEMPLATE_AUTHOR_IMAGE_", "authors/" + image);
-    strreplace_all(html_final, "_TEMPLATE_AUTHOR_IMAGEBLOCK_", html_image);
+    if (!this->image.empty())
+    {
+        std::string html_image = string_fromfile("templates/author_image.html");
+        strreplace_all(html_final, "_TEMPLATE_AUTHOR_IMAGESECTION_", html_image);
+        strreplace_all(html_final, "_TEMPLATE_AUTHOR_IMAGE_", this->image);
+    }
+    else
+    {
+        std::string html_image = string_fromfile("templates/author_image.html");
+        strreplace_all(html_final, "_TEMPLATE_AUTHOR_IMAGESECTION_", html_image);
+        strreplace_all(html_final, "_TEMPLATE_AUTHOR_IMAGE_", "noimage.png");
+    }
     strreplace_all(html_final, "_TEMPLATE_AUTHOR_DESCRIPTION_", html_description);
     strreplace_all(html_final, "_TEMPLATE_AUTHOR_CREDITS_", html_credits);
     std::ofstream out("authors/" + this->filename + ".html");

@@ -13,6 +13,7 @@ Handle the ROM list page.
 #include "page_rom.h"
 #include "markdown.h"
 #include "helper.h"
+#include "json.h"
 
 void ListPage_ROMs::Compile()
 {
@@ -40,12 +41,13 @@ void ListPage_ROMs::Compile()
         for (Page* page_a : cat->pages)
         {
             Page_ROM* page = dynamic_cast<Page_ROM*>(page_a);
-            html_roms += string_fromfile("templates/roms_rom.html");
-            strreplace_all(html_roms, "_TEMPLATE_ROM_URL_", relativepath + page->filename + ".html");
-            strreplace_all(html_roms, "_TEMPLATE_ROM_TITLE_", page->displayname);
-            strreplace_all(html_roms, "_TEMPLATE_ROM_IMAGE_", relativepath + page->icon);
-            strreplace_all(html_roms, "_TEMPLATE_ROM_TOOLTIP_", page->tooltip);
-            html_roms += "\r\n";
+            std::string html_rom = string_fromfile("templates/roms_rom.html");
+            strreplace_all(html_rom, "_TEMPLATE_ROM_URL_", sanitize_html(relativepath + page->filename + ".html"));
+            strreplace_all(html_rom, "_TEMPLATE_ROM_TITLE_", sanitize_html(page->displayname));
+            strreplace_all(html_rom, "_TEMPLATE_ROM_IMAGE_",  page->icon.empty() ? "roms/noicon.png" : relativepath + page->icon);
+            strreplace_all(html_rom, "_TEMPLATE_ROM_TOOLTIP_", sanitize_html(page->tooltip));
+            strreplace_all(html_rom, "_TEMPLATE_ROM_FILTER_", sanitize_html(json_romfilter(page)));
+            html_roms += html_rom + "\r\n";
         }
 
         // Generate the section blocks

@@ -1,13 +1,897 @@
 {
     "Authors": {
+        "9_nova": {
+            "Credits": [
+                "n64brew-gamejam2023/AlienSun"
+            ],
+            "DisplayName": "9_nova",
+            "Image": ""
+        },
+        "Allie": {
+            "Credits": [
+                "n64brew-gamejam2020/BigBurger"
+            ],
+            "DisplayName": "Allie",
+            "Image": ""
+        },
+        "BoxingBruin": {
+            "Credits": [
+                "n64brew-gamejam2025/Pandemonium"
+            ],
+            "DisplayName": "BoxingBruin",
+            "Image": ""
+        },
+        "Brozilla": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2022/Fanger_sLightmare"
+            ],
+            "DisplayName": "Brozilla",
+            "Image": ""
+        },
         "Buu342": {
             "Credits": [
+                "n64brew-gamejam2024/minigamejam",
                 "portsclones/pyoro64",
                 "examples/netlib",
                 "examples/unfloader"
             ],
             "DisplayName": "Buu342",
             "Image": "images/buu342.png"
+        },
+        "CYPRESS": {
+            "Credits": [
+                "n64brew-gamejam2025/BotBoy!64"
+            ],
+            "DisplayName": "CYPRESS",
+            "Image": ""
+        },
+        "CandiedCat": {
+            "Credits": [
+                "n64brew-gamejam2025/WizardCritter64"
+            ],
+            "DisplayName": "CandiedCat",
+            "Image": ""
+        },
+        "CardboardBox": {
+            "Credits": [
+                "n64brew-gamejam2022/SuperSnooperSpookers"
+            ],
+            "DisplayName": "CardboardBox",
+            "Image": ""
+        },
+        "Catonator": {
+            "Credits": [
+                "n64brew-gamejam2020/TheSwoop64"
+            ],
+            "DisplayName": "Catonator",
+            "Image": ""
+        },
+        "Cobra!": {
+            "Credits": [
+                "n64brew-gamejam2025/Icefishing",
+                "n64brew-gamejam2022/SpiritHarvest",
+                "n64brew-gamejam2020/Telocation"
+            ],
+            "DisplayName": "Cobra!",
+            "Image": ""
+        },
+        "DCall": {
+            "Credits": [
+                "n64brew-gamejam2025/BotBoy!64",
+                "n64brew-gamejam2023/Summer_sStory"
+            ],
+            "DisplayName": "DC.all",
+            "Image": ""
+        },
+        "Darklink623": {
+            "Credits": [
+                "n64brew-gamejam2021/BugGame"
+            ],
+            "DisplayName": "Darklink623",
+            "Image": ""
+        },
+        "DigiSpaceProductions": {
+            "Credits": [
+                "n64brew-gamejam2025/WizardCritter64"
+            ],
+            "DisplayName": "Digi-Space Productions",
+            "Image": ""
+        },
+        "Erockbrox": {
+            "Credits": [
+                "n64brew-gamejam2022/Fanger_sLightmare"
+            ],
+            "DisplayName": "Erockbrox",
+            "Image": ""
+        },
+        "FadedParadigm": {
+            "Credits": [
+                "n64brew-gamejam2025/tt64"
+            ],
+            "DisplayName": "FadedParadigm",
+            "Image": ""
+        },
+        "Fazana": {
+            "Credits": [
+                "n64brew-gamejam2025/WrenchWrangle"
+            ],
+            "DisplayName": "Fazana",
+            "Image": ""
+        },
+        "GaryJonesIII": {
+            "Credits": [
+                "n64brew-gamejam2025/RoboRenovations",
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2022/Fanger_sLightmare"
+            ],
+            "DisplayName": "Gary Jones III",
+            "Image": ""
+        },
+        "Geist": {
+            "Credits": [
+                "n64brew-gamejam2020/Test3rdPersonDemo"
+            ],
+            "DisplayName": "Geist",
+            "Image": ""
+        },
+        "Ghumdraup": {
+            "Credits": [
+                "n64brew-gamejam2025/Icefishing"
+            ],
+            "DisplayName": "Ghumdraup",
+            "Image": ""
+        },
+        "HailToDodongo": {
+            "Credits": [
+                "n64brew-gamejam2025/CathodeQuest64",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "HailToDodongo",
+            "Image": ""
+        },
+        "HappyFerret": {
+            "Credits": [
+                "n64brew-gamejam2025/BunbrushinOperationFriendshipRepair"
+            ],
+            "DisplayName": "Happy-Ferret",
+            "Image": ""
+        },
+        "Hazematman": {
+            "Credits": [
+                "n64brew-gamejam2021/BugGame"
+            ],
+            "DisplayName": "Hazematman",
+            "Image": ""
+        },
+        "HelloNewman": {
+            "Credits": [
+                "n64brew-gamejam2025/Pandemonium"
+            ],
+            "DisplayName": "HelloNewman",
+            "Image": ""
+        },
+        "Hypatia": {
+            "Credits": [
+                "n64brew-gamejam2022/DeadRitual"
+            ],
+            "DisplayName": "Hypatia",
+            "Image": ""
+        },
+        "InTheBeef": {
+            "Credits": [
+                "n64brew-gamejam2021/PowerStruggle",
+                "n64brew-gamejam2020/Tecto"
+            ],
+            "DisplayName": "InTheBeef",
+            "Image": ""
+        },
+        "Isabel": {
+            "Credits": [
+                "n64brew-gamejam2025/DamN64",
+                "n64brew-gamejam2021/FissionFailure64",
+                "n64brew-gamejam2020/Sblobber64"
+            ],
+            "DisplayName": "Isabel",
+            "Image": ""
+        },
+        "JvPeek": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "JvPeek",
+            "Image": ""
+        },
+        "Meeq": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "Meeq",
+            "Image": ""
+        },
+        "Miluaces": {
+            "Credits": [
+                "n64brew-gamejam2021/Game",
+                "n64brew-gamejam2020/TheSwoop64"
+            ],
+            "DisplayName": "Miluaces",
+            "Image": ""
+        },
+        "MrGlitch": {
+            "Credits": [
+                "n64brew-gamejam2022/TinyNightmare"
+            ],
+            "DisplayName": "Mr. Glitch",
+            "Image": ""
+        },
+        "Mr_J05H": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "Mr_J05H",
+            "Image": ""
+        },
+        "N64Squid": {
+            "Credits": [
+                "n64brew-gamejam2025/RoboRenovations",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "N64 Squid",
+            "Image": ""
+        },
+        "NickCarver": {
+            "Credits": [
+                "n64brew-gamejam2021/BugGame"
+            ],
+            "DisplayName": "Nick Carver",
+            "Image": ""
+        },
+        "Nupi": {
+            "Credits": [
+                "n64brew-gamejam2025/BotBoy!64"
+            ],
+            "DisplayName": "Nupi",
+            "Image": ""
+        },
+        "Petteri": {
+            "Credits": [
+                "n64brew-gamejam2020/KumiDaikoBeatoff64"
+            ],
+            "DisplayName": "Petteri",
+            "Image": ""
+        },
+        "Pixel": {
+            "Credits": [
+                "n64brew-gamejam2021/TandemTrouble"
+            ],
+            "DisplayName": "Pixel",
+            "Image": ""
+        },
+        "Pyroxene": {
+            "Credits": [
+                "n64brew-gamejam2025/JunkRunner64"
+            ],
+            "DisplayName": "Pyroxene",
+            "Image": ""
+        },
+        "Quilt": {
+            "Credits": [
+                "n64brew-gamejam2021/TandemTrouble"
+            ],
+            "DisplayName": "Quilt",
+            "Image": ""
+        },
+        "Raphaël": {
+            "Credits": [
+                "n64brew-gamejam2022/SlimeHeist"
+            ],
+            "DisplayName": "Raphaël",
+            "Image": ""
+        },
+        "Rasky": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "Rasky",
+            "Image": ""
+        },
+        "Razz": {
+            "Credits": [
+                "n64brew-gamejam2025/Boxfixboxwithbox",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "Razz",
+            "Image": ""
+        },
+        "RiPpEr253": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "RiPpEr253",
+            "Image": ""
+        },
+        "Routalanttu": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2020/KumiDaikoBeatoff64"
+            ],
+            "DisplayName": "Routalanttu",
+            "Image": ""
+        },
+        "RufioV": {
+            "Credits": [
+                "n64brew-gamejam2020/KumiDaikoBeatoff64"
+            ],
+            "DisplayName": "RufioV",
+            "Image": ""
+        },
+        "Ryzee119": {
+            "Credits": [
+                "n64brew-gamejam2021/zzgunner"
+            ],
+            "DisplayName": "Ryzee119",
+            "Image": ""
+        },
+        "Samuli": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2020/KumiDaikoBeatoff64"
+            ],
+            "DisplayName": "Samuli",
+            "Image": ""
+        },
+        "SapphireOnze": {
+            "Credits": [
+                "n64brew-gamejam2025/JunkRunner64"
+            ],
+            "DisplayName": "SapphireOnze",
+            "Image": ""
+        },
+        "SapphireTactics": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2023/MegatexturesTechDemo",
+                "n64brew-gamejam2022/Styx",
+                "n64brew-gamejam2021/MissionLostControl"
+            ],
+            "DisplayName": "SapphireTactics",
+            "Image": ""
+        },
+        "SausageSage": {
+            "Credits": [
+                "n64brew-gamejam2021/PowerStruggle"
+            ],
+            "DisplayName": "SausageSage",
+            "Image": ""
+        },
+        "Shootfast": {
+            "Credits": [
+                "n64brew-gamejam2025/TheBigFix"
+            ],
+            "DisplayName": "Shootfast",
+            "Image": ""
+        },
+        "Sloan누구": {
+            "Credits": [
+                "n64brew-gamejam2025/BunbrushinOperationFriendshipRepair"
+            ],
+            "DisplayName": "Sloan 누구",
+            "Image": ""
+        },
+        "SpiritOf1776": {
+            "Credits": [
+                "n64brew-gamejam2022/DeadRitual",
+                "n64brew-gamejam2021/TandemTrouble",
+                "n64brew-gamejam2020/RetroDash"
+            ],
+            "DisplayName": "SpiritOf1776",
+            "Image": ""
+        },
+        "Squiddy": {
+            "Credits": [
+                "n64brew-gamejam2021/Game"
+            ],
+            "DisplayName": "Squiddy",
+            "Image": ""
+        },
+        "StatycTyr": {
+            "Credits": [
+                "n64brew-gamejam2025/BotBoy!64",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "StatycTyr",
+            "Image": ""
+        },
+        "SuperBoognish": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "SuperBoognish",
+            "Image": ""
+        },
+        "Swagneto": {
+            "Credits": [
+                "n64brew-gamejam2022/TinyNightmare"
+            ],
+            "DisplayName": "Swagneto",
+            "Image": ""
+        },
+        "TurtleBox": {
+            "Credits": [
+                "n64brew-gamejam2025/Untitledracinggame"
+            ],
+            "DisplayName": "TurtleBox",
+            "Image": ""
+        },
+        "WadeMalone": {
+            "Credits": [
+                "n64brew-gamejam2022/SpiritHarvest",
+                "n64brew-gamejam2020/Test3rdPersonDemo"
+            ],
+            "DisplayName": "WadeMalone",
+            "Image": ""
+        },
+        "Will": {
+            "Credits": [
+                "n64brew-gamejam2025/KaijuResponseTeam"
+            ],
+            "DisplayName": "Will",
+            "Image": ""
+        },
+        "Wiseguy": {
+            "Credits": [
+                "n64brew-gamejam2021/PowerStruggle",
+                "n64brew-gamejam2020/Tecto"
+            ],
+            "DisplayName": "Wiseguy",
+            "Image": ""
+        },
+        "Xtagon": {
+            "Credits": [
+                "n64brew-gamejam2025/KaijuResponseTeam"
+            ],
+            "DisplayName": "Xtagon",
+            "Image": ""
+        },
+        "YoshiMaster96": {
+            "Credits": [
+                "n64brew-gamejam2022/SlimeHeist",
+                "n64brew-gamejam2021/Featherlight"
+            ],
+            "DisplayName": "YoshiMaster96",
+            "Image": ""
+        },
+        "Zest": {
+            "Credits": [
+                "n64brew-gamejam2025/Icefishing",
+                "n64brew-gamejam2021/Game",
+                "n64brew-gamejam2020/TheSwoop64"
+            ],
+            "DisplayName": "Zest",
+            "Image": ""
+        },
+        "anacierdem": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2023/Summer_sStory",
+                "n64brew-gamejam2021/Voidblade"
+            ],
+            "DisplayName": "anacierdem",
+            "Image": ""
+        },
+        "arookas": {
+            "Credits": [
+                "n64brew-gamejam2020/TheSwoop64"
+            ],
+            "DisplayName": "arookas",
+            "Image": ""
+        },
+        "beta_dynast": {
+            "Credits": [
+                "n64brew-gamejam2025/JunkRunner64"
+            ],
+            "DisplayName": "beta_dynast",
+            "Image": ""
+        },
+        "bigtimegoat": {
+            "Credits": [
+                "n64brew-gamejam2025/WizardCritter64"
+            ],
+            "DisplayName": "bigtimegoat",
+            "Image": ""
+        },
+        "blamerobots": {
+            "Credits": [
+                "n64brew-gamejam2025/Icefishing"
+            ],
+            "DisplayName": "blamerobots",
+            "Image": ""
+        },
+        "bop0880": {
+            "Credits": [
+                "n64brew-gamejam2025/N64GialloCrystaldreamsondeath_swing"
+            ],
+            "DisplayName": "bop0880",
+            "Image": ""
+        },
+        "brainpann": {
+            "Credits": [
+                "n64brew-gamejam2025/AsteRisk"
+            ],
+            "DisplayName": "brainpann",
+            "Image": ""
+        },
+        "bryc": {
+            "Credits": [
+                "n64brew-gamejam2022/SpiritHarvest"
+            ],
+            "DisplayName": "bryc",
+            "Image": ""
+        },
+        "chr0nomaton": {
+            "Credits": [
+                "n64brew-gamejam2025/Untitledracinggame"
+            ],
+            "DisplayName": "chr0nomaton",
+            "Image": ""
+        },
+        "cryb": {
+            "Credits": [
+                "n64brew-gamejam2023/SandCity"
+            ],
+            "DisplayName": "cryb",
+            "Image": ""
+        },
+        "dakodacomposer": {
+            "Credits": [
+                "n64brew-gamejam2025/BotBoy!64"
+            ],
+            "DisplayName": "dakodacomposer",
+            "Image": ""
+        },
+        "danielface": {
+            "Credits": [
+                "n64brew-gamejam2021/WizardoftheBoard",
+                "n64brew-gamejam2020/LunarAssault64"
+            ],
+            "DisplayName": "danielface",
+            "Image": ""
+        },
+        "darkrage64": {
+            "Credits": [
+                "n64brew-gamejam2025/Phazer64"
+            ],
+            "DisplayName": "darkrage64",
+            "Image": ""
+        },
+        "drludos": {
+            "Credits": [
+                "n64brew-gamejam2025/PlugNRepair"
+            ],
+            "DisplayName": "dr.ludos",
+            "Image": ""
+        },
+        "ealdeguer": {
+            "Credits": [
+                "n64brew-gamejam2021/FissionFailure64"
+            ],
+            "DisplayName": "ealdeguer",
+            "Image": ""
+        },
+        "gamemasterplc": {
+            "Credits": [
+                "n64brew-gamejam2021/Asteroids64",
+                "n64brew-gamejam2020/64noid"
+            ],
+            "DisplayName": "gamemasterplc",
+            "Image": ""
+        },
+        "hashalon": {
+            "Credits": [
+                "n64brew-gamejam2025/Untitledracinggame"
+            ],
+            "DisplayName": "hashalon",
+            "Image": ""
+        },
+        "hbw": {
+            "Credits": [
+                "n64brew-gamejam2025/tt64"
+            ],
+            "DisplayName": "hbw",
+            "Image": ""
+        },
+        "jaltekruse": {
+            "Credits": [
+                "n64brew-gamejam2022/TinyNightmare"
+            ],
+            "DisplayName": "jaltekruse",
+            "Image": ""
+        },
+        "joeldipops": {
+            "Credits": [
+                "n64brew-gamejam2020/JustAddWater"
+            ],
+            "DisplayName": "joeldipops",
+            "Image": ""
+        },
+        "jorquera": {
+            "Credits": [
+                "n64brew-gamejam2025/BunbrushinOperationFriendshipRepair"
+            ],
+            "DisplayName": "jorquera",
+            "Image": ""
+        },
+        "joshkautz": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "joshkautz",
+            "Image": ""
+        },
+        "jphosho": {
+            "Credits": [
+                "n64brew-gamejam2021/FissionFailure64"
+            ],
+            "DisplayName": "jphosho",
+            "Image": ""
+        },
+        "jtn191": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2023/MegatexturesTechDemo",
+                "n64brew-gamejam2022/Styx",
+                "n64brew-gamejam2021/MissionLostControl",
+                "n64brew-gamejam2020/Telocation"
+            ],
+            "DisplayName": "jtn191",
+            "Image": ""
+        },
+        "kivan117": {
+            "Credits": [
+                "n64brew-gamejam2022/DeadRitual",
+                "n64brew-gamejam2021/TandemTrouble",
+                "n64brew-gamejam2020/Juicin64"
+            ],
+            "DisplayName": "kivan117",
+            "Image": ""
+        },
+        "lambertjamesd": {
+            "Credits": [
+                "n64brew-gamejam2025/JunkRunner64",
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2023/MegatexturesTechDemo",
+                "n64brew-gamejam2022/Styx",
+                "n64brew-gamejam2021/MissionLostControl",
+                "n64brew-gamejam2020/Telocation"
+            ],
+            "DisplayName": "lambertjamesd",
+            "Image": ""
+        },
+        "lepidotós": {
+            "Credits": [
+                "n64brew-gamejam2025/Untitledracinggame",
+                "n64brew-gamejam2021/Featherlight"
+            ],
+            "DisplayName": "lepidotós",
+            "Image": ""
+        },
+        "manfried": {
+            "Credits": [
+                "n64brew-gamejam2020/Castle64"
+            ],
+            "DisplayName": "manfried",
+            "Image": ""
+        },
+        "manuhoz": {
+            "Credits": [
+                "n64brew-gamejam2025/DamN64"
+            ],
+            "DisplayName": "manuhoz",
+            "Image": ""
+        },
+        "mewde": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "mewde",
+            "Image": ""
+        },
+        "milton7854": {
+            "Credits": [
+                "n64brew-gamejam2025/Biosphere64",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "milton7854",
+            "Image": ""
+        },
+        "moxy": {
+            "Credits": [
+                "n64brew-gamejam2025/Icefishing"
+            ],
+            "DisplayName": "moxy",
+            "Image": ""
+        },
+        "nick12355": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "nick12355",
+            "Image": ""
+        },
+        "pepsiman": {
+            "Credits": [
+                "n64brew-gamejam2022/Fanger_sLightmare"
+            ],
+            "DisplayName": "pepsiman",
+            "Image": ""
+        },
+        "pixelcrustpunk": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "pixelcrustpunk",
+            "Image": ""
+        },
+        "radishriver": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "radishriver",
+            "Image": ""
+        },
+        "raisedwizardry": {
+            "Credits": [
+                "n64brew-gamejam2025/SomewheretoEscape",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "raisedwizardry",
+            "Image": ""
+        },
+        "ritter7124": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "ritter7124",
+            "Image": ""
+        },
+        "rumbarrel64": {
+            "Credits": [
+                "n64brew-gamejam2025/Fallout_Vault64"
+            ],
+            "DisplayName": "rumbarrel64",
+            "Image": ""
+        },
+        "s4ys": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "s4ys",
+            "Image": ""
+        },
+        "snacchus": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "snacchus",
+            "Image": ""
+        },
+        "someone2639": {
+            "Credits": [
+                "n64brew-gamejam2025/someone2639_sUltimateGadgetGameofMartialArts",
+                "n64brew-gamejam2021/sUGGOH_someone2639_sUltraGalacticGameOfHorse!"
+            ],
+            "DisplayName": "someone2639",
+            "Image": ""
+        },
+        "spookyiluha": {
+            "Credits": [
+                "n64brew-gamejam2025/UnchartedTerra2264",
+                "n64brew-gamejam2024/minigamejam"
+            ],
+            "DisplayName": "spookyiluha",
+            "Image": ""
+        },
+        "terzdesign": {
+            "Credits": [
+                "n64brew-gamejam2025/JunkRunner64"
+            ],
+            "DisplayName": "terzdesign",
+            "Image": ""
+        },
+        "tfmoe__": {
+            "Credits": [
+                "n64brew-gamejam2025/ConsoleClash",
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2023/BrewVolley"
+            ],
+            "DisplayName": "tfmoe__",
+            "Image": ""
+        },
+        "themoonmademehigh": {
+            "Credits": [
+                "n64brew-gamejam2025/moonfish"
+            ],
+            "DisplayName": "themoonmademehigh",
+            "Image": ""
+        },
+        "torte00": {
+            "Credits": [
+                "n64brew-gamejam2022/SwampHero64"
+            ],
+            "DisplayName": "torte00",
+            "Image": ""
+        },
+        "traill": {
+            "Credits": [
+                "n64brew-gamejam2023/SandCastleClamour"
+            ],
+            "DisplayName": "traill",
+            "Image": ""
+        },
+        "tree": {
+            "Credits": [
+                "n64brew-gamejam2025/tt64"
+            ],
+            "DisplayName": "tree",
+            "Image": ""
+        },
+        "valtherabbit": {
+            "Credits": [
+                "n64brew-gamejam2025/RepairmanvsCreatures"
+            ],
+            "DisplayName": "valtherabbit",
+            "Image": ""
+        },
+        "vieux": {
+            "Credits": [
+                "n64brew-gamejam2021/FissionFailure64",
+                "n64brew-gamejam2020/Sblobber64"
+            ],
+            "DisplayName": "vieux",
+            "Image": ""
+        },
+        "vieuxvrgl117": {
+            "Credits": [
+                "n64brew-gamejam2025/DamN64"
+            ],
+            "DisplayName": "vieux - vrgl117",
+            "Image": ""
+        },
+        "visualculture": {
+            "Credits": [
+                "n64brew-gamejam2025/MysteriousBarricades"
+            ],
+            "DisplayName": "visualculture",
+            "Image": ""
+        },
+        "wadetyhon": {
+            "Credits": [
+                "n64brew-gamejam2023/SandCity"
+            ],
+            "DisplayName": "wadetyhon",
+            "Image": ""
+        },
+        "whatswithandy": {
+            "Credits": [
+                "n64brew-gamejam2021/MissionLostControl"
+            ],
+            "DisplayName": "whatswithandy",
+            "Image": ""
+        },
+        "zoncabe": {
+            "Credits": [
+                "n64brew-gamejam2024/minigamejam",
+                "n64brew-gamejam2022/TinyNightmare"
+            ],
+            "DisplayName": "zoncabe",
+            "Image": ""
+        },
+        "ася": {
+            "Credits": [
+                "n64brew-gamejam2025/moonfish"
+            ],
+            "DisplayName": "ася",
+            "Image": ""
         }
     }
 }

@@ -13,6 +13,8 @@ sorting, and finding data types
     #include <dirent.h>
     #include <sys/stat.h>
 #endif
+#include <algorithm>
+#include <cctype>
 #include <fstream>
 #include <string>
 #include <cstdio>
@@ -207,7 +209,13 @@ bool taggedpage_sorter(Page* lhs, Page* rhs)
 
 bool author_sorter(Page_Author* lhs, Page_Author* rhs)
 {
-    return lhs->displayname < rhs->displayname;
+    return std::lexicographical_compare(
+        lhs->displayname.begin(), lhs->displayname.end(),
+        rhs->displayname.begin(), rhs->displayname.end(),
+        [](unsigned char lhs_char, unsigned char rhs_char)
+        {
+            return std::tolower(lhs_char) < std::tolower(rhs_char);
+        });
 }
 
 

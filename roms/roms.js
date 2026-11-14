@@ -39,9 +39,13 @@ function main()
     window.addEventListener('resize', 
         function(event) {
             for (i = 0; i < colbuts.length; i++)
-                colbuts[i].parentElement.nextElementSibling.style.maxHeight = colbuts[i].parentElement.nextElementSibling.scrollHeight + "px";
+                if (!colbuts[i].classList.contains("active"))
+                    colbuts[i].parentElement.nextElementSibling.style.maxHeight = colbuts[i].parentElement.nextElementSibling.scrollHeight + "px";
         }, true
     );
+
+    // Set up the ROM list filters when present
+    InitializeROMFilters();
 
     // Handle image carousel
     var carousellist = document.getElementsByClassName("carousel-list")[0];
@@ -89,6 +93,140 @@ function main()
             );
         }
     }
+}
+
+function InitializeROMFilters()
+{
+    var form = document.getElementById("rom-filters");
+    if (form == null)
+        return;
+    var controls = {
+        name: document.getElementById("filter-name"),
+        author: document.getElementById("filter-author"),
+        genre: document.getElementById("filter-genre"),
+        tag: document.getElementById("filter-tag"),
+        age: document.getElementById("filter-age"),
+        ai: document.getElementById("filter-ai")
+    };
+    var cards = document.querySelectorAll(".rom-filter-item");
+    var sections = document.querySelectorAll(".section");
+    var entries = [];
+    var options = {
+        genre: Object.create(null),
+        tag: Object.create(null),
+        age: Object.create(null)
+    };
+    var isunrated = false;
+
+    // Helper function for adding options to a specific filter
+    function AddOptions(field, values)
+    {
+        values.forEach(function(value)
+        {
+            if (value)
+                options[field][value.toLocaleLowerCase()] = value;
+        });
+    }
+
+    // Add options to each filter
+    for (var i=0; i<cards.length; i++)
+    {
+        var data = JSON.parse(cards[i].getAttribute("data-rom"));
+        entries.push({card: cards[i], data: data});
+        AddOptions("genre", data.genres);
+        AddOptions("tag", data.tags);
+        AddOptions("age", [data.age]);
+        if (!data.age)
+            isunrated = true;
+    }
+    ["genre", "tag", "age"].forEach(function(field)
+    {
+        Object.keys(options[field]).sort(function(first, second)
+        {
+            return options[field][first].localeCompare(options[field][second]);
+        }).forEach(function(key)
+        {
+            var option = document.createElement("option");
+            option.value = key;
+            option.textContent = options[field][key];
+            controls[field].appendChild(option);
+        });
+    });
+    if (isunrated)
+    {
+        var unrated = document.createElement("option");
+        unrated.value = "__unrated__";
+        unrated.textContent = "Unrated";
+        controls.age.appendChild(unrated);
+    }
+
+    // Filter matching function
+    function Matches(values, selected)
+    {
+        return !selected || values.some(function(value)
+        {
+            return value.toLocaleLowerCase() === selected;
+        });
+    }
+
+    // Filtering logic
+    function UpdateFilters()
+    {
+        var name = controls.name.value.trim().toLocaleLowerCase();
+        var author = controls.author.value.trim().toLocaleLowerCase();
+        var count = 0;
+        entries.forEach(function(entry)
+        {
+            var data = entry.data;
+            var age = controls.age.value;
+            var matches = data.name.toLocaleLowerCase().indexOf(name) !== -1 &&
+                (!author || data.authors.some(function(value)
+                {
+                    return value.toLocaleLowerCase().indexOf(author) !== -1;
+                })) &&
+                Matches(data.genres, controls.genre.value) &&
+                Matches(data.tags, controls.tag.value) &&
+                (!age || (age === "__unrated__" ? !data.age : data.age.toLocaleLowerCase() === age)) &&
+                (!controls.ai.value || data.ai === (controls.ai.value === "yes"));
+            entry.card.hidden = !matches;
+            if (matches)
+                count++;
+        });
+
+        // Update HTML
+        for (var i=0; i<sections.length; i++)
+        {
+            var section = sections[i];
+            var content = section.nextElementSibling;
+            var visible = content.querySelectorAll(".rom-filter-item:not([hidden])").length > 0;
+            section.hidden = !visible;
+            content.hidden = !visible;
+            if (visible && !section.querySelector(".collapse-button").classList.contains("active"))
+                content.style.maxHeight = content.scrollHeight + "px";
+        }
+        document.getElementById("filter-count").textContent = count + (count === 1 ? " ROM" : " ROMs");
+        document.getElementById("filter-empty").hidden = count !== 0;
+    }
+
+    // Filter controls
+    Object.keys(controls).forEach(function(field)
+    {
+        controls[field].addEventListener(field === "name" || field === "author" ? "input" : "change", UpdateFilters);
+    });
+    var toggle = document.getElementById("filter-toggle");
+    toggle.addEventListener("click", function()
+    {
+        form.hidden = !form.hidden;
+        toggle.setAttribute("aria-expanded", form.hidden ? "false" : "true");
+    });
+    document.getElementById("filter-clear").addEventListener("click", function()
+    {
+        form.reset();
+        UpdateFilters();
+    });
+    form.addEventListener("submit", function(event) { event.preventDefault(); });
+    document.getElementById("rom-filter-header").hidden = false;
+    UpdateFilters();
 }
 
 function HideElementsInCollapsedCategory(content)
