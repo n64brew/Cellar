@@ -369,7 +369,7 @@ void copy_directory_recursive(std::string source, std::string destination, std::
             }
             else
             {
-                if (!is_excluded_extension(filename, excluded_extensions) && !is_excluded_file(filename, excluded_files,))
+                if (!is_excluded_extension(filename, excluded_extensions) && !is_excluded_file(filename, excluded_files))
                 {
                     // Copy file
                     std::ifstream src(src_path, std::ios::binary);

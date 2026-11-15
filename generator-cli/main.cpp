@@ -509,6 +509,7 @@ void publish(std::string publishpath)
         "cellar-generator",
         "cellar-generator.exe",
         "LICENSE",
+        ".gitkeep",
     };
     std::vector<std::string> ignoredextensions = {
         ".json",
