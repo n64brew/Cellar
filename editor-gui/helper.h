@@ -29,5 +29,3 @@ bool date_fromstring(wxString input, wxDateTime* output);
 // Markdown helper functions
 wxString sanitize_tagname(wxString tagname);
 void md4c_funcptr_handlestr(const MD_CHAR* input, MD_SIZE inputsize, void* output);
-wxString* md_sanitize(wxString* input);
-wxString* md_unsanitize(wxString* input);

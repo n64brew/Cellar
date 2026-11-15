@@ -1,1 +1,1 @@
-Submission to the 2026 Kaze Water Competition showcasing semi-realistic Water rendering with custom RSP microcode, object-water interactions, real reflections, dynamic shadows, dynamic shoreline foam, rigidbody physics, buoyancy and more. Made using Pyrite64
+Submission to the 2026 Kaze Water Competition showcasing semi-realistic Water rendering with custom RSP microcode, object-water interactions, real reflections, dynamic shadows, dynamic shoreline foam, rigidbody physics, buoyancy and more. Made using Pyrite64.

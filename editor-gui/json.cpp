@@ -6,10 +6,10 @@ bulky JSON header only library.
 ***************************************************************/
 
 #include <algorithm>
-#include <fstream>
 #include "json.h"
 #include "helper.h"
 #include "include/json.hpp"
+#include <wx/file.h>
 #include <wx/textfile.h>
 #include <wx/msgdlg.h>
 
@@ -24,18 +24,34 @@ nlohmann::json json_fromfilepath(wxString filepath)
 {
     try
     {
+        wxFile file;
+        wxString contents;
+        wxCharBuffer utf8;
         if (!wxFileExists(filepath))
         {
             wxTextFile newfile;
             wxMessageBox(wxString("JSON file at '"+filepath+"' does not exist. It will be created."), wxString("Error opening JSON"), wxICON_ERROR);
-            newfile.Create(filepath);
+            if (!newfile.Create(filepath))
+            {
+                wxMessageBox("Could not create the JSON file.", "Error opening JSON", wxICON_ERROR);
+                return NULL;
+            }
             newfile.AddLine("{}");
-            newfile.Write();
+            if (!newfile.Write(wxTextFileType_None, wxConvUTF8))
+            {
+                wxMessageBox("Could not write the JSON file.", "Error opening JSON", wxICON_ERROR);
+                return NULL;
+            }
             newfile.Close();
         }
-        std::ifstream stream(filepath.mb_str());
-        if (stream.is_open())
-            return nlohmann::json::parse(stream);
+        file.Open(filepath);
+        if (!file.IsOpened() || !file.ReadAll(&contents, wxConvUTF8))
+        {
+            wxMessageBox("Could not read the JSON file as UTF-8.", "Error opening JSON", wxICON_ERROR);
+            return NULL;
+        }
+        utf8 = contents.ToUTF8();
+        return nlohmann::json::parse(utf8.data(), utf8.data() + utf8.length());
     }
     catch (nlohmann::json::exception e)
     {
@@ -62,14 +78,14 @@ int json_loadcategories(wxString filepath, std::vector<Category*>* categorylist)
     for (nlohmann::json::iterator it = pagejson["Categories"].begin(); it != pagejson["Categories"].end(); ++it)
     {
         Category* cat;
-        wxString catfoldername = wxString(it.key());
+        wxString catfoldername = wxString::FromUTF8(it.key());
 
         // Create the category object
         cat = new Category();
         cat->foldername = catfoldername;
         cat->index = (*it)["Index"];
-        cat->displayname = wxString(std::string((*it)["DisplayName"]));
-        cat->description = wxString(std::string((*it)["Description"]));
+        cat->displayname = wxString::FromUTF8(std::string((*it)["DisplayName"]));
+        cat->description = wxString::FromUTF8(std::string((*it)["Description"]));
         cat->wasmodified = false;
         cat->treeid = NULL;
         cat->pages.clear();
@@ -110,7 +126,7 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
         // Find the category tree index
         for (Category* cat : *categorylist)
         {
-            if (wxString(itcat.key()) == cat->foldername)
+            if (wxString::FromUTF8(itcat.key()) == cat->foldername)
             {
                 cat_elem = cat;
                 cat_id = cat->treeid;
@@ -119,39 +135,39 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
         }
 
         // Read the rom data from the JSON
-        for (nlohmann::json::iterator itproj = (*itcat)["Pages"].begin(); itproj != (*itcat)["Pages"].end(); ++itproj)
+        for (nlohmann::json::iterator itrom = (*itcat)["Pages"].begin(); itrom != (*itcat)["Pages"].end(); ++itrom)
         {
             wxString taglist = wxString("");
-            ROM* proj = new ROM();
-            proj->index = (*itproj)["Index"];
-            proj->filename = wxString::FromUTF8(itproj.key());
-            proj->displayname = wxString::FromUTF8(std::string((*itproj)["DisplayName"]));
-            proj->icon = wxString::FromUTF8(std::string((*itproj)["Icon"]));
-            proj->date = (*itproj)["Date"];
-            proj->tooltip = wxString::FromUTF8(std::string((*itproj)["ToolTip"]));
-            proj->agerating = wxString::FromUTF8(std::string((*itproj)["AgeRating"]));
-            proj->contentwarning = wxString::FromUTF8(std::string((*itproj)["ContentWarning"]));
-            proj->aidisclosure = wxString::FromUTF8(std::string((*itproj)["AIDisclosure"]));
-            proj->wasmodified = false;
-            proj->description = string_fromfile(workingdir + wxString("/roms/") + cat_elem->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
-            proj->images.clear();
-            for (nlohmann::json::iterator it = (*itproj)["Images"].begin(); it != (*itproj)["Images"].end(); ++it)
-                proj->images.push_back(wxString::FromUTF8(std::string(*it)));
-            proj->urls.clear();
-            for (nlohmann::json::iterator it = (*itproj)["URLs"].begin(); it != (*itproj)["URLs"].end(); ++it)
-                proj->urls.push_back(wxString::FromUTF8(std::string(*it)));
-            proj->tags.clear();
-            for (nlohmann::json::iterator it = (*itproj)["Tags"].begin(); it != (*itproj)["Tags"].end(); ++it)
-                proj->tags.push_back(wxString::FromUTF8(std::string(*it)));
-            proj->genres.clear();
-            for (nlohmann::json::iterator it = (*itproj)["Genres"].begin(); it != (*itproj)["Genres"].end(); ++it)
-                proj->genres.push_back(wxString::FromUTF8(std::string(*it)));
-            if (itproj->contains("Authors") && (*itproj)["Authors"].is_array())
-                for (const auto& author : (*itproj)["Authors"])
-                    proj->authors.push_back(wxString::FromUTF8(author.get<std::string>()));
-            proj->category = cat_elem;
-            proj->treeid = NULL;
-            roms.push_back(proj);
+            ROM* rom = new ROM();
+            rom->index = (*itrom)["Index"];
+            rom->filename = wxString::FromUTF8(itrom.key());
+            rom->displayname = wxString::FromUTF8(std::string((*itrom)["DisplayName"]));
+            rom->icon = wxString::FromUTF8(std::string((*itrom)["Icon"]));
+            rom->date = (*itrom)["Date"];
+            rom->tooltip = wxString::FromUTF8(std::string((*itrom)["ToolTip"]));
+            rom->agerating = wxString::FromUTF8(std::string((*itrom)["AgeRating"]));
+            rom->contentwarning = wxString::FromUTF8(std::string((*itrom)["ContentWarning"]));
+            rom->aidisclosure = wxString::FromUTF8(std::string((*itrom)["AIDisclosure"]));
+            rom->wasmodified = false;
+            rom->description = string_fromfile(workingdir + wxString("/roms/") + cat_elem->foldername + wxString("/markdown/") + rom->filename + wxString(".md"));
+            rom->images.clear();
+            for (nlohmann::json::iterator it = (*itrom)["Images"].begin(); it != (*itrom)["Images"].end(); ++it)
+                rom->images.push_back(wxString::FromUTF8(std::string(*it)));
+            rom->urls.clear();
+            for (nlohmann::json::iterator it = (*itrom)["URLs"].begin(); it != (*itrom)["URLs"].end(); ++it)
+                rom->urls.push_back(wxString::FromUTF8(std::string(*it)));
+            rom->tags.clear();
+            for (nlohmann::json::iterator it = (*itrom)["Tags"].begin(); it != (*itrom)["Tags"].end(); ++it)
+                rom->tags.push_back(wxString::FromUTF8(std::string(*it)));
+            rom->genres.clear();
+            for (nlohmann::json::iterator it = (*itrom)["Genres"].begin(); it != (*itrom)["Genres"].end(); ++it)
+                rom->genres.push_back(wxString::FromUTF8(std::string(*it)));
+            if (itrom->contains("Authors") && (*itrom)["Authors"].is_array())
+                for (const auto& author : (*itrom)["Authors"])
+                    rom->authors.push_back(wxString::FromUTF8(author.get<std::string>()));
+            rom->category = cat_elem;
+            rom->treeid = NULL;
+            roms.push_back(rom);
         }
 
         // Correct the indices of the roms, to make sure they're in proper order
@@ -159,14 +175,14 @@ void json_loadroms(wxString workingdir, std::vector<Category*>* categorylist, wx
         {
             index = 0;
             std::sort(roms.begin(), roms.end(), &rom_sorter);
-            for (ROM* proj : roms)
-                proj->index = index++;
+            for (ROM* rom : roms)
+                rom->index = index++;
 
             // Now add the rom to the tree
-            for (ROM* proj : roms)
+            for (ROM* rom : roms)
             {
-                proj->treeid = tree->AppendItem(cat_id, proj->displayname);
-                cat_elem->pages.push_back(proj);
+                rom->treeid = tree->AppendItem(cat_id, rom->displayname);
+                cat_elem->pages.push_back(rom);
             }
         }
     }
@@ -211,7 +227,7 @@ void json_loadauthors(wxString workingdir, std::vector<Author*>* authors)
 
 bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, std::vector<Author*>* authors)
 {
-    wxTextFile out_proj(workingdir + wxString("/roms/roms.json"));
+    wxTextFile out_rom(workingdir + wxString("/roms/roms.json"));
     wxTextFile out_authors(workingdir + wxString("/authors/authors.json"));
     nlohmann::json romjson = {};
     romjson["Categories"] = {};
@@ -247,16 +263,16 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, s
     for (Author* author : *authors)
     {
         wxTextFile markdown(workingdir + wxString("/authors/markdown") + "/" + author->filename + ".md");
-        if (!(markdown.Exists() ? markdown.Open() : markdown.Create()))
+        if (!(markdown.Exists() ? markdown.Open(wxConvUTF8) : markdown.Create()))
         {
-            wxMessageBox("Could not open an author description for saving.", "Error saving authors", wxOK|wxICON_ERROR);
+            wxMessageBox(wxString::Format("Could not open %s.md for saving.", author->filename), "Error saving authors", wxOK|wxICON_ERROR);
             return false;
         }
         markdown.Clear();
         markdown.AddLine(author->description);
-        if (!markdown.Write())
+        if (!markdown.Write(wxTextFileType_None, wxConvUTF8))
         {
-            wxMessageBox("Could not save an author description.", "Error saving authors", wxOK|wxICON_ERROR);
+            wxMessageBox(wxString::Format("Could not save %s.md.", author->filename), "Error saving authors", wxOK|wxICON_ERROR);
             return false;
         }
         markdown.Close();
@@ -265,7 +281,7 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, s
     // Handle roms
     for (Category* cat : *categorylist_roms)
     {
-        std::string catstr = cat->foldername.ToStdString();
+        std::string catstr = cat->foldername.ToUTF8().data();
         romjson["Categories"][catstr] = {};
         romjson["Categories"][catstr]["Index"] = cat->index;
         romjson["Categories"][catstr]["DisplayName"] = cat->displayname.ToUTF8();
@@ -284,66 +300,73 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, s
         }
         for (void* child : cat->pages)
         {
-            ROM* proj = (ROM*)child;
-            std::string projstr = proj->filename.ToStdString();
-            wxTextFile projmd(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/") + proj->filename + wxString(".md"));
-            romjson["Categories"][catstr]["Pages"][projstr] = {};
-            romjson["Categories"][catstr]["Pages"][projstr]["Index"] = proj->index;
-            romjson["Categories"][catstr]["Pages"][projstr]["DisplayName"] = proj->displayname.ToUTF8();
-            romjson["Categories"][catstr]["Pages"][projstr]["Icon"] = proj->icon.ToUTF8();
-            romjson["Categories"][catstr]["Pages"][projstr]["Date"] = proj->date;
-            romjson["Categories"][catstr]["Pages"][projstr]["ToolTip"] = proj->tooltip.ToUTF8();
-            romjson["Categories"][catstr]["Pages"][projstr]["AgeRating"] = proj->agerating.ToUTF8();
-            romjson["Categories"][catstr]["Pages"][projstr]["ContentWarning"] = proj->contentwarning.ToUTF8();
-            romjson["Categories"][catstr]["Pages"][projstr]["AIDisclosure"] = proj->aidisclosure.ToUTF8();
-            romjson["Categories"][catstr]["Pages"][projstr]["Images"] = {};
-            for (wxString str :  proj->images)
-                romjson["Categories"][catstr]["Pages"][projstr]["Images"].push_back(str.ToUTF8());
-            romjson["Categories"][catstr]["Pages"][projstr]["URLs"] = {};
-            for (wxString str :  proj->urls)
-                romjson["Categories"][catstr]["Pages"][projstr]["URLs"].push_back(str.ToUTF8());
-            romjson["Categories"][catstr]["Pages"][projstr]["Tags"] = {};
-            for (wxString str :  proj->tags)
-                romjson["Categories"][catstr]["Pages"][projstr]["Tags"].push_back(str.ToUTF8());
-            romjson["Categories"][catstr]["Pages"][projstr]["Genres"] = {};
-            for (wxString str :  proj->genres)
-                romjson["Categories"][catstr]["Pages"][projstr]["Genres"].push_back(str.ToUTF8());
-            romjson["Categories"][catstr]["Pages"][projstr]["Authors"] = nlohmann::json::array();
-            for (const wxString& author : proj->authors)
-                romjson["Categories"][catstr]["Pages"][projstr]["Authors"].push_back(author.ToUTF8());
-            if (!projmd.Exists())
-                projmd.Create();
-            projmd.Clear();
-            projmd.AddLine(proj->description);
-            projmd.Write();
-            projmd.Close();
+            ROM* rom = (ROM*)child;
+            std::string romstr = rom->filename.ToUTF8().data();
+            wxTextFile rommd(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/") + rom->filename + wxString(".md"));
+            romjson["Categories"][catstr]["Pages"][romstr] = {};
+            romjson["Categories"][catstr]["Pages"][romstr]["Index"] = rom->index;
+            romjson["Categories"][catstr]["Pages"][romstr]["DisplayName"] = rom->displayname.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][romstr]["Icon"] = rom->icon.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][romstr]["Date"] = rom->date;
+            romjson["Categories"][catstr]["Pages"][romstr]["ToolTip"] = rom->tooltip.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][romstr]["AgeRating"] = rom->agerating.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][romstr]["ContentWarning"] = rom->contentwarning.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][romstr]["AIDisclosure"] = rom->aidisclosure.ToUTF8();
+            romjson["Categories"][catstr]["Pages"][romstr]["Images"] = {};
+            for (wxString str :  rom->images)
+                romjson["Categories"][catstr]["Pages"][romstr]["Images"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][romstr]["URLs"] = {};
+            for (wxString str :  rom->urls)
+                romjson["Categories"][catstr]["Pages"][romstr]["URLs"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][romstr]["Tags"] = {};
+            for (wxString str :  rom->tags)
+                romjson["Categories"][catstr]["Pages"][romstr]["Tags"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][romstr]["Genres"] = {};
+            for (wxString str :  rom->genres)
+                romjson["Categories"][catstr]["Pages"][romstr]["Genres"].push_back(str.ToUTF8());
+            romjson["Categories"][catstr]["Pages"][romstr]["Authors"] = nlohmann::json::array();
+            for (const wxString& author : rom->authors)
+                romjson["Categories"][catstr]["Pages"][romstr]["Authors"].push_back(author.ToUTF8());
+            if (!(rommd.Exists() ? rommd.Open(wxConvUTF8) : rommd.Create()))
+            {
+                wxMessageBox(wxString::Format("Could not open %s.md for saving.", rom->filename), "Error saving ROMs", wxOK|wxICON_ERROR);
+                return false;
+            }
+            rommd.Clear();
+            rommd.AddLine(rom->description);
+            if (!rommd.Write(wxTextFileType_None, wxConvUTF8))
+            {
+                wxMessageBox(wxString::Format("Could not save %s.md.", rom->filename), "Error saving ROMs", wxOK|wxICON_ERROR);
+                return false;
+            }
+            rommd.Close();
         }
     }
 
     // Dump the JSONs to text files
-    if (!(out_proj.Exists() ? out_proj.Open() : out_proj.Create()))
+    if (!(out_rom.Exists() ? out_rom.Open(wxConvUTF8) : out_rom.Create()))
     {
-        wxMessageBox("Could not open the ROM file for saving.", "Error saving ROMs", wxOK|wxICON_ERROR);
+        wxMessageBox("Could not open roms.json for saving.", "Error saving ROMs", wxOK|wxICON_ERROR);
         return false;
     }
-    out_proj.Clear();
-    out_proj.AddLine(wxString::FromUTF8(romjson.dump(4)));
-    if (!out_proj.Write())
+    out_rom.Clear();
+    out_rom.AddLine(wxString::FromUTF8(romjson.dump(4)));
+    if (!out_rom.Write(wxTextFileType_None, wxConvUTF8))
     {
-        wxMessageBox("Could not save the ROM file.", "Error saving ROMs", wxOK|wxICON_ERROR);
+        wxMessageBox("Could not save roms.json.", "Error saving ROMs", wxOK|wxICON_ERROR);
         return false;
     }
-    out_proj.Close();
-    if (!(out_authors.Exists() ? out_authors.Open() : out_authors.Create()))
+    out_rom.Close();
+    if (!(out_authors.Exists() ? out_authors.Open(wxConvUTF8) : out_authors.Create()))
     {
-        wxMessageBox("Could not open the authors file for saving.", "Error saving authors", wxOK|wxICON_ERROR);
+        wxMessageBox("Could not open authors.json for saving.", "Error saving authors", wxOK|wxICON_ERROR);
         return false;
     }
     out_authors.Clear();
     out_authors.AddLine(wxString::FromUTF8(authorjson.dump(4)));
-    if (!out_authors.Write())
+    if (!out_authors.Write(wxTextFileType_None, wxConvUTF8))
     {
-        wxMessageBox("Could not save the authors file.", "Error saving authors", wxOK|wxICON_ERROR);
+        wxMessageBox("Could not save authors.json.", "Error saving authors", wxOK|wxICON_ERROR);
         return false;
     }
     out_authors.Close();
