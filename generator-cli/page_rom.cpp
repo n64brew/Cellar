@@ -248,6 +248,8 @@ void Page_ROM::Compile()
                 strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadit.png");
             else if (str.find("youtube.com") != std::string::npos || str.find("youtu.be") != std::string::npos)
                 strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadyt.png");
+            else if (!str.compare(str.length() - 4, 4, ".n64") || !str.compare(str.length() - 4, 4, ".z64") || !str.compare(str.length() - 4, 4, ".v64"))
+                strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadrom.png");
             else
                 strreplace_all(obj, "_TEMPLATE_ROMS_URL_BADGE_", "../downloadzp.png");
             strreplace_all(obj, "_TEMPLATE_ROMS_URL_", str);
