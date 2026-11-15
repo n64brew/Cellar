@@ -42,6 +42,7 @@ void compile_author(std::vector<Page_Author*>* authors, std::string jsonpath);
 void compile_tags(std::vector<Category*>* pages);
 void compile_genres(std::vector<Category*>* pages);
 void compile_homepage(std::vector<Category*>* pages);
+void publish(std::string publishpath);
 
 
 /*==============================
@@ -57,6 +58,7 @@ int main(int argc, char* argv[])
     ProgramMode mode = MODE_ALL;
     std::string rompath = "roms/roms.json";
     std::string authorpath = "authors/authors.json";
+    std::string publishpath = "";
     std::string contentfolder, jsonname;
     std::vector<Category*> pages;
     std::vector<Page_Author*> authors;
@@ -68,8 +70,9 @@ int main(int argc, char* argv[])
         printf("Usage:\n");
         printf("    %s all|roms|authors <options>\n\n", argv[0]);
         printf("Available options:\n");
-        printf("-all            (default, assumed) Compile all pages of the selected type\n");
-        printf("-single <name>  Compile one ROM (category/internalname) or author (filename)\n");
+        printf("-all              (default, assumed) Compile all pages of the selected type\n");
+        printf("-single <name>    Compile one ROM (category/internalname) or author (filename)\n");
+        printf("-publish <path>   Put the finished site in a specific folder\n");
         return 1;
     }
 
@@ -83,7 +86,7 @@ int main(int argc, char* argv[])
             {
                 if (i + 1 >= argc)
                 {
-                    printf("Missing page name after -single\n");
+                    printf("Missing page name after '-single'\n");
                     return 2;
                 }
                 mode = MODE_SINGLE;
@@ -94,6 +97,16 @@ int main(int argc, char* argv[])
             else if (!strcmp(argv[i], "-all"))
             {
                 // Do nothing
+            }
+            else if (!strcmp(argv[i], "-publish"))
+            {
+                if (i + 1 >= argc)
+                {
+                    printf("Missing folder path after '-publish'\n");
+                    return 2;
+                }
+                i++;
+                publishpath = argv[i];
             }
             else
             {
@@ -149,6 +162,9 @@ int main(int argc, char* argv[])
         else
             compile_author(&authors, target);
     }
+
+    if (!publishpath.empty())
+        publish(publishpath);
 
     printf("Site compiled successfully.\n");
     return 0;
@@ -463,4 +479,44 @@ void compile_homepage(std::vector<Category*>* pages)
     std::ofstream out(homepath, std::ios::binary);
     out << html_final;
     out.close();
+}
+
+
+/*==============================
+    publish
+    Publishes the site to a specific folder
+    @param The path to publish to
+==============================*/
+
+void publish(std::string publishpath)
+{
+    std::vector<std::string> ignoredpaths = {
+        ".git",
+        ".github",
+        "editor-gui",
+        "generator-cli",
+        "templates",
+    };
+    std::vector<std::string> ignoredfiles = {
+        ".gitattributes",
+        ".gitignore",
+        "cellar-editor",
+        "cellar-editor.exe",
+        "cellar-generator",
+        "cellar-generator.exe",
+        "LICENSE",
+        "README.md",
+        "authors.json",
+        "roms.json",
+    };
+
+    // Remove trailing slashes from the publish path
+    if (!publishpath.empty() && (publishpath.back() == '\\' || publishpath.back() == '/'))
+        publishpath.pop_back();
+
+    // Create the destination directory if it doesn't exist
+    makedir(publishpath);
+
+    // Copy all files and directories recursively, excluding specified items
+    copy_directory_recursive(publishpath, &ignoredpaths, &ignoredfiles);
 }

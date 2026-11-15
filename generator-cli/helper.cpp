@@ -282,3 +282,130 @@ void makedir(const std::string& directory)
         mkdir(directory.c_str(), 0755);
     #endif
 }
+
+
+/*==============================
+    is_excluded_path
+    Checks if a path is in an exclusion list
+    @param The path to check
+    @param The list of excluded paths
+==============================*/
+
+static bool is_excluded_path(std::string path, std::vector<std::string>* excluded_paths)
+{
+    for (std::string excluded : *excluded_paths)
+        if (path == excluded)
+            return true;
+    return false;
+};
+
+
+/*==============================
+    is_excluded_file
+    Checks if a file is in an exclusion list
+    @param The file to check
+    @param The list of excluded files
+==============================*/
+
+static bool is_excluded_file(std::string filename, std::vector<std::string>* excluded_files)
+{
+    for (std::string excluded : *excluded_files)
+        if (filename == excluded)
+            return true;
+    return false;
+};
+
+
+/*==============================
+    copy_directory_recursive
+    Recursively copies a directory, excluding specified paths and files
+    @param The destination directory
+    @param A pointer to the list of paths to exclude
+    @param A pointer to the list of files to exclude
+==============================*/
+
+void copy_directory_recursive(std::string destination, std::vector<std::string>* excluded_paths, std::vector<std::string>* excluded_files)
+{
+    std::string source = ".";
+
+    #ifdef _WIN32
+        WIN32_FIND_DATAA finddata;
+        HANDLE findhandle = FindFirstFileA((source + "\\*").c_str(), &finddata);
+        if (findhandle == INVALID_HANDLE_VALUE)
+            return;
+        do
+        {
+            std::string filename = finddata.cFileName;
+            if (filename == "." || filename == "..")
+                continue;
+
+            std::string src_path = source + "\\" + filename;
+            std::string dst_path = destination + "\\" + filename;
+
+            if (finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            {
+                if (!is_excluded_path(filename, excluded_paths))
+                {
+                    _mkdir(dst_path.c_str());
+                    copy_directory_recursive(dst_path, excluded_paths, excluded_files);
+                }
+            }
+            else
+            {
+                if (!is_excluded_file(filename, excluded_files))
+                {
+                    // Copy file
+                    std::ifstream src(src_path, std::ios::binary);
+                    std::ofstream dst(dst_path, std::ios::binary);
+                    dst << src.rdbuf();
+                    src.close();
+                    dst.close();
+                }
+            }
+        }
+        while (FindNextFileA(findhandle, &finddata));
+        FindClose(findhandle);
+    #else
+        struct dirent* entry;
+        DIR* dir = opendir(source.c_str());
+        if (!dir)
+            return;
+
+        while ((entry = readdir(dir)) != NULL)
+        {
+            std::string filename = entry->d_name;
+            if (filename == "." || filename == "..")
+                continue;
+
+            std::string src_path = source + "/" + filename;
+            std::string dst_path = destination + "/" + filename;
+
+            // Check if it's a directory
+            struct stat stat_buf;
+            if (stat(src_path.c_str(), &stat_buf) != 0)
+                continue;
+
+            if (S_ISDIR(stat_buf.st_mode))
+            {
+                if (!is_excluded_path(filename, excluded_paths))
+                {
+                    mkdir(dst_path.c_str(), 0755);
+                    copy_directory_recursive(dst_path, excluded_paths, excluded_files);
+                }
+            }
+            else
+            {
+                if (!is_excluded_file(filename, excluded_files))
+                {
+                    // Copy file
+                    std::ifstream src(src_path, std::ios::binary);
+                    std::ofstream dst(dst_path, std::ios::binary);
+                    dst << src.rdbuf();
+                    src.close();
+                    dst.close();
+                }
+            }
+        }
+        closedir(dir);
+    #endif
+}

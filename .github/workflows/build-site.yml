@@ -1,0 +1,45 @@
+name: Build and Deploy Page
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Build Generator
+        run: |
+            cd generator-cli
+            make -j$(nproc)
+            cp build/cellar-generator ../cellar-generator
+
+      - name: Build HTML
+        run: |
+          generator-cli all -publish published
+
+      - name: Upload page artifact for GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: published
+
+  deploy-page:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build-site
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

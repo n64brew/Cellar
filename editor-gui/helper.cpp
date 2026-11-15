@@ -6,6 +6,7 @@ sorting, and finding data types
 ***************************************************************/
 
 #include <wx/textfile.h>
+#include <wx/file.h>
 #include "helper.h"
 
 
@@ -382,4 +383,21 @@ void filter_tree(wxTreeCtrl* tree, wxString filter)
         return;
     wxString filter_lower = filter.Lower();
     filter_tree_recursive(tree, root, filter_lower);
+}
+
+
+/*==============================
+    create_gitkeep
+    Creates a .gitkeep file in the specified directory
+    This is to keep the folder structure more beginner
+    friendly. The generator then cleans up gitkeeps from
+    non-empty folders.
+    @param  The directory path
+==============================*/
+
+void create_gitkeep(wxString directory)
+{
+    wxString gitkeep_path = directory + "/.gitkeep";
+    wxFile gitkeep(gitkeep_path, wxFile::write_append);
+    gitkeep.Close();
 }

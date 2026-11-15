@@ -951,7 +951,7 @@
             }
         },
         "n64brew-gamejam2022": {
-            "Description": "N64brew's game jam returned for 2022, with a **Spooky** theme. Judges this year were N64 Squid, Gerry (BehindTheCode.ca), and Buu342. The final prize pool of  $1369.65 was donated to [Child’s Play](https://childsplaycharity.org/) by the winning entry <ins>Styx</ins>. Second place was taken by <ins>Super Snooper Spookers</ins> while third place was <ins>Spirit Harvest</ins>.",
+            "Description": "N64brew's game jam returned for 2022, with a **Spooky** theme. Judges this year were N64 Squid, Gerry (BehindTheCode.ca), and Buu342. The final prize pool of  $1369.65 was donated to [Child's Play](https://childsplaycharity.org/) by the winning entry <ins>Styx</ins>. Second place was taken by <ins>Super Snooper Spookers</ins> while third place was <ins>Spirit Harvest</ins>.",
             "DisplayName": "N64brew Spooky Jam",
             "Index": 4,
             "Pages": {
@@ -1204,7 +1204,7 @@
             }
         },
         "n64brew-gamejam2023": {
-            "Description": "For the fourth year in a row, N64brew hosted a game jam. This year the theme was **Summer*, and the community voted on their favorite entries. <ins>Summer's Story</ins> got first place, the <ins>Megatextures demo</ins> got second, and <ins>Alien Sun</ins> got third. $776.76 was raised for the [Michael J. Fox Foundation for Parkinson’s Research](https://www.michaeljfox.org/)",
+            "Description": "For the fourth year in a row, N64brew hosted a game jam. This year the theme was **Summer**, and the community voted on their favorite entries. <ins>Summer's Story</ins> got first place, the <ins>Megatextures demo</ins> got second, and <ins>Alien Sun</ins> got third. $776.76 was raised for the [Michael J. Fox Foundation for Parkinson's Research](https://www.michaeljfox.org/)",
             "DisplayName": "N64brew Summer Game Jam",
             "Index": 3,
             "Pages": {
@@ -2502,7 +2502,7 @@
             "Pages": null
         },
         "pom1998": {
-            "Description": "",
+            "Description": "In 1998, the now defunct retro community Dextrose created the first ever Nintendo 64 homebrew competition, named Presence of Mind. Bung Enterprise Ltd. sponsored the competition, providing [Doctor V64](https://en.wikipedia.org/wiki/Doctor_V64)'s to winners of the competition, as well as some other development hardware to the top 10 entries. The top 5 entries were:\n1. <ins>Nintro 64</ins> by Split!\n2.<ins> GB</ins> by BB\n3. <ins>Mind Present</ins> by Dynamix\n4. <ins>Psycho</ins> by BB\n5. <ins>Twintris</ins> by Secret Force",
             "DisplayName": "Presence of Mind 1998",
             "Index": 7,
             "Pages": null

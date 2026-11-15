@@ -240,7 +240,10 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, s
 
     // Handle authors markdown files
     if (!wxDirExists(workingdir + "/authors/markdown"))
+    {
         wxFileName::Mkdir(workingdir + wxString("/authors/markdown"), 0777, wxPATH_MKDIR_FULL);
+        create_gitkeep(workingdir + "/authors/markdown");
+    }
     for (Author* author : *authors)
     {
         wxTextFile markdown(workingdir + wxString("/authors/markdown") + "/" + author->filename + ".md");
@@ -274,6 +277,10 @@ bool json_save(wxString workingdir, std::vector<Category*>* categorylist_roms, s
             wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/images/"), 0777, wxPATH_MKDIR_FULL);
             wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/icons/"), 0777, wxPATH_MKDIR_FULL);
             wxFileName::Mkdir(workingdir + wxString("/roms/") + cat->foldername + wxString("/downloads/"), 0777, wxPATH_MKDIR_FULL);
+            create_gitkeep(workingdir + wxString("/roms/") + cat->foldername + wxString("/markdown/"));
+            create_gitkeep(workingdir + wxString("/roms/") + cat->foldername + wxString("/images/"));
+            create_gitkeep(workingdir + wxString("/roms/") + cat->foldername + wxString("/icons/"));
+            create_gitkeep(workingdir + wxString("/roms/") + cat->foldername + wxString("/downloads/"));
         }
         for (void* child : cat->pages)
         {
