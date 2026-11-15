@@ -517,6 +517,6 @@ void publish(std::string publishpath)
     // Create the destination directory if it doesn't exist
     makedir(publishpath);
 
-    // Copy all files and directories recursively, excluding specified items
-    copy_directory_recursive(publishpath, &ignoredpaths, &ignoredfiles);
+    // Copy all files and directories recursively, excluding specified items, into the publish path
+    copy_directory_recursive(".", publishpath, &ignoredpaths, &ignoredfiles);
 }

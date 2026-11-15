@@ -16,4 +16,4 @@ bool author_sorter(Page_Author* lhs, Page_Author* rhs);
 
 void purge_htmlfiles(const std::string& directory);
 void makedir(const std::string& directory);
-void copy_directory_recursive(std::string destination, std::vector<std::string>* excluded_paths, std::vector<std::string>* excluded_files);
+void copy_directory_recursive(std::string source, std::string destination, std::vector<std::string>* excluded_paths, std::vector<std::string>* excluded_files);
