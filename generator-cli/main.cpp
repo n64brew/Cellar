@@ -162,11 +162,14 @@ int main(int argc, char* argv[])
         else
             compile_author(&authors, target);
     }
+    printf("Site compiled successfully.\n");
 
     if (!publishpath.empty())
+    {
         publish(publishpath);
+        printf("Site published successfully.\n");
+    }
 
-    printf("Site compiled successfully.\n");
     return 0;
 }
 
@@ -496,6 +499,7 @@ void publish(std::string publishpath)
         "editor-gui",
         "generator-cli",
         "templates",
+        publishpath
     };
     std::vector<std::string> ignoredfiles = {
         ".gitattributes",
@@ -505,9 +509,10 @@ void publish(std::string publishpath)
         "cellar-generator",
         "cellar-generator.exe",
         "LICENSE",
-        "README.md",
-        "authors.json",
-        "roms.json",
+    };
+    std::vector<std::string> ignoredextensions = {
+        ".json",
+        ".md",
     };
 
     // Remove trailing slashes from the publish path
@@ -518,5 +523,5 @@ void publish(std::string publishpath)
     makedir(publishpath);
 
     // Copy all files and directories recursively, excluding specified items, into the publish path
-    copy_directory_recursive(".", publishpath, &ignoredpaths, &ignoredfiles);
+    copy_directory_recursive(".", publishpath, &ignoredpaths, &ignoredfiles, &ignoredextensions);
 }

@@ -317,15 +317,32 @@ static bool is_excluded_file(std::string filename, std::vector<std::string>* exc
 
 
 /*==============================
+    is_excluded_extension
+    Checks if a file is in an exclusion list
+    @param The file to check
+    @param The list of excluded files
+==============================*/
+
+static bool is_excluded_extension(std::string filename, std::vector<std::string>* excluded_extensions)
+{
+    for (std::string extension : *excluded_extensions)
+        if (filename.length() >= extension.length() && !filename.compare(filename.length() - extension.length(), extension.length(), extension))
+            return true;
+    return false;
+};
+
+
+/*==============================
     copy_directory_recursive
     Recursively copies a directory, excluding specified paths and files
     @param The source directory
     @param The destination directory
     @param A pointer to the list of paths to exclude
     @param A pointer to the list of files to exclude
+    @param A pointer to the list of extensions to exclude
 ==============================*/
 
-void copy_directory_recursive(std::string source, std::string destination, std::vector<std::string>* excluded_paths, std::vector<std::string>* excluded_files)
+void copy_directory_recursive(std::string source, std::string destination, std::vector<std::string>* excluded_paths, std::vector<std::string>* excluded_files, std::vector<std::string>* excluded_extensions)
 {
     #ifdef _WIN32
         WIN32_FIND_DATAA finddata;
@@ -347,12 +364,12 @@ void copy_directory_recursive(std::string source, std::string destination, std::
                 if (!is_excluded_path(filename, excluded_paths) && src_path != destination)
                 {
                     _mkdir(dst_path.c_str());
-                    copy_directory_recursive(src_path, dst_path, excluded_paths, excluded_files);
+                    copy_directory_recursive(src_path, dst_path, excluded_paths, excluded_files, excluded_extensions);
                 }
             }
             else
             {
-                if (!is_excluded_file(filename, excluded_files))
+                if (!is_excluded_extension(filename, excluded_extensions) && !is_excluded_file(filename, excluded_files,))
                 {
                     // Copy file
                     std::ifstream src(src_path, std::ios::binary);
@@ -389,12 +406,12 @@ void copy_directory_recursive(std::string source, std::string destination, std::
                 if (!is_excluded_path(filename, excluded_paths) && src_path != destination)
                 {
                     mkdir(dst_path.c_str(), 0755);
-                    copy_directory_recursive(src_path, dst_path, excluded_paths, excluded_files);
+                    copy_directory_recursive(src_path, dst_path, excluded_paths, excluded_files, excluded_extensions);
                 }
             }
             else
             {
-                if (!is_excluded_file(filename, excluded_files))
+                if (!is_excluded_extension(filename, excluded_extensions) && !is_excluded_file(filename, excluded_files))
                 {
                     std::ifstream src(src_path, std::ios::binary);
                     std::ofstream dst(dst_path, std::ios::binary);
