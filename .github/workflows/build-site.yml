@@ -21,7 +21,7 @@ jobs:
 
       - name: Build HTML
         run: |
-          generator-cli all -publish published
+          ./cellar-generator all -publish published
 
       - name: Upload page artifact for GitHub Pages
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
