@@ -5,10 +5,10 @@ This file contains a bunch of helper functions for transforming,
 sorting, and finding data types
 ***************************************************************/
 
+#include "helper.h"
 #include <wx/textfile.h>
 #include <wx/file.h>
 #include <wx/msgdlg.h>
-#include "helper.h"
 
 
 /*==============================
