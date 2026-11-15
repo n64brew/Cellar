@@ -1,3 +1,4 @@
 cellar-editor
 cellar-generator
 *.exe
+.vscode/

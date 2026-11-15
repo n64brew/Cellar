@@ -39,6 +39,13 @@
             "DisplayName": "Buu342",
             "Image": "images/buu342.jpg"
         },
+        "Byterset": {
+            "Credits": [
+                "water/Poolrooms"
+            ],
+            "DisplayName": "Byterset",
+            "Image": ""
+        },
         "CYPRESS": {
             "Credits": [
                 "n64brew-gamejam2025/BotBoy!64"

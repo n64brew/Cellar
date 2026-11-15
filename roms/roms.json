@@ -2574,7 +2574,45 @@
             "Description": "Super Mario 64 hacker [Kaze Emanuar](https://www.youtube.com/channel/UCuvSqzfO_LV_QzHdmEj84SQ) hosted a water competition for the N64, where competitors had to create the most realistic looking water.",
             "DisplayName": "Kaze's Water Competition",
             "Index": 9,
-            "Pages": null
+            "Pages": {
+                "Poolrooms": {
+                    "AIDisclosure": "Claude Code was used for: research and testing water rendering techniques, help with writing RSPL microcode, help with reducing 3D model fidelity and fixing UVs via the blender MCP server",
+                    "AgeRating": "",
+                    "Authors": [
+                        "Byterset"
+                    ],
+                    "ContentWarning": "",
+                    "Date": 1794610800,
+                    "DisplayName": "Poolrooms",
+                    "Genres": [
+                        "Demo"
+                    ],
+                    "Icon": "icons/poolrooms/pr_icon.jpg",
+                    "Images": [
+                        "images/poolrooms/pr_1.jpg",
+                        "images/poolrooms/pr_2.jpg",
+                        "images/poolrooms/pr_3.jpg",
+                        "images/poolrooms/pr_4.jpg",
+                        "images/poolrooms/pr_5.jpg"
+                    ],
+                    "Index": 0,
+                    "Tags": [
+                        "1 Player",
+                        "Everdrive",
+                        "Has Embedded Metadata",
+                        "Libdragon",
+                        "MPAL Console",
+                        "NTSC Console",
+                        "PAL Console",
+                        "SC64",
+                        "Supports Accurate Emulator"
+                    ],
+                    "ToolTip": "Submission to the 2026 Kaze Water Competition",
+                    "URLs": [
+                        "downloads/Poolrooms.z64"
+                    ]
+                }
+            }
         }
     }
 }
