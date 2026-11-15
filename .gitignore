@@ -2,3 +2,8 @@ cellar-editor
 cellar-generator
 *.exe
 .vscode/
+
+# Ignore all HTML files
+*.html
+# Except for in the templates folder
+!templates/

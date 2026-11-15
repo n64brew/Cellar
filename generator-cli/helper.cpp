@@ -37,8 +37,8 @@ std::string string_fromfile(std::string path)
     std::string line;
     bool first = true;
 
-    // Ensure we managed to check and open the file
-    std::ifstream file(path);
+    // Open file in binary mode to preserve UTF-8 encoding on all platforms
+    std::ifstream file(path, std::ios::binary);
     if (!file.is_open())
         return "";
 
